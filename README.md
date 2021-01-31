@@ -1,2 +1,2 @@
 # Projet-Jeu-de-role
-Projet: Jeu de rôle de Thomas CHAMPSEIX et Gabriel MASSCHELEIN
+Jeu de rôle post apo 2nd guerre mondiale de de Thomas CHAMPSEIX et Gabriel MASSCHELEIN
