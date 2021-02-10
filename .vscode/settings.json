@@ -1,3 +1,6 @@
 {
-    "maven.view": "flat"
+    "maven.view": "flat",
+    "java.project.referencedLibraries": [
+        "src/main/java/lib/**/*.jar"
+    ]
 }
