@@ -2,15 +2,19 @@ import pygame
 
 
 class Jeu:
-    
+
+    #
     def __init__(self):
-        self.__nbTour = 0
-        self.on_init()
+        self.__nbTour = 0    
+        self._running = True
+        self.__size = self.width, self.height = 720, 720
+        self.__window = None
+  
 
     #Méthode lancée une fois servant a initialisé tout ce qu'il faut
     def on_init(self):
         pygame.init()
-        self.__display_surf = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self.__running = True
     
     #Méthode définissant la boucle de jeu principale
