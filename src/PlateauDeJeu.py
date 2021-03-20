@@ -6,8 +6,8 @@ class PlateauDejeu:
     def __init__(self,fichier):
         pass
 
-    def generateMap(self):
+    def generateMap(self) -> None:
         pass
 
-    def getCase(self, coord):
+    def getCase(self, coord:tuple(2)) -> Case:
         return None
