@@ -17,7 +17,11 @@ class Expedition:
     #Calcul des affichages
     def on_render(self, window):
         pass
-        
+
+    #Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
+    def selectPlateau(self):
+        pass
+
 
     #Méthode lançant un événement précis
     def lancerEvenement(self,evenement):
