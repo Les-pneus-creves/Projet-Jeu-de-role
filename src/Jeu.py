@@ -8,24 +8,26 @@ Etats = Enum('Etats', 'Gestion Expedition Evenement')
 
 class Jeu:
     def __init__(self):
-        self.__nbTour = 0    
-        self.__running = True
-        self.__size = self.width, self.height = 720, 720
+        self.__nbTour: int = 0    
+        self.__running: bool = True
+        self.__width: int = 720
+        self.__height: int = 720
+        self.__size: tuple = self.__width, self.__height
         self.__window = None
-        self.__etatActuel = Etats.Expedition
+        self.__etatActuel: Etats = Etats.Expedition
         self.__expedition = Expedition(equipe, PlateauDeJeu("maps/1.tmx"))
 
     #Méthode lancée une fois servant a initialisé tout ce qu'il faut
-    def on_init(self):
+    def on_init(self) -> None:
         pygame.init()
         self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self.__running = True
     
     #Méthode définissant la boucle de jeu principale
-    def on_execute(self):
+    def on_execute(self) -> None:
         if self.on_init() == False:
             self.__running = False
- 
+ -
         while(self.__running ):
             for event in pygame.event.get():
                 self.on_event(event)
@@ -34,7 +36,7 @@ class Jeu:
         self.on_cleanup()
 
     # lecture des evenements
-    def on_event(self, event):
+    def on_event(self, event) -> None:
         if event.type == pygame.QUIT:
             self.__running = False
         
@@ -48,7 +50,7 @@ class Jeu:
             print("Etat inexistant dsl ...")
 
     #Calcul des mises à jours
-    def on_loop(self):
+    def on_loop(self) -> None:
         
         if self.__etatActuel == Etats.Gestion:
             pass
@@ -60,7 +62,7 @@ class Jeu:
             print("Etat inexistant dsl ...")
 
     #Calcul des affichages
-    def on_render(self):
+    def on_render(self) -> None:
         
         if self.__etatActuel == Etats.Gestion:
             pass
@@ -74,7 +76,7 @@ class Jeu:
         pass
 
     #Méthode pour quitter le jeu proprement  
-    def on_cleanup(self):
+    def on_cleanup(self) -> None:
         pygame.quit()
 
 

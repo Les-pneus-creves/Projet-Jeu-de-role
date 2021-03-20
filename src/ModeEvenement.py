@@ -3,14 +3,14 @@ class ModeEvenement:
         self.__evenement = None    #Evenement actuellement en cours (peut etre nul)
 
     # lecture des evenements
-    def on_event(self, event):
+    def on_event(self, event) -> None:
         pass
     
     #Calcul des mises à jours
-    def on_loop(self):
+    def on_loop(self) -> None:
         pass
     
     #Calcul des affichages
-    def on_render(self, window):
+    def on_render(self, window) -> None:
         pass
 
