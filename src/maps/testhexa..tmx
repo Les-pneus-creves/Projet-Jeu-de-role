@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.3" orientation="hexagonal" renderorder="right-down" width="8" height="8" tilewidth="32" tileheight="32" infinite="0" hexsidelength="16" staggeraxis="y" staggerindex="odd" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" name="HexTilesetv3" tilewidth="32" tileheight="32" tilecount="72" columns="24">
-  <image source="../../../../../../Pictures/pour prog/HexTilesetv3.png" width="768" height="96"/>
+  <image source="../../tmx/HexTilesetv3.png" width="768" height="96"/>
  </tileset>
  <layer id="1" name="Calque de Tuiles 1" width="8" height="8">
   <data encoding="csv">
