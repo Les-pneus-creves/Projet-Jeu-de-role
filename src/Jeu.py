@@ -1,7 +1,7 @@
 import pygame
 from enum import Enum
-import Expedition
-import PlateauDeJeu
+from Expedition import Expedition
+from PlateauDeJeu import PlateauDeJeu
 
 
 Etats = Enum('Etats', 'Gestion Expedition Evenement')
@@ -15,19 +15,24 @@ class Jeu:
         self.__size: tuple = self.__width, self.__height
         self.__window = None
         self.__etatActuel: Etats = Etats.Expedition
-        self.__expedition = Expedition(equipe, PlateauDeJeu("maps/1.tmx"))
 
     #Méthode lancée une fois servant a initialisé tout ce qu'il faut
     def on_init(self) -> None:
         pygame.init()
         self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF)
         self.__running = True
+
+        plateau = PlateauDeJeu('src/maps/testhexa..tmx')
+        if(plateau.getMap() != None):
+            plateau.generatePlateau()
+        equipe = 1
+        self.__expedition = Expedition(equipe, plateau)
     
     #Méthode définissant la boucle de jeu principale
     def on_execute(self) -> None:
         if self.on_init() == False:
             self.__running = False
- -
+
         while(self.__running ):
             for event in pygame.event.get():
                 self.on_event(event)
@@ -43,7 +48,7 @@ class Jeu:
         if self.__etatActuel == Etats.Gestion:
             pass
         elif self.__etatActuel == Etats.Expedition:
-            self.__expedition.on_event()
+            self.__expedition.on_event(event)
         elif self.__etatActuel == Etats.Evenement:
             pass
         else:
@@ -67,7 +72,7 @@ class Jeu:
         if self.__etatActuel == Etats.Gestion:
             pass
         elif self.__etatActuel == Etats.Expedition:
-            self.__expedition.on_render()
+            self.__expedition.on_render(self.__window)
         elif self.__etatActuel == Etats.Evenement:
             pass
         else:

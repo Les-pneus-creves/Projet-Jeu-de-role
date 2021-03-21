@@ -1,6 +1,6 @@
 import EquipeDePersonnages
 import Evenement
-import PlateauDeJeu
+from PlateauDeJeu import PlateauDeJeu
 
 class Expedition:
 
@@ -8,7 +8,7 @@ class Expedition:
         self.__temps: int = 1             #Numéro du tour de l'expédition en cour
         self.__equipe: EquipeDePersonnages = equipe          #Equipe de personnage joueur du joueur
         self.__eventEnCours: Evenement = None      #Even ement actuellement en cours
-        self.__plateau: PlateauDejeu = plateau     #Plateau sur lequel l'éxpedition se déroule
+        self.__plateau: PlateauDeJeu = plateau     #Plateau sur lequel l'éxpedition se déroule
 
     # lecture des evenements
     def on_event(self, event) -> None:
@@ -20,7 +20,7 @@ class Expedition:
     
     #Calcul des affichages
     def on_render(self, window) -> None:
-        pass
+        self.__plateau.render(window)
 
     #Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
     def selectPlateau(self)  -> None:
