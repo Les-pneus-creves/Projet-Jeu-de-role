@@ -10,5 +10,5 @@ Pour faire tourner le jeu il vous faudra avoir installé :
 
 ## Instruction de lancement : 
 
-Il suffit en suite de lancer le fichier Jeu.py depuis la source du projet avec Python 3.8.5 :
+Il suffit en suite de lancer le fichier Jeu.py depuis la racine du projet avec Python 3.8.5 :
     `python3.8 src/Jeu.py`
