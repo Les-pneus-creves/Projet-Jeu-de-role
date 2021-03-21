@@ -55,13 +55,3 @@ class PlateauDeJeu:
                 else:
                     mod = 0
                 window.blit(self.__plateau[j][i].getImage(), (i*32 + mod, j*25))
-
-        pass
-
-
-if __name__ == "__main__" :
-    plateau = PlateauDeJeu('src/maps/testhexa..tmx')
-    if(plateau.getMap() != None):
-        plateau.generatePlateau()
-
-
