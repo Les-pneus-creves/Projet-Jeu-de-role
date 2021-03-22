@@ -1,12 +1,13 @@
-import abc #module pour classe abstraite
+from abc import ABC, abstractmethod #module pour classe abstraite
 import EquipeDePersonnages
 
-class Evenement(metaclass=abc.ABCMeta):
+class Evenement(ABC):
 
     def __init__(self):
         self.__enCours: bool = True
         self.__texteDescr: str = ""
 
-    @abc.abstractmethod
+    @abstractmethod
     def lancement(self,equipePerso: EquipeDePersonnages) -> None:
         pass
+

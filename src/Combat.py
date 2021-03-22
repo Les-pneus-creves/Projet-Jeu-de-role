@@ -1,11 +1,12 @@
-import Evenement
+from abc import ABC, abstractmethod #module pour classe abstraite
+from Evenement import Evenement # Heritage
 import EquipeDePersonnages
 import Personnage
 
 class Combat(Evenement):
 
     def __init__(self, equipe: EquipeDePersonnages):
-        super().__init__(self, )
+        super().__init__()
         self.__log: str = ""
         self.__equipeMechant: EquipeDePersonnages = None   #J'ai mis none en attendant
 
