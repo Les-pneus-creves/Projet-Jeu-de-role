@@ -1,10 +1,12 @@
 import Evenement
+import pygame
 import pygame_menu
+from Recompense import Recompense
 
 class ModeEvenement:
     def __init__(self, evenement: Evenement):
-        self.__evenement = None    #Evenement actuellement en cours (peut etre nul)
-        self.__menu = None
+        self.evenement = None    #Evenement actuellement en cours (peut etre nul)
+        self.__surface = pygame.display.set_mode((600,400))
 
     # lecture des evenements
     def on_event(self, event) -> None:
@@ -16,5 +18,21 @@ class ModeEvenement:
     
     #Calcul des affichages
     def on_render(self, window) -> None:
-        pass
+        self.evenement.menu.mainloop(window)
+
+
+if __name__ == "__main__" :
+
+    pygame.init()
+
+    window = pygame.display.set_mode((720,720), pygame.HWSURFACE | pygame.DOUBLEBUF)
+
+    ter = Recompense(15)
+    x = ModeEvenement(ter)
+    x.evenement = Recompense(12)
+    x.menu = ter.creerMenu("titre","ceci est un texxxxxte", "images/20124.jpg")
+    while True:
+        x.on_render(window)
+        pygame.display.flip()
+
 

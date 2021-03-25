@@ -10,6 +10,25 @@ class Combat(Evenement):
         self.__log: str = ""
         self.__equipeMechant: EquipeDePersonnages = None   #J'ai mis none en attendant
 
+    #propriétés héritées
+    
+    @property
+    def texteDescr(self):
+        return self.__texteDescr
+
+    @texteDescr.setter
+    def setTexteDescr(self, value):
+        self.__texteDescr = value
+
+    @property
+    def menu(self):
+        return self.__menu
+
+    @property.setter
+    def setMenu(self, value):
+        self.__menu = value
+
+    #----------
 
     #Méthode permettant de donner au combat l'équipe de personnage Joueur qui va se battre
     def lancement(self,equipePerso: EquipeDePersonnages) -> None :
