@@ -36,7 +36,7 @@ class Recompense(Evenement):
     def creerMenu(self, titre: str, texte : str, image):
         self.__menu = pygame_menu.Menu(300,400, titre)
         self.__menu.add_label(texte)
-        self.__menu.add.image(image)
+      #  self.__menu.add.image(image) wth?
         return self.__menu
         
 
