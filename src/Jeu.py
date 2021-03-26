@@ -10,8 +10,8 @@ class Jeu:
     def __init__(self):
         self.__nbTour: int = 0    
         self.__running: bool = True
-        self.__width: int = 720
-        self.__height: int = 720
+        self.__width: int = 960
+        self.__height: int = 1080
         self.__size: tuple = self.__width, self.__height
         self.__window = None
         self.__etatActuel: Etats = Etats.Expedition
@@ -22,7 +22,7 @@ class Jeu:
         self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.__running = True
 
-        plateau = PlateauDeJeu('src/maps/testhexa..tmx')
+        plateau = PlateauDeJeu('src/maps/test2.tmx')
         if(plateau.getMap() != None):
             plateau.generatePlateau()
         equipe = 1
@@ -34,6 +34,7 @@ class Jeu:
             self.__running = False
 
         while(self.__running ):
+            pygame.time.Clock().tick(60)
             for event in pygame.event.get():
                 self.on_event(event)
             self.on_loop()

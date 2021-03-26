@@ -9,6 +9,14 @@ class TypeCase(Enum):
     TERRE = 26
     EAU = 2
     NEIGE = 25
+    VIDE = 69
+    AUTOROUTEHGBD = 23
+    JSP = 14
+    JSP2 = 16
+    CAMIONTERRE = 43
+    CAMIONSOIN = 67
+    ETANG = 37
+    ROCHER = 60
 
 class Case:
     def __init__(self, image, typeCase):    # , evenement):
