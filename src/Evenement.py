@@ -4,30 +4,21 @@ import EquipeDePersonnages
 class Evenement(ABC):
 
     def __init__(self):
-        self.__enCours: bool = True
-        self.__texteDescr: str = ""
-        self.__menu = None
+        self._enCours: bool = True
+        self._texteDescr: str = ""
+        self._menu = None
 
-    #Faut faire comme ça pour une propriété abstraite
-    @property
-    @abstractmethod
-    def texteDescr(self):
-        pass
+    def getTexteDescr(self):
+        return self._texteDescr
 
-    @texteDescr.setter
-    @abstractmethod
-    def texteDescr(self, value):
-        pass
+    def getMenu(self):
+        return self._menu
 
-    @property
-    @abstractmethod
-    def menu(self):
-        pass
-
-    @menu.setter
-    @abstractmethod
-    def menu(self, value):
-        pass
+    def getEnCours(self) -> bool:
+        return self._enCours
+    
+    def setEncours(self, boule: bool):
+        self._enCours = boule
 
     @abstractmethod
     def lancement(self,equipePerso: EquipeDePersonnages) -> None:

@@ -5,8 +5,11 @@ from Recompense import Recompense
 
 class ModeEvenement:
     def __init__(self, evenement: Evenement):
-        self.evenement = evenement    #Evenement actuellement en cours (peut etre nul)
+        self._evenement = evenement    #Evenement actuellement en cours (peut etre nul)
        # self.__surface = pygame.display.set_mode((1600,1400))
+
+    def getEvenement(self):
+        return self._evenement
 
     # lecture des evenements
     def on_event(self, event) -> None:
@@ -18,7 +21,7 @@ class ModeEvenement:
     
     #Calcul des affichages
     def on_render(self, window) -> None:
-        self.evenement.menu.mainloop(window)
+        pass
 
 
 if __name__ == "__main__" :
@@ -27,13 +30,24 @@ if __name__ == "__main__" :
 
     window = pygame.display.set_mode((1000,1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
     
-    
+    evenement = Recompense(15)
+    x = ModeEvenement(evenement)
 
-    ter = Recompense(15)
-    x = ModeEvenement(ter)
-    x.menu = ter.creerMenu("Attaque de bandit!","Des bandits vous attaquent", "src/images/20124.jpg")
-    while True:       
-        x.on_render(window)
+    while True:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                exit()
+
+        if evenement.getEnCours() == True: 
+
+            if x.getEvenement().getMenu().is_enabled():
+                x.getEvenement().getMenu().update(events)
+                x.getEvenement().getMenu().draw(window)
+
+        
+        #else:
+           # pygame.draw.rect(window, (255,0,0),(0,0,1000,1000))
         pygame.display.flip()
 
 

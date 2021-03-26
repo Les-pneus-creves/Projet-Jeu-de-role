@@ -1,0 +1,16 @@
+{
+    "rouge": {
+        "texte": "red",
+        "titre": "je suis rouge",
+        "image": "src/images/rouge.jpg"
+    },
+
+    "bleu": {
+        "texte": "blue",
+        "titre": "je suis bleu",
+        "image": "src/images/20124.jpg"
+    }
+
+    
+
+}
