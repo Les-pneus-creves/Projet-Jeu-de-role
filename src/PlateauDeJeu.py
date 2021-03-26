@@ -1,6 +1,7 @@
 import pytmx
 import os
 from Case import Case
+import pygame
 
 class PlateauDeJeu:
 
@@ -20,6 +21,9 @@ class PlateauDeJeu:
         tmxdata = pytmx.util_pygame.load_pygame(self.__map)
         self.__width = tmxdata.width
         self.__height = tmxdata.height
+        self.__tilewidth = tmxdata.tilewidth
+        self.__tileheight = tmxdata.tileheight
+        
         self.__plateau = []
         images = []
         gid = []
@@ -42,6 +46,9 @@ class PlateauDeJeu:
             for j in range(self.__height):
                 self.__plateau[i][j] = Case(images[i][j], gid[i][j])
                 
+        self.__tileheight *= 2
+        self.__tilewidth *= 2
+                
   
     def getCase(self, coord:tuple) -> Case :
         return None
@@ -50,8 +57,8 @@ class PlateauDeJeu:
         for i in range(self.__width):
             mod = 0
             if i%2 == 1:
-                mod = 16
+                mod = self.__tilewidth/2
             else:
                 mod = 0
             for j in range(self.__height):
-                window.blit(self.__plateau[j][i].getImage(), (j*32 + mod, i*25))
+                window.blit(pygame.transform.scale(self.__plateau[j][i].getImage(), (self.__tilewidth, self.__tileheight)), (j*self.__tilewidth + mod, i*self.__tileheight*0.78125))

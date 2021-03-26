@@ -19,7 +19,7 @@ class Jeu:
     #Méthode lancée une fois servant a initialisé tout ce qu'il faut
     def on_init(self) -> None:
         pygame.init()
-        self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.__running = True
 
         plateau = PlateauDeJeu('src/maps/testhexa..tmx')
