@@ -40,7 +40,7 @@ class PlateauDeJeu:
         
         for i in range(self.__width):
             for j in range(self.__height):
-                self.__plateau[j][i] = Case(images[j][i], gid[j][i])
+                self.__plateau[i][j] = Case(images[i][j], gid[i][j])
                 
   
     def getCase(self, coord:tuple) -> Case :
@@ -48,10 +48,10 @@ class PlateauDeJeu:
 
     def render(self, window):
         for i in range(self.__width):
-            for j in range(self.__height):
+            mod = 0
+            if i%2 == 1:
+                mod = 16
+            else:
                 mod = 0
-                if j%2 == 1:
-                    mod = 16
-                else:
-                    mod = 0
-                window.blit(self.__plateau[j][i].getImage(), (i*32 + mod, j*25))
+            for j in range(self.__height):
+                window.blit(self.__plateau[j][i].getImage(), (j*32 + mod, i*25))
