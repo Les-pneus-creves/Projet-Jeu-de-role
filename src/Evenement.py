@@ -5,8 +5,8 @@ class Evenement(ABC):
 
     def __init__(self):
         self.__enCours: bool = True
-       # self.__texteDescr: str = ""
-       # self.__menu = None
+        self.__texteDescr: str = ""
+        self.__menu = None
 
     #Faut faire comme ça pour une propriété abstraite
     @property
