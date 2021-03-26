@@ -5,6 +5,7 @@ from enum import Enum
 TypeCase = Enum('TypeCase', 'HERBE TERRE EAU NEIGE')
 
 class TypeCase(Enum):
+    BASE = 49
     HERBE = 50
     TERRE = 26
     EAU = 2
