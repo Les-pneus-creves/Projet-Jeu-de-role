@@ -19,15 +19,6 @@ class Evenement(ABC):
     def texteDescr(self, value):
         pass
 
-    @property
-    @abstractmethod
-    def menu(self):
-        pass
-
-    @menu.setter
-    @abstractmethod
-    def menu(self, value):
-        pass
 
     @abstractmethod
     def lancement(self,equipePerso: EquipeDePersonnages) -> None:

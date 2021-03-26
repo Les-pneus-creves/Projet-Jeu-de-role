@@ -18,7 +18,7 @@ class ModeEvenement:
     
     #Calcul des affichages
     def on_render(self, window) -> None:
-        self.evenement.menu.mainloop(window)
+        self.evenement.getMenu().mainloop(window)
 
 
 if __name__ == "__main__" :
@@ -31,7 +31,6 @@ if __name__ == "__main__" :
 
     ter = Recompense(15)
     x = ModeEvenement(ter)
-    x.menu = ter.creerMenu("Attaque de bandit!","Des bandits vous attaquent", "src/images/20124.jpg")
     while True:       
         x.on_render(window)
         pygame.display.flip()
