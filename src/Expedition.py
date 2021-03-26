@@ -2,6 +2,7 @@ import EquipeDePersonnages
 import Evenement
 import math
 from PlateauDeJeu import PlateauDeJeu
+import pygame
 
 class Expedition:
 
@@ -13,8 +14,14 @@ class Expedition:
 
     # lecture des evenements
     def on_event(self, event) -> None:
-        pass
-    
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:    #Lorsque je clic gauche sur une unite et que j'en ai pas de selectionnée
+
+            xInMap = int(event.pos[0]) # Enregistre la coordonnée y de l'event
+            yInMap = int(event.pos[1]) # Enregistre la coordonnée y de l'event
+
+            print("clic", xInMap, " ", yInMap)
+            print(self.pixel_to_hex((xInMap,yInMap)))
+           
     #Calcul des mises à jours
     def on_loop(self) -> None:
         pass
@@ -22,6 +29,10 @@ class Expedition:
     #Calcul des affichages
     def on_render(self, window) -> None:
         self.__plateau.render(window)
+        for i in range(16):
+            for y in range(16):
+                pygame.draw.rect(window, (255,0,0), (i*64,y*64,64,64), 1)
+
 
     #Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
     def selectPlateau(self)  -> None:
@@ -64,7 +75,7 @@ class Expedition:
 
         return(rx,ry,rz)
 
-    def cube_to_axial(self, coordCube):
+    def cube_to_axial(self, coordCube: tuple):
         q = coordCube[0]
         r = coordCube[2]
         return (q,r)
