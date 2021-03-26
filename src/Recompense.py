@@ -34,9 +34,9 @@ class Recompense(Evenement):
         print("Lancement d'une récompense very nice")
 
     def creerMenu(self, titre: str, texte : str, image):
-        self.__menu = pygame_menu.Menu(300,400, titre)
+        self.__menu = pygame_menu.Menu(800,800, titre)
         self.__menu.add_label(texte)
-      #  self.__menu.add.image(image) wth?
+        self.__menu.add_image(image)
         return self.__menu
         
 
