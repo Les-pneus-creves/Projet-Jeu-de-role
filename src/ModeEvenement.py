@@ -2,6 +2,7 @@ import Evenement
 import pygame
 import pygame_menu
 from Recompense import Recompense
+from Combat import Combat
 
 class ModeEvenement:
     def __init__(self, evenement: Evenement):
@@ -30,7 +31,7 @@ if __name__ == "__main__" :
 
     window = pygame.display.set_mode((1000,1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
     
-    evenement = Recompense(15)
+    evenement = Combat(15)
     x = ModeEvenement(evenement)
 
     while True:

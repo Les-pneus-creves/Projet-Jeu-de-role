@@ -85,7 +85,7 @@ class Jeu:
     def on_cleanup(self) -> None:
         pygame.quit()
 
-D
+        
 
 if __name__ == "__main__" :
     leJeu = Jeu()
