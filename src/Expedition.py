@@ -8,7 +8,7 @@ class Expedition:
 
     def __init__(self, equipe, plateau):
         self.__temps: int = 1             #Numéro du tour de l'expédition en cour
-        self.__equipe: EquipeDePersonnages = EquipeDePersonnages([1])          #Equipe de personnage joueur du joueur
+        self.__equipe: EquipeDePersonnages = EquipeDePersonnages([1, 2, 3])          #Equipe de personnage joueur du joueur
         self.__eventEnCours: Evenement = None      #Even ement actuellement en cours
         self.__plateau: PlateauDeJeu = plateau     #Plateau sur lequel l'éxpedition se déroule
 
