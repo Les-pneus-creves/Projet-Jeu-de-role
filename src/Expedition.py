@@ -1,4 +1,4 @@
-import EquipeDePersonnages
+from EquipeDePersonnages import EquipeDePersonnages
 import Evenement
 import math
 from PlateauDeJeu import PlateauDeJeu
@@ -8,7 +8,7 @@ class Expedition:
 
     def __init__(self, equipe, plateau):
         self.__temps: int = 1             #Numéro du tour de l'expédition en cour
-        self.__equipe: EquipeDePersonnages = equipe          #Equipe de personnage joueur du joueur
+        self.__equipe: EquipeDePersonnages = EquipeDePersonnages([1])          #Equipe de personnage joueur du joueur
         self.__eventEnCours: Evenement = None      #Even ement actuellement en cours
         self.__plateau: PlateauDeJeu = plateau     #Plateau sur lequel l'éxpedition se déroule
 
@@ -29,6 +29,7 @@ class Expedition:
     #Calcul des affichages
     def on_render(self, window) -> None:
         self.__plateau.render(window)
+        self.__equipe.render(window, (self.__plateau.getTilewidth(), self.__plateau.getTileheight()))
         for i in range(16):
             for y in range(16):
                 pygame.draw.rect(window, (255,0,0), (i*self.__plateau.getTilewidth(),y*self.__plateau.getTileheight(),self.__plateau.getTilewidth(),self.__plateau.getTileheight()), 1)
