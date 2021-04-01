@@ -32,10 +32,7 @@ class Expedition:
     def on_render(self, window) -> None:
         self.__plateau.render(window)
         self.__equipe.render(window, (self.__plateau.getTilewidth(), self.__plateau.getTileheight()))
-        for i in range(16):
-            for y in range(16):
-                pygame.draw.rect(window, (255,0,0), (i*self.__plateau.getTilewidth(),y*self.__plateau.getTileheight(),self.__plateau.getTilewidth(),self.__plateau.getTileheight()), 1)
-
+        
 
     #Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
     def selectPlateau(self)  -> None:
