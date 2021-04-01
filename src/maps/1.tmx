@@ -2,6 +2,144 @@
 <map version="1.4" tiledversion="1.4.3" orientation="hexagonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" hexsidelength="16" staggeraxis="y" staggerindex="odd" nextlayerid="4" nextobjectid="1">
  <tileset firstgid="1" source="HexTilesetv4.tsx"/>
  <tileset firstgid="73" source="../../tmx/HexTilesetv3.tsx"/>
+ <tileset firstgid="145" name="Mieux" tilewidth="120" tileheight="140" tilecount="45" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_01.png"/>
+  </tile>
+  <tile id="1">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_02.png"/>
+  </tile>
+  <tile id="2">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_03.png"/>
+  </tile>
+  <tile id="5">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_06.png"/>
+  </tile>
+  <tile id="6">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_07.png"/>
+  </tile>
+  <tile id="9">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_10.png"/>
+  </tile>
+  <tile id="10">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_11.png"/>
+  </tile>
+  <tile id="11">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_12.png"/>
+  </tile>
+  <tile id="12">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_13.png"/>
+  </tile>
+  <tile id="13">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_14.png"/>
+  </tile>
+  <tile id="14">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_15.png"/>
+  </tile>
+  <tile id="15">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_16.png"/>
+  </tile>
+  <tile id="16">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_17.png"/>
+  </tile>
+  <tile id="17">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Dirt/dirt_18.png"/>
+  </tile>
+  <tile id="18">
+   <image width="88" height="101" source="../../../PNG/Tiles/Terrain/Dirt/dirt_19.png"/>
+  </tile>
+  <tile id="19">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_01.png"/>
+  </tile>
+  <tile id="22">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_04.png"/>
+  </tile>
+  <tile id="23">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_05.png"/>
+  </tile>
+  <tile id="24">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_06.png"/>
+  </tile>
+  <tile id="27">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_09.png"/>
+  </tile>
+  <tile id="28">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_10.png"/>
+  </tile>
+  <tile id="29">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_11.png"/>
+  </tile>
+  <tile id="30">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_12.png"/>
+  </tile>
+  <tile id="31">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_13.png"/>
+  </tile>
+  <tile id="32">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_14.png"/>
+  </tile>
+  <tile id="33">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_15.png"/>
+  </tile>
+  <tile id="34">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_16.png"/>
+  </tile>
+  <tile id="35">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_17.png"/>
+  </tile>
+  <tile id="36">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Grass/grass_18.png"/>
+  </tile>
+  <tile id="37">
+   <image width="88" height="102" source="../../../PNG/Tiles/Terrain/Grass/grass_19.png"/>
+  </tile>
+  <tile id="38">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_01.png"/>
+  </tile>
+  <tile id="39">
+   <image width="88" height="101" source="../../../PNG/Tiles/Terrain/Stone/stone_02.png"/>
+  </tile>
+  <tile id="40">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_03.png"/>
+  </tile>
+  <tile id="43">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_06.png"/>
+  </tile>
+  <tile id="44">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_07.png"/>
+  </tile>
+  <tile id="45">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_08.png"/>
+  </tile>
+  <tile id="46">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_09.png"/>
+  </tile>
+  <tile id="49">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_12.png"/>
+  </tile>
+  <tile id="50">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_13.png"/>
+  </tile>
+  <tile id="51">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_14.png"/>
+  </tile>
+  <tile id="52">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_15.png"/>
+  </tile>
+  <tile id="53">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_16.png"/>
+  </tile>
+  <tile id="54">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_17.png"/>
+  </tile>
+  <tile id="55">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_18.png"/>
+  </tile>
+  <tile id="56">
+   <image width="120" height="140" source="../../../PNG/Tiles/Terrain/Stone/stone_19.png"/>
+  </tile>
+ </tileset>
  <layer id="1" name="Calque de Tuiles 1" width="15" height="15">
   <data encoding="csv">
 8,57,57,5,5,8,8,8,2,5,5,5,8,8,8,

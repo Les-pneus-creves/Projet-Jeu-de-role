@@ -22,7 +22,7 @@ class Jeu:
         self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.__running = True
 
-        plateau = PlateauDeJeu('src/maps/test2.tmx')
+        plateau = PlateauDeJeu('src/maps/test1.tmx')
         if(plateau.getMap() != None):
             plateau.generatePlateau()
         equipe = 1

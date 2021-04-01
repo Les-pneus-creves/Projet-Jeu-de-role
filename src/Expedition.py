@@ -90,7 +90,7 @@ class Expedition:
 
         x = (coord[0] - 32) / 64
 
-        t1 = coord[1] / 34
+        t1 = coord[1] / 37
         t2 = math.floor(x + t1)
         r = math.floor((math.floor(t1 - x) + t2) / 3)
         q = math.floor((math.floor(2 * x + 1) + t2) / 3) - r

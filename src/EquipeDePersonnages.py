@@ -1,4 +1,5 @@
 # from Personnage import Personnage
+import pygame
 
 class EquipeDePersonnages:
     def __init__(self,personnages):
@@ -13,5 +14,16 @@ class EquipeDePersonnages:
         self.__coord = coord
     
     def render(self):
-        pass
+        longueur = len(self)
+        if (longueur == 1):
+            pygame.draw.circle(screen, (255,0,0), self.coord * 64, 5, 3)
+        elif (longueur == 2):
+            pygame.draw.circle(screen, (255,0,0), (self.coord[0] * 64 - 10, self.coord[0] * 64), 5, 3)
+            pygame.draw.circle(screen, (0,255,0), (self.coord[0] * 64 + 10, self.coord[0] * 64), 5, 3)
+        elif (longueur == 3):
+            pygame.draw.circle(screen, (255,0,0), (self.coord[0] * 64 - 10, self.coord[1] * 64), 5, 3)
+            pygame.draw.circle(screen, (0,255,0), (self.coord[0] * 64 + 10, self.coord[1] * 64), 5, 3)
+            pygame.draw.circle(screen, (0,0,255), (self.coord[0] * 64, self.coord[1] * 64), 5, 3)
+        else:
+            print("wtf tu as mis combiens de personnes dans ton Equipe mec !!")
         
