@@ -6,37 +6,57 @@ import pygame_menu
 import json
 import pygame
 import random
-
+from persotest import persotest
 
 class Combat(Evenement):
 
     def __init__(self, equipe: EquipeDePersonnages):
         super().__init__()
-        self.__log: str = ""
-        self.__equipeMechant: EquipeDePersonnages = None   #J'ai mis none en attendant
+        self._log = None
+        self._equipeMechant: EquipeDePersonnages = persotest("arthur", 80,1)   #J'ai mis none en attendant
         self._equipe = equipe 
 
         with open("src/dossierJson/combats.json") as fichier:
             data = json.loads(fichier.read())
             event_a_lancer = random.choice(list(data))
             eventJson = data[event_a_lancer]
-            self.creerMenu(eventJson["titre"],eventJson["texte"], eventJson["image"])
+            self.creerMenu(eventJson["titre"],eventJson["texte"], eventJson["image"], self.lancement(self._equipe))
 
 
     #----------
 
     #Méthode permettant de donner au combat l'équipe de personnage Joueur qui va se battre
-    def lancement(self,equipePerso: EquipeDePersonnages) -> None :
+    def lancement(self,equipePerso: EquipeDePersonnages) -> list :
+        logs = []
+        m = self._equipeMechant 
+        g = equipePerso
         print("un combat se lance bruh bruh bruh bruh")
+        while self._equipeMechant.getVivant() and equipePerso.getVivant():
+           logs.append(m.faireDegat(m.getDegat(), g))
+           if g.getVivant():
+            logs.append(g.faireDegat(g.getDegat(), m))
+        
+        return logs
+
 
 
         #Methode appelée dans l'init qui modifie le menu avec ce qu'il faut
-    def creerMenu(self, titre: str, texte : str, image) -> None:
-        self._menu = pygame_menu.Menu(800,800, titre, columns= 2, rows = 2, column_max_width=(200,200))
+    def creerMenu(self, titre: str, texte : str, image, logs) -> None :
+
+        #création du menu log
+        self._log = pygame_menu.Menu(800,800, "logs de combat", column_max_width=200, center_content= False)
+        for entree in logs:
+            self._log.add_label(entree, align=pygame_menu.locals.ALIGN_LEFT)
+        self._log.add_button("Retour", pygame_menu.events.BACK)
+
+        #création du menu "principal"
+
+        self._menu = pygame_menu.Menu(800,800, titre, column_max_width=200)
         self._menu.add_label(texte)
-        self._menu.add_image(image, scale = (0.5,0.5))
-        self._menu.add_label("Ici c'est des logs de combat") # \n ouais un vrai combat de bonhomme \n y'a du sang partout \n call an ambulance, but not for me")
+        self._menu.add_image(image)
+        self._menu.add_button("Voir logs", self._log)
         self._menu.add_button("ok", self.mettreFin)
+
 
     #Methode permettant de passer en cours a false
     def mettreFin(self):

@@ -1,6 +1,7 @@
 import Evenement
 import pygame
 import pygame_menu
+from persotest import persotest
 from Recompense import Recompense
 from Combat import Combat
 
@@ -31,7 +32,7 @@ if __name__ == "__main__" :
 
     window = pygame.display.set_mode((1000,1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
     
-    evenement = Combat(15)
+    evenement = Combat(persotest("bob",40,7))
     x = ModeEvenement(evenement)
 
     while True:
