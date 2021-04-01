@@ -31,7 +31,7 @@ class Expedition:
         self.__plateau.render(window)
         for i in range(16):
             for y in range(16):
-                pygame.draw.rect(window, (255,0,0), (i*64,y*64,64,64), 1)
+                pygame.draw.rect(window, (255,0,0), (i*self.__plateau.getTilewidth(),y*self.__plateau.getTileheight(),self.__plateau.getTilewidth(),self.__plateau.getTileheight()), 1)
 
 
     #Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
@@ -88,12 +88,12 @@ class Expedition:
                                                                
     def  pointToCoord(self, coord: tuple) :
 
-        x = (coord[0] - 32) / 64
+        x = (coord[0] - (self.__plateau.getTilewidth()/2)) / self.__plateau.getTilewidth()
 
-        t1 = coord[1] / 37
+        t1 = coord[1] / (self.__plateau.getTileheight()/2)
         t2 = math.floor(x + t1)
-        r = math.floor((math.floor(t1 - x) + t2) / 3)
-        q = math.floor((math.floor(2 * x + 1) + t2) / 3) - r
+        r = math.floor((math.floor(t1 - x) + t2) / 3) 
+        q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r/2)
 
         return (q,r)
 

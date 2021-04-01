@@ -65,6 +65,18 @@ class PlateauDeJeu:
     def getCase(self, coord:tuple) -> Case :
         return None
 
+    def getTileheight(self) -> int:
+        return self.__tileheight
+
+    def getTilewidth(self) -> int:
+        return self.__tilewidth
+
+    def getHeight(self) -> int:
+        return self.__height
+
+    def getWidth(self) -> int:
+        return self.__width
+
     def render(self, window):
         for l in range(self.__nblayers):
             for i in range(self.__width):
