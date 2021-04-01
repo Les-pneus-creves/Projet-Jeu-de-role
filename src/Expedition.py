@@ -21,6 +21,8 @@ class Expedition:
 
             print("clic", xInMap, " ", yInMap)
             print(self.pointToCoord((xInMap,yInMap)))
+
+            self.__equipe.deplacement(self.pointToCoord((xInMap,yInMap))) #Déplacement de l'équipe
            
     #Calcul des mises à jours
     def on_loop(self) -> None:
