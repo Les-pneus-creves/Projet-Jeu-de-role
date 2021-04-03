@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.4" tiledversion="1.4.3" name="Tuiles" tilewidth="120" tileheight="140" tilecount="48" columns="0">
+<tileset version="1.4" tiledversion="1.4.3" name="Tuiles" tilewidth="120" tileheight="140" tilecount="50" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="Herbe_">
   <image width="120" height="140" source="../src/images/Tiles/Terrain/Grass/grass_05.png"/>
@@ -144,5 +144,11 @@
  </tile>
  <tile id="47" type="Bucheron_U-">
   <image width="120" height="140" source="../src/images/Tiles/Mill/mill_warehouse.png"/>
+ </tile>
+ <tile id="48">
+  <image width="120" height="140" source="../src/images/Tiles/Customs/Bomba_01.png"/>
+ </tile>
+ <tile id="49">
+  <image width="120" height="140" source="../src/images/Tiles/Customs/Bomba_02.png"/>
  </tile>
 </tileset>
