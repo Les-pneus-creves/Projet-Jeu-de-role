@@ -1,4 +1,5 @@
 import pytmx
+import xml.etree.ElementTree
 import os
 from Case import Case
 import pygame
@@ -11,15 +12,21 @@ class PlateauDeJeu:
     def __init__(self,fichier):
         if os.path.isfile(fichier):
             self.__map = fichier
+            self.generatePlateau()
         else:
-            self.__map = None
+            raise FileNotFoundError("Le fichier de map n'existe pas ...")
         
 
     def getMap(self) -> str:
         return self.__map
 
     def generatePlateau(self) -> None:
-        tmxdata = pytmx.util_pygame.load_pygame(self.__map)
+        try:
+            tmxdata = pytmx.util_pygame.load_pygame(self.__map)
+        except xml.etree.ElementTree.ParseError:
+            raise FileExistsError("Le fichier n'a pas le bon format et n'a pas pu être chargé ...")
+        finally:
+            print("Chargement de la map réussi !")
         self.__nblayers = len(tmxdata.layers)
         self.__width = tmxdata.width
         self.__height = tmxdata.height
@@ -63,7 +70,7 @@ class PlateauDeJeu:
                 
   
     def getCase(self, coord:tuple) -> Case :
-        return None
+        return self.__plateau[0][coord[0]][coord[1]]
 
     def getTileheight(self) -> int:
         return self.__tileheight
