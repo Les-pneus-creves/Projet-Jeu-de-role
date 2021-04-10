@@ -44,7 +44,7 @@ class Combat(Evenement):
     def creerMenu(self, titre: str, texte : str, image, logs) -> None :
 
         #création du menu log
-        self._log = pygame_menu.Menu("logs de combat", 100,100,center_content= False)
+        self._log = pygame_menu.Menu("logs de combat", 1000,1000,center_content= False)
         for entree in logs:
             self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
         self._log.add_button("Retour", pygame_menu.events.BACK)
