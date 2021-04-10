@@ -8,12 +8,10 @@ import random
 
 class Recompense(Evenement):
 
-    def __init__(self, equipe: EquipeDePersonnages):
-        super().__init__()
-        self._equipe = equipe        
+    def __init__(self, event_a_lancer : str):
+        super().__init__()      
         with open("src/dossierJson/recompenses.json") as fichier:
             data = json.loads(fichier.read())
-            event_a_lancer = random.choice(list(data))
             eventJson = data[event_a_lancer]
             self.creerMenu(eventJson["titre"],eventJson["texte"], eventJson["image"])
         

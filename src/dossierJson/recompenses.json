@@ -1,13 +1,13 @@
 {
-    "rouge": {
-        "texte": "red",
-        "titre": "je suis rouge",
+    "Herbe": {
+        "titre": "Herbe",
+        "texte": "L'herbe est verte !",
         "image": "src/images/rouge.jpg"
     },
 
-    "bleu": {
-        "texte": "blue",
-        "titre": "je suis bleu",
+    "Terre": {
+        "titre": "Terre",
+        "texte": "La terre est marron (mais ça n'existe pas le marron c'est du orange en vrai)",
         "image": "src/images/20124.jpg"
     }
 
