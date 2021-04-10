@@ -10,10 +10,10 @@ class Case:
         self.__image = image
 
     def eventSeLance(self) -> bool:
-        return self.proba < random()
+        return self.__proba < random()
 
-    def getEvent(self) -> Evenement:
-        return self.__evenement
+    def getTypeCase(self) -> Evenement:
+        return self.__typeCase
 
     def getImage(self):
         return self.__image

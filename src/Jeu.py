@@ -1,5 +1,6 @@
 import pygame
 from enum import Enum
+from EquipeDePersonnages import EquipeDePersonnages
 from Expedition import Expedition
 from PlateauDeJeu import PlateauDeJeu
 
@@ -23,9 +24,7 @@ class Jeu:
         self.__running = True
 
         plateau = PlateauDeJeu('src/maps/1.tmx')
-        if(plateau.getMap() != None):
-            plateau.generatePlateau()
-        equipe = 1
+        equipe = EquipeDePersonnages([1, 2, 3])
         self.__expedition = Expedition(equipe, plateau)
     
     #Méthode définissant la boucle de jeu principale
@@ -39,6 +38,7 @@ class Jeu:
                 self.on_event(event)
             self.on_loop()
             self.on_render()
+            self.change_state()
         self.on_cleanup()
 
     # lecture des evenements
@@ -49,7 +49,7 @@ class Jeu:
         if self.__etatActuel == Etats.Gestion:
             pass
         elif self.__etatActuel == Etats.Expedition:
-            self.__expedition.on_event(event)
+            self.__whatAppend = self.__expedition.on_event(event)
         elif self.__etatActuel == Etats.Evenement:
             pass
         else:
@@ -63,7 +63,7 @@ class Jeu:
         elif self.__etatActuel == Etats.Expedition:
             self.__expedition.on_loop()
         elif self.__etatActuel == Etats.Evenement:
-            pass
+            print(self.__expedition.returnTypeCase(self.__whatAppend), self.__whatAppend)
         else:
             print("Etat inexistant dsl ...")
 
@@ -80,6 +80,19 @@ class Jeu:
             print("Etat inexistant dsl ...")
         pygame.display.flip()
         pass
+
+    def change_state(self) -> None:
+
+        if self.__etatActuel == Etats.Gestion:
+            pass
+        elif self.__etatActuel == Etats.Expedition:
+            if(self.__whatAppend is not None):
+                self.__etatActuel = Etats.Evenement
+
+        elif self.__etatActuel == Etats.Evenement:
+            pass
+        else:
+            print("Etat inexistant dsl ...")
 
     #Méthode pour quitter le jeu proprement  
     def on_cleanup(self) -> None:
