@@ -28,8 +28,8 @@ class Recompense(Evenement):
 
     #Methode appelée dans l'init qui modifie le menu avec ce qu'il faut
     def creerMenu(self, titre: str, texte : str, image) -> None:
-        self._menu = pygame_menu.Menu(800,800, titre)
-        self._menu.add_label(texte)
+        self._menu = pygame_menu.Menu(titre, 1000,1000)
+        self._menu.add.label(texte)
         self._menu.add_image(image)
         self._menu.add_button("ok", self.mettreFin)
 
