@@ -25,7 +25,7 @@ class PlateauDeJeu:
             tmxdata = pytmx.util_pygame.load_pygame(self.__map)
         except xml.etree.ElementTree.ParseError:
             raise FileExistsError("Le fichier n'a pas le bon format et n'a pas pu être chargé ...")
-        finally:
+        else:
             print("Chargement de la map réussi !")
         self.__nblayers = len(tmxdata.layers)
         self.__width = tmxdata.width
@@ -35,32 +35,36 @@ class PlateauDeJeu:
         
         self.__plateau = []
         images = []
-        gid = []
+        typeCase = []
         
         for l in range(self.__nblayers):
             self.__plateau.append([])
             images.append([])
-            gid.append([])
+            typeCase.append([])
             for i in range(self.__width):
                 self.__plateau[l].append([])
                 images[l].append([])
-                gid[l].append([])
+                typeCase[l].append([])
                 for j in range(self.__height):
                     self.__plateau[l][i].append(None)
                     images[l][i].append(0)
-                    gid[l][i].append(0)
+                    typeCase[l][i].append(0)
+
         l = 0
         for layer in tmxdata.layers:
             for x, y, image in layer.tiles():
                 images[l][x][y] = image
-                gid[l][x][y] = tmxdata.get_tile_properties_by_gid(layer.data[x][y])
+                try :
+                    typeCase[l][x][y] = tmxdata.get_tile_properties_by_gid(layer.data[x][y])["type"]
+                except KeyError:
+                    print(x, y, "il n'y pas de type de case sur cette case ...")
                 
             l += 1
         
         for l in range(self.__nblayers):
             for i in range(self.__width):
                 for j in range(self.__height):
-                    self.__plateau[l][i][j] = Case(images[l][i][j], gid[l][i][j])
+                    self.__plateau[l][i][j] = Case(images[l][i][j], typeCase[l][i][j])
 
         self.__tileheight /= 2
         self.__tilewidth /= 2
@@ -70,7 +74,7 @@ class PlateauDeJeu:
                 
   
     def getCase(self, coord:tuple) -> Case :
-        return self.__plateau[0][coord[0]][coord[1]]
+        return self.__plateau[0][coord[1]][coord[0]]
 
     def getTileheight(self) -> int:
         return self.__tileheight

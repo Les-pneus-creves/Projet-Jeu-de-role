@@ -115,7 +115,7 @@
  <tile id="37" type="Chateau_">
   <image width="120" height="140" source="../src/images/Tiles/Medieval/medieval_openCastle.png"/>
  </tile>
- <tile id="38">
+ <tile id="38" type="Ruine_">
   <image width="120" height="140" source="../src/images/Tiles/Medieval/medieval_ruins.png"/>
  </tile>
  <tile id="39" type="Chateau_-">
@@ -145,10 +145,10 @@
  <tile id="47" type="Bucheron_U-">
   <image width="120" height="140" source="../src/images/Tiles/Mill/mill_warehouse.png"/>
  </tile>
- <tile id="48">
+ <tile id="48" type="Cratere_0">
   <image width="120" height="140" source="../src/images/Tiles/Customs/Bomba_01.png"/>
  </tile>
- <tile id="49">
+ <tile id="49" type="Cratere_1">
   <image width="120" height="140" source="../src/images/Tiles/Customs/Bomba_02.png"/>
  </tile>
 </tileset>
