@@ -44,15 +44,15 @@ class Combat(Evenement):
     def creerMenu(self, titre: str, texte : str, image, logs) -> None :
 
         #création du menu log
-        self._log = pygame_menu.Menu(800,800, "logs de combat", column_max_width=200, center_content= False)
+        self._log = pygame_menu.Menu("logs de combat", 100,100,center_content= False)
         for entree in logs:
-            self._log.add_label(entree, align=pygame_menu.locals.ALIGN_LEFT)
+            self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
         self._log.add_button("Retour", pygame_menu.events.BACK)
 
         #création du menu "principal"
 
-        self._menu = pygame_menu.Menu(800,800, titre, column_max_width=200)
-        self._menu.add_label(texte)
+        self._menu = pygame_menu.Menu(titre, 1000,1000)
+        self._menu.add.label(texte)
         self._menu.add_image(image)
         self._menu.add_button("Voir logs", self._log)
         self._menu.add_button("ok", self.mettreFin)

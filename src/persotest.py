@@ -25,7 +25,7 @@ class persotest:
 
     def faireDegat(self, inte, cible):
         temp = cible.setVie(cible.getVie() - inte)
-        return self._name, "inflige ",  str(inte), " dégats à ", cible.getName(), temp, "il lui reste: ", str(cible.getVie())
+        return self._name + " inflige " +  str(inte) + " dégats à " + cible.getName() + " "+ temp + " il lui reste " + str(cible.getVie()) + " pdv"
 
     def getVivant(self):
         return self._estVivant
