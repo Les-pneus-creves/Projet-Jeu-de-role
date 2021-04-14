@@ -1,5 +1,6 @@
-from abc import ABC, abstractmethod #module pour classe abstraite
+from abc import ABC, abstractmethod  # module pour classe abstraite
 import EquipeDePersonnages
+
 
 class Evenement(ABC):
 
@@ -16,14 +17,14 @@ class Evenement(ABC):
 
     def getEnCours(self) -> bool:
         return self._enCours
-    
+
     def setEncours(self, boule: bool):
         self._enCours = boule
 
     @abstractmethod
-    def lancement(self,equipePerso: EquipeDePersonnages) -> None:
+    def lancement(self, equipePerso: EquipeDePersonnages) -> None:
         pass
 
     @abstractmethod
-    def creerMenu(self, titre: str, texte : str, image):
+    def creerMenu(self, titre: str, texte: str, image):
         pass
