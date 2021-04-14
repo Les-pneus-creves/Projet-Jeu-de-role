@@ -1,3 +1,4 @@
+
 class persotest:
 
     def __init__(self, name, vie, degat):
