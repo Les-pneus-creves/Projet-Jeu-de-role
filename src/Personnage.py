@@ -1,5 +1,6 @@
 import pygame
 from typing import Type
+from typing import Tuple
 import Personnage
 
 
@@ -28,8 +29,8 @@ class Personnage:
         self._vie = self._vie - degat
         return degat
 
-    def attaquer(self, cible: Personnage) -> int:
-        return "bordel"
+    def attaquer(self, cible: Personnage) -> Tuple[int, int]:
+        return self._force, cible.prendreDegat(self._force)
 
     def __str__(self):
         print("nom: ", self._nom, " vie: ", self._vie, " bruh")
@@ -38,4 +39,8 @@ class Personnage:
 if __name__ == "__main__" :
 
     x = Personnage("bob", 18, 10, 10, 1, "bob")
+    x.__str__()
+    x.prendreDegat(10)
+    x.__str__()
+    x.prendreDegat("oui")
     x.__str__()
