@@ -2,15 +2,90 @@
     "Herbe": {
         "titre": "Herbe",
         "texte": "L'herbe est verte !",
-        "image": "src/images/rouge.jpg"
+        "image": "src/images/Tiles/Terrain/Grass/grass_05.png"
     },
 
     "Terre": {
         "titre": "Terre",
-        "texte": "La terre est marron (mais ça n'existe pas le marron c'est du orange en vrai)",
-        "image": "src/images/20124.jpg"
-    }
+        "texte": "La terre est marron \n(mais ça n'existe pas le marron c'est du orange en vrai)",
+        "image": "src/images/Tiles/Terrain/Dirt/dirt_06.png"
+    },
 
+    "Pierre": {
+        "titre": "Pierre",
+        "texte": "La pierre est grise",
+        "image": "src/images/Tiles/Terrain/Stone/stone_07.png"
+    },
     
+    "Archer": {
+        "titre": "Archer",
+        "texte": "L'archerie est jolie ! Merci !",
+        "image": "src/images/Tiles/Medieval/medieval_archery.png"
+    },
 
+    "Arche": {
+        "titre": "Arche",
+        "texte": "Mais c une arche et on peut passer dessous !",
+        "image": "src/images/Tiles/Medieval/medieval_archway.png"
+    },
+    
+    "Forgeron": {
+        "titre": "Forgeron",
+        "texte": "La pierre est grise",
+        "image": "src/images/Tiles/Medieval/medieval_blacksmith.png"
+    },
+
+    "Maison": {
+        "titre": "Maison",
+        "texte": "Home sweet home ! Mais mince c'est pas ma maison !!!",
+        "image": "src/images/Tiles/Medieval/medieval_cabin.png"
+    },
+
+    "Eglise": {
+        "titre": "Eglise",
+        "texte": "Amen",
+        "image": "src/images/Tiles/Medieval/medieval_church.png"
+    },
+
+    "Ferme": {
+        "titre": "Ferme",
+        "texte": "Oh une ferme ! Quelle ferme ? La ferme ta gu***** pauvre c**",
+        "image": "src/images/Tiles/Medieval/medieval_farm.png"
+    },
+
+    "Chateau": {
+        "titre": "Chateau",
+        "texte": "Bienvenue au chateau gente dame",
+        "image": "src/images/Tiles/Medieval/medieval_largeCastle.png"
+    },
+
+    "Mine": {
+        "titre": "Mine",
+        "texte": "Ici on cherche de l'or mais on trouve du fer",
+        "image": "src/images/Tiles/Medieval/medieval_mine.png"
+    },
+
+    "Ruine": {
+        "titre": "Ruine",
+        "texte": "Ah le chateau à l'air cassé dit donc",
+        "image": "src/images/Tiles/Medieval/medieval_ruins.png"
+    },
+
+    "Tour": {
+        "titre": "Tour",
+        "texte": "Tiens il y a peut être une princesse là haut !",
+        "image": "src/images/Tiles/Medieval/medieval_tower.png"
+    },
+
+    "Bucheron": {
+        "titre": "Bucheron",
+        "texte": "Ça bucheronne par ici !",
+        "image": "src/images/Tiles/Mill/mill_crane.png"
+    },
+
+    "Cratere": {
+        "titre": "Cratere",
+        "texte": "Encore un trou d'obus !",
+        "image": "src/images/Tiles/Customs/Bomba_01.png"
+    }
 }
