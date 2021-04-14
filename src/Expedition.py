@@ -22,11 +22,13 @@ class Expedition:
             xInGrid , yInGrid = self.pointToCoord((xInMap,yInMap))
             print((xInGrid, yInGrid))
 
+            if(self.__plateau.isInTheMap((xInGrid, yInGrid))):
+                self.__equipe.deplacement((xInGrid, yInGrid)) #Déplacement de l'équipe
 
-            self.__equipe.deplacement((xInGrid, yInGrid)) #Déplacement de l'équipe
-
-            if (self.__plateau.getCase((xInGrid, yInGrid)).eventSeLance()):
-                return (xInGrid, yInGrid)
+                if (self.__plateau.getCase((xInGrid, yInGrid)).eventSeLance()):
+                    return (xInGrid, yInGrid)
+                else :
+                    return None
             else :
                 return None
                 

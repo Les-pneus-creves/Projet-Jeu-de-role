@@ -7,7 +7,7 @@
 
     "Terre": {
         "titre": "Terre",
-        "texte": "La terre est marron (mais ça n'existe pas le marron c'est du orange en vrai)",
+        "texte": "La terre est marron \n(mais ça n'existe pas le marron c'est du orange en vrai)",
         "image": "src/images/Tiles/Terrain/Dirt/dirt_06.png"
     },
 
@@ -49,7 +49,7 @@
 
     "Ferme": {
         "titre": "Ferme",
-        "texte": "Oh une ferme ! Quelle ferme ? La ferme te gu***** pauvre c**",
+        "texte": "Oh une ferme ! Quelle ferme ? La ferme ta gu***** pauvre c**",
         "image": "src/images/Tiles/Medieval/medieval_farm.png"
     },
 

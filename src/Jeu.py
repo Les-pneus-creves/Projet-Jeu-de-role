@@ -84,6 +84,7 @@ class Jeu:
             pass
 
         elif self.__etatActuel == Etats.Expedition:
+            self.__window.fill((0,0,0))
             self.__expedition.on_render(self.__window)
 
         elif self.__etatActuel == Etats.Evenement:

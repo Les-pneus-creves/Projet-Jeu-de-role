@@ -88,6 +88,9 @@ class PlateauDeJeu:
     def getWidth(self) -> int:
         return self.__width
 
+    def isInTheMap(self, coord:tuple) -> bool:
+        return (coord[0] >= 0) & (coord[0] < self.__height) & (coord[1] >= 0) & (coord[1] < self.__width)
+
     def render(self, window):
         for l in range(self.__nblayers):
             for i in range(self.__width):
