@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from Evenement import Evenement  # Heritage
 import EquipeDePersonnages
 # import Personnage
+import pygame
 import pygame_menu
 import json
 import random
@@ -23,7 +24,10 @@ class Recompense(Evenement):
 
     # Methode appelée dans l'init qui modifie le menu avec ce qu'il faut
     def creerMenu(self, titre: str, texte: str, image) -> None:
-        self._menu = pygame_menu.Menu(titre, 1000, 1000)
+        taille = list(pygame.display.get_window_size())
+        taille[0] /= 1.25
+        taille[1] /= 1.25
+        self._menu = pygame_menu.Menu(titre, taille[0], taille[1])
         self._menu.add.label(texte)
         self._menu.add_image(image)
         self._menu.add_button("ok", self.mettreFin)

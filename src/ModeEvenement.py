@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     window = pygame.display.set_mode((1000, 1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-    evenement = Recompense()
+    evenement = Recompense("Herbe")
     x = ModeEvenement(evenement)
 
     while True:
