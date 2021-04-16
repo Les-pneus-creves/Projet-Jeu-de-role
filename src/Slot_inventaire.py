@@ -8,7 +8,7 @@ class Slot_inventaire:
         if self.puisJeAjouter(objet):
             self._objet = objet
             self._nbContenue = nombre
-        else :
+        else:
             print("Tu ne peux pas mettre cette objet dans ce slot ...")
 
     def vider(self):
