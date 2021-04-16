@@ -8,10 +8,10 @@ import EquipeDePersonnages
 class Expedition:
 
     def __init__(self, equipe, plateau):
-        self.__temps: int = 1  # Numéro du tour de l'expédition en cour
-        self.__equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
-        self.__eventEnCours: Evenement = None  # Even ement actuellement en cours
-        self.__plateau: PlateauDeJeu = plateau  # Plateau sur lequel l'éxpedition se déroule
+        self._temps: int = 1  # Numéro du tour de l'expédition en cour
+        self._equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
+        self._eventEnCours: Evenement = None  # Even ement actuellement en cours
+        self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l'éxpedition se déroule
 
     # lecture des evenements
     def on_event(self, event) -> tuple:
@@ -24,10 +24,10 @@ class Expedition:
             xInGrid, yInGrid = self.pointToCoord((xInMap, yInMap))
             print((xInGrid, yInGrid))
 
-            if self.__plateau.isInTheMap((xInGrid, yInGrid)):
-                self.__equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l'équipe
+            if self._plateau.isInTheMap((xInGrid, yInGrid)):
+                self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l'équipe
 
-                if self.__plateau.getCase((xInGrid, yInGrid)).eventSeLance():
+                if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
                     return xInGrid, yInGrid
                 else:
                     return None
@@ -43,8 +43,8 @@ class Expedition:
 
     # Calcul des affichages
     def on_render(self, window) -> None:
-        self.__plateau.render(window)
-        self.__equipe.render(window, (self.__plateau.getTilewidth(), self.__plateau.getTileheight()))
+        self._plateau.render(window)
+        self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
 
     # Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
     def selectPlateau(self) -> None:
@@ -52,7 +52,7 @@ class Expedition:
 
     # Méthode lançant un événement précis
     def returnTypeCase(self, coord) -> str:
-        return self.__plateau.getCase(coord).getTypeCase()
+        return self._plateau.getCase(coord).getTypeCase()
 
     # Méthode retournant true ou false selon si des coordonnées (En pixel ou en case/hexagone??) sont effectivement dans la map
     def estDansLaMap(self, coord) -> bool:
@@ -60,9 +60,9 @@ class Expedition:
 
     def pointToCoord(self, coord: tuple):
 
-        x = (coord[0] - (self.__plateau.getTilewidth() / 2)) / self.__plateau.getTilewidth()
+        x = (coord[0] - (self._plateau.getTilewidth() / 2)) / self._plateau.getTilewidth()
 
-        t1 = coord[1] / (self.__plateau.getTileheight() / 2)
+        t1 = coord[1] / (self._p²lateau.getTileheight() / 2)
         t2 = math.floor(x + t1)
         r = math.floor((math.floor(t1 - x) + t2) / 3)
         q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r / 2)

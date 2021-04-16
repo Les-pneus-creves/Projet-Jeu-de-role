@@ -10,31 +10,31 @@ Etats = Enum('Etats', 'Gestion Expedition Evenement')
 
 class Jeu:
     def __init__(self):
-        self.__nbTour: int = 0
-        self.__running: bool = True
-        self.__width: int = 1080
-        self.__height: int = 1080
-        self.__size: tuple = self.__width, self.__height
-        self.__window = None
-        self.__etatActuel: Etats = Etats.Expedition
+        self._nbTour: int = 0
+        self._running: bool = True
+        self._width: int = 1080
+        self._height: int = 1080
+        self._size: tuple = self._width, self._height
+        self._window = None
+        self._etatActuel: Etats = Etats.Expedition
 
     # Méthode lancée une fois servant a initialisé tout ce qu'il faut
     def on_init(self) -> None:
         pygame.init()
-        self.__window = pygame.display.set_mode(self.__size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
-        self.__running = True
+        self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+        self._running = True
 
         plateau = PlateauDeJeu('src/maps/1.tmx')
         equipe = EquipeDePersonnages([1, 2, 3])
-        self.__expedition = Expedition(equipe, plateau)
-        self.__modeEvenement = None
+        self._expedition = Expedition(equipe, plateau)
+        self._modeEvenement = None
 
     # Méthode définissant la boucle de jeu principale
     def on_execute(self) -> None:
         if self.on_init() == False:
-            self.__running = False
+            self._running = False
 
-        while (self.__running):
+        while (self._running):
             pygame.time.Clock().tick(60)
             events = pygame.event.get()
             self.on_event(events)
@@ -47,16 +47,16 @@ class Jeu:
     def on_event(self, events) -> None:
         for event in events:
             if event.type == pygame.QUIT:
-                self.__running = False
+                self._running = False
 
-            if self.__etatActuel == Etats.Gestion:
+            if self._etatActuel == Etats.Gestion:
                 pass
 
-            elif self.__etatActuel == Etats.Expedition:
-                self.__whatAppend = self.__expedition.on_event(event)
+            elif self._etatActuel == Etats.Expedition:
+                self._whatAppend = self._expedition.on_event(event)
 
-            elif self.__etatActuel == Etats.Evenement:
-                self.__modeEvenement.on_event(events)
+            elif self._etatActuel == Etats.Evenement:
+                self._modeEvenement.on_event(events)
                 break
 
             else:
@@ -65,14 +65,14 @@ class Jeu:
     # Calcul des mises à jours
     def on_loop(self) -> None:
 
-        if self.__etatActuel == Etats.Gestion:
+        if self._etatActuel == Etats.Gestion:
             pass
 
-        elif self.__etatActuel == Etats.Expedition:
-            self.__expedition.on_loop()
+        elif self._etatActuel == Etats.Expedition:
+            self._expedition.on_loop()
 
-        elif self.__etatActuel == Etats.Evenement:
-            self.__modeEvenement.on_loop()
+        elif self._etatActuel == Etats.Evenement:
+            self._modeEvenement.on_loop()
 
         else:
             print("Etat inexistant dsl ...")
@@ -80,15 +80,15 @@ class Jeu:
     # Calcul des affichages
     def on_render(self) -> None:
 
-        if self.__etatActuel == Etats.Gestion:
+        if self._etatActuel == Etats.Gestion:
             pass
 
-        elif self.__etatActuel == Etats.Expedition:
-            self.__window.fill((0, 0, 0))
-            self.__expedition.on_render(self.__window)
+        elif self._etatActuel == Etats.Expedition:
+            self._window.fill((0, 0, 0))
+            self._expedition.on_render(self._window)
 
-        elif self.__etatActuel == Etats.Evenement:
-            self.__modeEvenement.on_render(self.__window)
+        elif self._etatActuel == Etats.Evenement:
+            self._modeEvenement.on_render(self._window)
 
         else:
             print("Etat inexistant dsl ...")
@@ -96,17 +96,17 @@ class Jeu:
         pass
 
     def change_state(self) -> None:
-        if self.__etatActuel == Etats.Gestion:
+        if self._etatActuel == Etats.Gestion:
             pass
-        elif self.__etatActuel == Etats.Expedition:
-            if self.__whatAppend is not None:
-                self.__etatActuel = Etats.Evenement
-                self.__modeEvenement = ModeEvenement(self.__expedition.returnTypeCase(self.__whatAppend))
+        elif self._etatActuel == Etats.Expedition:
+            if self._whatAppend is not None:
+                self._etatActuel = Etats.Evenement
+                self._modeEvenement = ModeEvenement(self._expedition.returnTypeCase(self._whatAppend))
 
-        elif self.__etatActuel == Etats.Evenement:
-            if not self.__modeEvenement.getEnCours():
-                self.__etatActuel = Etats.Expedition
-                self.__whatAppend = None
+        elif self._etatActuel == Etats.Evenement:
+            if not self._modeEvenement.getEnCours():
+                self._etatActuel = Etats.Expedition
+                self._whatAppend = None
         else:
             print("Etat inexistant dsl ...")
 

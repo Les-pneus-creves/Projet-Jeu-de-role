@@ -8,17 +8,17 @@ from Combat import Combat
 
 class ModeEvenement:
     def __init__(self, typeCase: str):
-        self.__evenement = Recompense(typeCase.split("_")[0])
-        # self.__surface = pygame.display.set_mode((1600,1400))
+        self._evenement = Recompense(typeCase.split("_")[0])
+        # self._surface = pygame.display.set_mode((1600,1400))
 
     def getEvenement(self):
         return self._evenement
 
     # lecture des evenements
     def on_event(self, events) -> None:
-        if self.__evenement.getEnCours():
-            if self.__evenement.getMenu().is_enabled():
-                self.__evenement.getMenu().update(events)
+        if self._evenement.getEnCours():
+            if self._evenement.getMenu().is_enabled():
+                self._evenement.getMenu().update(events)
 
     # Calcul des mises à jours
     def on_loop(self) -> None:
@@ -27,12 +27,12 @@ class ModeEvenement:
     # Calcul des affichages
     def on_render(self, window) -> None:
 
-        if self.__evenement.getEnCours():
-            if self.__evenement.getMenu().is_enabled():
-                self.__evenement.getMenu().draw(window)
+        if self._evenement.getEnCours():
+            if self._evenement.getMenu().is_enabled():
+                self._evenement.getMenu().draw(window)
 
     def getEnCours(self):
-        return self.__evenement.getEnCours()
+        return self._evenement.getEnCours()
 
 
 if __name__ == "__main__":
