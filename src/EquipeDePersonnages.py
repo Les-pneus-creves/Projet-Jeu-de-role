@@ -1,30 +1,41 @@
-# from Personnage import Personnage
+from Personnage import Personnage
 import pygame
 from math import floor
 
 
 class EquipeDePersonnages:
     def __init__(self, personnages):
-        self.__coord = (0, 0)
-        self.__estVivante: bool = True
-        self.__personnages: list = personnages
+        self._coord = (0, 0)
+        self._estVivante: bool = True
+        self._personnages: list = personnages
 
     def __len__(self) -> int:
         return len(self.__personnages)
 
+    def getPersonnages(self) -> list[Personnage]:
+        return self._personnages
+
+    def getVivante(self) -> bool:
+        return self._estVivante
+
+    def __str__(self) -> none:
+        for i in range(len(self._personnages)):
+            self._personnages[i].__str__()
+
+
     def deplacement(self, coord) -> tuple:
-        self.__coord = coord
+        self._coord = coord
 
     def render(self, window, dimmensions) -> None:
         longueur = len(self)
         mod = 0
-        if self.__coord[1] % 2 == 1:
+        if self._coord[1] % 2 == 1:
             mod = floor(dimmensions[0] / 2)
         else:
             mod = 0
 
-        coordPixel = ((self.__coord[0] * dimmensions[0]) + floor(dimmensions[0] / 2) + mod,
-                      floor((self.__coord[1] * dimmensions[1]) * 0.75 + floor(dimmensions[1] / 2)))
+        coordPixel = ((self._coord[0] * dimmensions[0]) + floor(dimmensions[0] / 2) + mod,
+                      floor((self._coord[1] * dimmensions[1]) * 0.75 + floor(dimmensions[1] / 2)))
 
         if longueur == 1:
             pygame.draw.circle(window, (255, 0, 0), coordPixel, 5, 4)

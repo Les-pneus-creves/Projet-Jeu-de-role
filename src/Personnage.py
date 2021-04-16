@@ -24,6 +24,9 @@ class Personnage:
     def getVie(self) -> int:
         return self._vie
 
+    def getInitiative(self) -> int:
+        return self._initiative
+
     # Retourne un int pour la construction de log
     def prendreDegat(self, degat: int) -> int:
         self._vie = self._vie - degat
