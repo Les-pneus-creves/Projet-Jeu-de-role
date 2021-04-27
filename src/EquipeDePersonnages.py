@@ -1,4 +1,5 @@
 from Personnage import Personnage
+import EquipeDePersonnages
 import pygame
 from math import floor
 
@@ -10,17 +11,19 @@ class EquipeDePersonnages:
         self._personnages: list = personnages
 
     def __len__(self) -> int:
-        return len(self.__personnages)
+        return len(self._personnages)
 
-    def getPersonnages(self) -> list[Personnage]:
+    def getPersonnages(self) -> list:
         return self._personnages
 
     def getVivante(self) -> bool:
         return self._estVivante
 
-    def __str__(self) -> none:
+    def __str__(self) -> str:
+        temp = ""
         for i in range(len(self._personnages)):
-            self._personnages[i].__str__()
+            temp += str(self._personnages[i].__str__()) + "\n"
+        return temp
 
 
     def deplacement(self, coord) -> tuple:

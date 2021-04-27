@@ -1,7 +1,6 @@
 import Evenement
 import pygame
 import pygame_menu
-from persotest import persotest
 from Recompense import Recompense
 from Combat import Combat
 

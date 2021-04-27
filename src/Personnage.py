@@ -35,8 +35,8 @@ class Personnage:
     def attaquer(self, cible: Personnage) -> Tuple[int, int]:
         return self._force, cible.prendreDegat(self._force)
 
-    def __str__(self):
-        print("nom: ", self._nom, " vie: ", self._vie, " bruh")
+    def __str__(self) -> str:
+       return "nom: " + self._nom + " vie: " + str(self._vie) + " bruh"
 
 
 if __name__ == "__main__" :

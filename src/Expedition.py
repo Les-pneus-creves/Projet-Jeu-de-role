@@ -62,7 +62,7 @@ class Expedition:
 
         x = (coord[0] - (self._plateau.getTilewidth() / 2)) / self._plateau.getTilewidth()
 
-        t1 = coord[1] / (self._p²lateau.getTileheight() / 2)
+        t1 = coord[1] / (self._plateau.getTileheight() / 2)
         t2 = math.floor(x + t1)
         r = math.floor((math.floor(t1 - x) + t2) / 3)
         q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r / 2)
