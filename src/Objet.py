@@ -1,10 +1,18 @@
 
-
 class Objet:
-    def __init__(self, nom: string, image, stackable: int):
+    def __init__(self, nom: str, image, stackable: int):
         self._nom = nom
         self._image = image
         self._stackable = stackable
 
+    def __str__(self):
+        return "[" + self._nom + ", max= " + str(self._stackable) + "]"
+
     def getImage(self):
-        return self.__image
+        return self._image
+
+    def getNom(self):
+        return self._nom
+
+    def getStackable(self):
+        return self._stackable

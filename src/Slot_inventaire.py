@@ -1,24 +1,54 @@
+from Objet import Objet
+
+
 class Slot_inventaire:
-    def __init__(self, typeObjet: type):
+    def __init__(self, typeObjet: str):
         self._objet = None
         self._typeObjet = typeObjet
         self._nbContenue = 0
 
-    def remplir(self, objet, nombre: int = 1):
-        if self.puisJeAjouter(objet):
-            self._objet = objet
-            self._nbContenue = nombre
-        else:
-            print("Tu ne peux pas mettre cette objet dans ce slot ...")
+    def __str__(self):
+        return "[" + str(self._objet) + ", " + self._typeObjet + ", " + str(self._nbContenue) + "]"
 
     def vider(self):
         self._nbContenue = 0
+        self._objet = None
 
-    def ajouter(self, nombre: int = 1):
-        self._nbContenue += nombre
+    def ajouter(self, objet: Objet = None, nombre: int = 1):
+        if self.puisJeAjouter(objet):
+            self._objet: Objet = objet
+            if not self.plein():
+                if self._nbContenue + nombre > self._objet.getStackable():
+                    nombre -= self._objet.getStackable() - self._nbContenue
+                    self._nbContenue = self._objet.getStackable()
+                    return nombre
+                else:
+                    self._nbContenue += nombre
+                    return 0
+        return -1
 
     def retirer(self, nombre: int = 1):
         self._nbContenue -= nombre
 
     def puisJeAjouter(self, objet):
-        return type(objet) is self._typeObjet
+        if objet is not None:
+            if self._objet is None:
+                return objet.getNom().split("_")[0] == self._typeObjet
+            else:
+                return objet.getNom() == self._objet.getNom()
+        return False
+
+    def getObjet(self):
+        if not self.vide():
+            return self._objet
+        return None
+
+    def vide(self):
+        if self._nbContenue == 0 and self._objet is None:
+            return True
+        return False
+
+    def plein(self):
+        if self._nbContenue == self._objet.getStackable():
+            return True
+        return False
