@@ -29,8 +29,8 @@ class Recompense(Evenement):
         taille[1] /= 1.25
         self._menu = pygame_menu.Menu(titre, taille[0], taille[1])
         self._menu.add.label(texte)
-        self._menu.add_image(image)
-        self._menu.add_button("ok", self.mettreFin)
+        self._menu.add.image(image)
+        self._menu.add.button("ok", self.mettreFin)
 
     # Methode permettant de passer en cours a false
     def mettreFin(self):
