@@ -15,6 +15,9 @@ class Slot_inventaire:
         self._objet = None
 
     def ajouter(self, objet: Objet = None, nombre: int = 1):
+        if objet is None and self._objet is not None:
+            objet = self._objet
+
         if self.puisJeAjouter(objet):
             self._objet: Objet = objet
             if not self.plein():
@@ -29,6 +32,12 @@ class Slot_inventaire:
 
     def retirer(self, nombre: int = 1):
         self._nbContenue -= nombre
+        if self._nbContenue <= 0:
+            nb = self._nbContenue
+            self.vider()
+            return nb
+        else:
+            return 0
 
     def puisJeAjouter(self, objet):
         if objet is not None:

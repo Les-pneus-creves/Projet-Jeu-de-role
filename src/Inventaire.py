@@ -70,7 +70,7 @@ class Inventaire(list):
     def ajouter(self, objet: Objet, nombre=1):
         position = self.contientObjet(objet)
         if position != -1 and not self[position].plein():
-            ajout = self[position].ajouter(nombre)
+            ajout = self[position].ajouter(nombre=nombre)
             if ajout > 0:
                 self.ajouter(objet, ajout)
                 return
@@ -87,11 +87,29 @@ class Inventaire(list):
                     self.ajouter(objet, ajout)
                     return
 
+    def retirer(self, objet: Objet, nombre=1):
+        position = self.contientObjet(objet)
+        if position == -1:
+            print("pas d'objets de ce type dans l'inventaire")
+        else:
+            retrait = self[position].retirer(nombre)
+            if retrait < 0:
+                self.retirer(objet, - retrait)
 
 
 if __name__ == "__main__":
     inventaire = Inventaire(1, 1, 5)
-    inventaire.ajouter(Objet("Ressources_Patate", "prout", 3), 5)
-    inventaire.ajouter(Objet("Ressources_Oignons", "prout", 4), 5)
-    inventaire.ajouter(Objet("Arme_Fusil", "prout", 1), 2)
+    patate = Objet("Ressources_Patate", "prout", 3)
+    oignon = Objet("Ressources_Oignons", "prout", 4)
+    fusil = Objet("Arme_Fusil", "prout", 1)
+
+    inventaire.ajouter(patate, 2)
+    inventaire.ajouter(patate, 3)
+    inventaire.ajouter(oignon, 5)
+    inventaire.ajouter(fusil)
+
+    print(inventaire)
+    inventaire.retirer(fusil)
+    inventaire.retirer(patate, 2)
+
     print(inventaire)
