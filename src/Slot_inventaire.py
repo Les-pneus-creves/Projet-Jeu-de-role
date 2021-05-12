@@ -61,3 +61,6 @@ class Slot_inventaire:
         if self._nbContenue == self._objet.getStackable():
             return True
         return False
+
+    def getNbContenue(self):
+        return self._nbContenue

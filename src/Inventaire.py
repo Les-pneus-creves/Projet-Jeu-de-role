@@ -1,5 +1,6 @@
 from Slot_inventaire import Slot_inventaire
 from Objet import Objet
+import math
 
 
 class Inventaire(list):
@@ -57,6 +58,28 @@ class Inventaire(list):
         retour += "]"
         return retour
 
+    def listObjetUnique(self):
+        liste = []
+        for objet in self.tolistofObjet():
+            if objet not in liste and objet is not None:
+                liste.append(objet)
+        return liste
+
+    def tolistofObjet(self):
+        liste = []
+        for slot in self:
+            liste.append(slot.getObjet())
+        return liste
+
+    def slotsOfThisObjet(self, objet: Objet):
+        listePos = []
+        i = 0
+        for element in self.tolistofObjet():
+            if element is objet:
+                listePos.append(i)
+            i += 1
+        return listePos
+
     def contientObjet(self, objet: Objet):
         i = 0
         for slot in self:
@@ -96,6 +119,27 @@ class Inventaire(list):
             if retrait < 0:
                 self.retirer(objet, - retrait)
 
+    def trier(self):
+        repetitionObjects = dict.fromkeys(self.listObjetUnique(), 0)
+        # Analyse de l'inventaire
+        for objet in repetitionObjects:
+            # On récupère les positions dans l'inventaire de chaque objets contenue dans l'inventaire
+            positionsObjet = self.slotsOfThisObjet(objet)
+
+            # On compte combien on a d'élément de cette objets dans l'inventaire en comptant tous les slots.
+            nb = 0
+            for pos in positionsObjet:
+                nb += self[pos].getNbContenue()
+
+            # On enregistre l'information de nb d'élément et du nombre de slots pris pour chaque objets
+            repetitionObjects[objet] = nb, len(positionsObjet)
+
+        # Trie de l'inventaire en conséquence
+        for objet, (nb, nbslots) in repetitionObjects.items():
+            if math.ceil(nb/objet.getStackable()) < nbslots:
+                self.retirer(objet, nb)
+                self.ajouter(objet, nb)
+
 
 if __name__ == "__main__":
     inventaire = Inventaire(1, 1, 5)
@@ -111,5 +155,8 @@ if __name__ == "__main__":
     print(inventaire)
     inventaire.retirer(fusil)
     inventaire.retirer(patate, 2)
+
+    print(inventaire)
+    inventaire.trier()
 
     print(inventaire)

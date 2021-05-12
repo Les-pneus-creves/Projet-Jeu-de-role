@@ -11,8 +11,8 @@ class Objet:
     def getImage(self):
         return self._image
 
-    def getNom(self):
+    def getNom(self) -> str:
         return self._nom
 
-    def getStackable(self):
+    def getStackable(self) -> int:
         return self._stackable
