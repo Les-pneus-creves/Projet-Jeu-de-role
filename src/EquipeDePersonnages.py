@@ -5,10 +5,11 @@ from math import floor
 
 
 class EquipeDePersonnages:
-    def __init__(self, personnages):
+    def __init__(self, *personnages):
         self._coord = (0, 0)
         self._estVivante: bool = True
-        self._personnages: list = personnages
+        self._personnages: list = list(personnages)
+
 
     def __len__(self) -> int:
         return len(self._personnages)
@@ -16,7 +17,21 @@ class EquipeDePersonnages:
     def getPersonnages(self) -> list:
         return self._personnages
 
+    def getPersonnagesVivants(self) -> list:
+
+        temp = []
+        for perso in self._personnages:
+            if perso.estVivant():
+                temp.append(perso)
+        return temp
+
     def getVivante(self) -> bool:
+        temp = False
+        for p in self._personnages:
+            if p.estVivant():
+                temp = True
+        self._estVivante = temp
+
         return self._estVivante
 
     def __str__(self) -> str:

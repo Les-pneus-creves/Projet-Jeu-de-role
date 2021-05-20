@@ -18,6 +18,9 @@ class Personnage:
     def mourir(self) -> None:
         self._estVivant = False
 
+    def getNom(self) -> str:
+        return self._nom
+
     def estVivant(self) -> bool:
         return self._estVivant
 
@@ -30,6 +33,8 @@ class Personnage:
     # Retourne un int pour la construction de log
     def prendreDegat(self, degat: int) -> int:
         self._vie = self._vie - degat
+        if self._vie < 0:
+            self._estVivant = False
         return degat
 
     def attaquer(self, cible: Personnage) -> Tuple[int, int]:
@@ -42,8 +47,6 @@ class Personnage:
 if __name__ == "__main__" :
 
     x = Personnage("bob", 18, 10, 10, 1, "bob")
-    x.__str__()
+    print(x)
     x.prendreDegat(10)
-    x.__str__()
-    x.prendreDegat("oui")
-    x.__str__()
+    print(x)

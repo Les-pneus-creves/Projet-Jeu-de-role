@@ -1,6 +1,8 @@
 import Evenement
 import pygame
 import pygame_menu
+from EquipeDePersonnages import EquipeDePersonnages
+from Personnage import Personnage #pour faire test
 from Recompense import Recompense
 from Combat import Combat
 
@@ -36,11 +38,12 @@ class ModeEvenement:
 
 if __name__ == "__main__":
 
+
     pygame.init()
 
     window = pygame.display.set_mode((1000, 1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-    evenement = Recompense("Herbe")
+    evenement = c
     x = ModeEvenement(evenement)
 
     while True:
