@@ -1,4 +1,10 @@
 from Objet import Objet
+import pygame
+
+typeObjetImages = {"Arme": pygame.image.load("./images/Inventory/Slot_arme.jpg").convert(),
+                   "Equipemment": pygame.image.load("./images/Inventory/Slot_equipement.jpg").convert(),
+                   "Ressources": pygame.image.load("./images/Inventory/Slot_ressources.jpg").convert(),
+                   "Selection": pygame.image.load("./images/Inventory/Slot_select.jpg").convert()}
 
 
 class Slot_inventaire:
@@ -64,3 +70,8 @@ class Slot_inventaire:
 
     def getNbContenue(self):
         return self._nbContenue
+
+    def render(self, window, posx, posy):
+        window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
+        if not self.vide():
+            window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))

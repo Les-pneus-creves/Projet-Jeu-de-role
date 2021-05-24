@@ -45,6 +45,7 @@ class Expedition:
     def on_render(self, window) -> None:
         self._plateau.render(window)
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
+        # self.renderInventaires(window)
 
     # Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
     def selectPlateau(self) -> None:
@@ -68,3 +69,13 @@ class Expedition:
         q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r / 2)
 
         return q, r
+
+    def renderInventaires(self, window):
+        peronnages = self._equipe.getPersonnages()
+        minx = 0
+        miny = 800
+
+        for peronnage in peronnages:
+            """ Il faudrait aussi afficher ici les noms de chaques personnes devant leur inventaires """
+            peronnage.getInventaire().render(window, minx, miny)
+            miny += 60 * 4 + 30

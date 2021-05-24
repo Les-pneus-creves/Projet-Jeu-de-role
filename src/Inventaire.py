@@ -7,7 +7,7 @@ class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
         """ En faite se serais plus pour l'inventaire personnage toutes ces spécificité.
-            Pour l'inventaire de base on ferais des slots capables d'accueillir tout types d'objets (les coffres)"""
+            Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'objets (les coffres)"""
         super(Inventaire, self).__init__()
         for i in range(nbArme):
             self.append(Slot_inventaire("Arme"))
@@ -139,6 +139,20 @@ class Inventaire(list):
             if math.ceil(nb/objet.getStackable()) < nbslots:
                 self.retirer(objet, nb)
                 self.ajouter(objet, nb)
+
+    def render(self, window, minx, miny):
+        posx = minx
+        posy = miny
+
+        i = 1
+        for slot in self:
+            slot.render(window, posx, posy)
+            if i % 4:
+                posy += 60
+                posx = minx
+            else:
+                posx += 60
+            i += 1
 
 
 if __name__ == "__main__":
