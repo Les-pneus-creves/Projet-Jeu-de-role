@@ -8,8 +8,8 @@ from Combat import Combat
 
 
 class ModeEvenement:
-    def __init__(self, typeCase: str):
-        self._evenement = Recompense(typeCase.split("_")[0])
+    def __init__(self, evenement : Evenement):
+        self._evenement = evenement
         # self._surface = pygame.display.set_mode((1600,1400))
 
     def getEvenement(self):

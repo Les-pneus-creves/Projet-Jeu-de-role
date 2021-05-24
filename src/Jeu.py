@@ -4,6 +4,7 @@ from EquipeDePersonnages import EquipeDePersonnages
 from Expedition import Expedition
 from PlateauDeJeu import PlateauDeJeu
 from ModeEvenement import ModeEvenement
+from Recompense import Recompense
 
 Etats = Enum('Etats', 'Gestion Expedition Evenement')
 
@@ -101,7 +102,7 @@ class Jeu:
         elif self._etatActuel == Etats.Expedition:
             if self._whatAppend is not None:
                 self._etatActuel = Etats.Evenement
-                self._modeEvenement = ModeEvenement(self._expedition.returnTypeCase(self._whatAppend))
+                self._modeEvenement = ModeEvenement(Recompense(self._expedition.returnTypeCase(self._whatAppend).split("_")[0]))
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():
