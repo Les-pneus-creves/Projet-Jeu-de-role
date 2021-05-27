@@ -21,15 +21,15 @@ class Inventaire(list):
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).append(slot)
         else:
-            raise ValueError('Seul les Slot_inventaire sont autorisé')
+            raise ValueError('Seul les Slot_inventaire sont autorisés')
 
     def insert(self, index, slot: Slot_inventaire):
         """ Overload de la méthode insert des list, cela permet d'ajouter que des Slot_inventaire à notre Inventaire
-            Pas forcément utile mais pour que se soit jolie"""
+            Pas forcément utile mais pour que ce soit jolie"""
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).insert(index, slot)
         else:
-            raise ValueError('Seul les Slot_inventaire sont autorisé')
+            raise ValueError('Seul les Slot_inventaire sont autorisés')
 
     def __add__(self, slot: Slot_inventaire):
         """ Overload de l'opérateur +, cela permet d'ajouter que des Slot_inventaire à notre Inventaire
