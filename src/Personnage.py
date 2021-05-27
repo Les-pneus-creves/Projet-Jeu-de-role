@@ -14,7 +14,8 @@ class Personnage:
         self._force = force
         self._precision = precision
         self._initiative = initiative
-        self._image = pygame.image.load(image).convert()
+        if image is not None:
+            self._image = pygame.image.load(image).convert()
         self._estVivant = True
         self._inventaire = Inventaire(1, 1, 6)
 
