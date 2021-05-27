@@ -14,7 +14,7 @@ class Personnage:
         self._force = force
         self._precision = precision
         self._initiative = initiative
-       # self._image = pygame.image.load(image)
+        self._image = pygame.image.load(image).convert()
         self._estVivant = True
         self._inventaire = Inventaire(1, 1, 6)
 
@@ -43,11 +43,20 @@ class Personnage:
     def attaquer(self, cible: Personnage) -> Tuple[int, int]:
         return self._force, cible.prendreDegat(self._force)
 
+    def getInventaire(self):
+        return self._inventaire
+
     def __str__(self) -> str:
        return "nom: " + self._nom + " vie: " + str(self._vie) + " bruh"
 
-    def getInventaire(self):
-        return self._inventaire
+    def render(self, window, minx, miny):
+        posx = minx
+        posy = miny
+        window.blit(pygame.transform.scale(self._image, (60, 60)), (posx, posy))
+        posx += 90
+        font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+        text = font.render(self._nom, True, (255, 255, 255))
+        window.blit(text, (posx, posy))
 
 
 if __name__ == "__main__" :

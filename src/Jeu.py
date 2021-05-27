@@ -27,7 +27,7 @@ class Jeu:
         self._running = True
 
         plateau = PlateauDeJeu('src/maps/1.tmx')
-        equipe = EquipeDePersonnages(Personnage("Frank",40, 12, 5, 5, "euh veyez patienter"), Personnage("Albert",30, 15, 3, 2, "euh veyez patienter"))
+        equipe = EquipeDePersonnages(Personnage("Frank",40, 12, 5, 5, "src/images/Smiguel.jpg"), Personnage("Albert",30, 15, 3, 2, "src/images/kv2v2v2.jpg"))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 

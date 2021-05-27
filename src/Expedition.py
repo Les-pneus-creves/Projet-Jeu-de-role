@@ -73,9 +73,10 @@ class Expedition:
     def renderInventaires(self, window):
         peronnages = self._equipe.getPersonnages()
         minx = 0
-        miny = 850
+        miny = 830
 
         for peronnage in peronnages:
             """ Il faudrait aussi afficher ici les noms de chaques personnes devant leur inventaires """
-            peronnage.getInventaire().render(window, minx, miny)
+            peronnage.render(window, minx, miny)
+            peronnage.getInventaire().render(window, minx, miny + 60)
             minx += 60 * 4 + 30
