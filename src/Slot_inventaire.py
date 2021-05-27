@@ -72,7 +72,7 @@ class Slot_inventaire:
 
 def generateSlotsImages():
     global typeObjetImages
-    typeObjetImages = {"Arme": pygame.image.load("src/images/Inventory/Slot_arme.jpg").convert(),
+    typeObjetImages = {"Arme": pygame.image.load("src/images/Inventory/Slot_arme.png").convert(),
      "Equipement": pygame.image.load("src/images/Inventory/Slot_equipement.png").convert(),
      "Ressources": pygame.image.load("src/images/Inventory/Slot_ressources.png").convert(),
      "Selection": pygame.image.load("src/images/Inventory/Slot_select.png").convert()}
