@@ -9,6 +9,7 @@ class Personnage:
     def __init__(self, nom: str, vie: int, force: int, precision: int, initiative: int, image: str):
         self._nom = nom
         self._vie = vie
+        self._vieMax = vie
         self._force = force
         self._precision = precision
         self._initiative = initiative

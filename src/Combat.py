@@ -34,7 +34,7 @@ class Combat(Evenement):
         return self._menu
 
 
-    # Méthode permettant de donner au combat l'équipe de personnage Joueur qui va se battre
+    # Méthode permettant de donner au combat l'équipe de personnage Joueur qui va se battre et déroule la logique de combat
     def lancement(self):
         logs = []
         m = self._equipeMechant
@@ -141,7 +141,6 @@ if __name__ == "__main__":
 
     equipe = EquipeDePersonnages(jean, bob, jeanCastex)
 
-    print(equipe)
 
     c = Combat(equipe)
 
