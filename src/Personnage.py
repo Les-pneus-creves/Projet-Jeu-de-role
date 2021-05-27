@@ -33,7 +33,7 @@ class Personnage:
     # Retourne un int pour la construction de log
     def prendreDegat(self, degat: int) -> int:
         self._vie = self._vie - degat
-        if self._vie < 0:
+        if self._vie <= 0:
             self._estVivant = False
         return degat
 

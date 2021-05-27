@@ -7,7 +7,6 @@ from math import floor
 class EquipeDePersonnages:
     def __init__(self, *personnages):
         self._coord = (0, 0)
-        self._estVivante: bool = True
         self._personnages: list = list(personnages)
 
 
@@ -17,6 +16,7 @@ class EquipeDePersonnages:
     def getPersonnages(self) -> list:
         return self._personnages
 
+    #Retourne tous les personnages vivants de l'équipe
     def getPersonnagesVivants(self) -> list:
 
         temp = []
@@ -25,14 +25,14 @@ class EquipeDePersonnages:
                 temp.append(perso)
         return temp
 
+    #proprieté calculée
     def getVivante(self) -> bool:
         temp = False
         for p in self._personnages:
             if p.estVivant():
                 temp = True
-        self._estVivante = temp
 
-        return self._estVivante
+        return temp
 
     def __str__(self) -> str:
         temp = ""
