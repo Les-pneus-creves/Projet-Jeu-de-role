@@ -1,16 +1,66 @@
 {
-    "Smiguel": {
-        "texte": "Caramba",
-        "titre": "Un tacos pour les gouverner tous",
-        "image": "src/images/Smiguel.jpg"
-    },
-
-    "wtf is that": {
-        "texte": "kv2 goes brrrrrrrrrrrrrr",
-        "titre": "victory royal",
-        "image": "src/images/kv2v2v2.jpg"
+  "Bandit": {
+    "texte": "Des bandits vous prennent en embuscade",
+    "titre": "Attaque de bandit!",
+    "image": "src/images/bandit.jpg",
+    "unite": {
+      "nom": "Bandit",
+      "vieMin": 12,
+      "vieMax": 22,
+      "forceMin": 3,
+      "forceMax": 7,
+      "iniMax": 15,
+      "iniMin": 8,
+      "preciMin": 4,
+      "preciMax": 9
     }
-
-    
-
+  },
+  "Chien": {
+    "texte": "Des chiens sauvages vous prennent en chasse!",
+    "titre": "Attaque de chien sauvage",
+    "image": "src/images/chihuahua.jpg",
+    "unite": {
+      "nom": "Chien",
+      "vieMin": 7,
+      "vieMax": 19,
+      "forceMin": 2,
+      "forceMax": 5,
+      "iniMax": 16,
+      "iniMin": 11,
+      "preciMin": 2,
+      "preciMax": 7
+    }
+  },
+  "Soldat": {
+    "texte": "D'ancien soldat vous attaquent'",
+    "titre": "Attaque de soldat",
+    "image": "src/images/soldats.jpg",
+    "unite": {
+      "nom": "Soldat",
+      "vieMin": 19,
+      "vieMax": 38,
+      "forceMin": 6,
+      "forceMax": 11,
+      "iniMax": 18,
+      "iniMin": 10,
+      "preciMin": 6,
+      "preciMax": 10
+    }
+  },
+  "Kv2v2v2": {
+    "texte": "Bonne chance",
+    "titre": "Qu'est ce que c'est que ça?!",
+    "image": "src/images/kv2v2v2.jpg",
+    "unite": {
+      "nom": "Kv2v2v2",
+      "vieMin": 80,
+      "vieMax": 120,
+      "forceMin": 20,
+      "forceMax": 25,
+      "iniMax": 11,
+      "iniMin": 6,
+      "preciMin": 4,
+      "preciMax": 6
+    }
+  }
 }

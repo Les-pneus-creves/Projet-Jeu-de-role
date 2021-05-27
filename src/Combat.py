@@ -8,31 +8,26 @@ import json
 import pygame
 import random
 
+
 class Combat(Evenement):
 
     def __init__(self, equipe: EquipeDePersonnages):
         super().__init__()
 
-        dude = Personnage("Dude", 150, 50, 4, 6, "image") #pour test....
-        dude2 = Personnage("Dude2", 12, 10, 4, 6, "image")  # pour test....
+        with open("src/dossierJson/combats.json") as fichier:
+            data = json.loads(fichier.read())
+            combat_a_lancer = random.choice(list(data))
+            self.eventJson = data[combat_a_lancer]
 
         self._log = []
         self._menu = None
-        self._equipeMechant: EquipeDePersonnages = EquipeDePersonnages(dude)  # pour test
+        self._equipeMechant: EquipeDePersonnages = self.creerEquipeMechant(self.eventJson)
         self._equipe = equipe
-        self.eventJson = []
-
-        with open("src/dossierJson/combats.json") as fichier:
-            data = json.loads(fichier.read())
-            event_a_lancer = random.choice(list(data))
-            self.eventJson = data[event_a_lancer]
 
     # ----------
 
-
     def getMenu(self):
         return self._menu
-
 
     # Méthode permettant de donner au combat l'équipe de personnage Joueur qui va se battre et déroule la logique de combat
     def lancement(self):
@@ -54,14 +49,8 @@ class Combat(Evenement):
         else:
             logs.append("Les gentils ont gagné brubrubrubru")
 
-
-       # pour test plutot que faire les menu je met juste les logs dans une variable lolg pour la print:
-
-        self._log = logs
-       # self.creerMenu(self.eventJson["titre"], self.eventJson["texte"], self.eventJson["image"])
-
-       # self.creerMenuCombat(logs)
-
+        self.creerMenuCombat(logs)
+        self.creerMenu(self.eventJson["titre"], self.eventJson["texte"], self.eventJson["image"])
 
         # Methode appelée dans l'init qui modifie le menu avec ce qu'il faut
 
@@ -90,7 +79,6 @@ class Combat(Evenement):
     # Méthode permettant de déterminer l'ordre des tours des personnages lors du combat
     def __creerOrdreTour(self, ep1: EquipeDePersonnages, ep2: EquipeDePersonnages) -> list:
 
-
         listeDesordre = ep1.getPersonnages() + ep2.getPersonnages()
         listeOrdre = []
 
@@ -110,37 +98,61 @@ class Combat(Evenement):
 
         return persoReturned
 
+    # Methode qui retourne une equipe de personnage en fonction du combat lancé
+    def creerEquipeMechant(self, combat):
 
+        equipetemp = []
+        if combat == "kv2":
+            nb = 1
+        else:
+            nb = random.randint(1, 3)
 
+        for i in range(nb):
+            equipetemp.append(self.creerMechant(combat["unite"], i))
+
+        if nb == 1:
+            return EquipeDePersonnages(equipetemp[0])
+        elif nb == 2:
+            return EquipeDePersonnages(equipetemp[0], equipetemp[1])
+        else:
+            return EquipeDePersonnages(equipetemp[0], equipetemp[1], equipetemp[2])
+
+    # Methode qui creer un mechant avec les valeurs aléatoire du json
+    def creerMechant(selfself, modele, i: int):
+
+        vie = random.randint(modele["vieMin"], modele["vieMax"])
+        force = random.randint(modele["forceMin"], modele["forceMax"])
+        ini = random.randint(modele["iniMin"], modele["iniMax"])
+        preci = random.randint(modele["preciMin"], modele["preciMax"])
+
+        return Personnage(modele["nom"] + " " + str(i+1), vie, force, preci, preci, None)
 
     # Méthode permmetant de selectionné une cible dans une équipe donnée
-    def _choisirCible(self,equipePerso: EquipeDePersonnages) -> Personnage:
-       cible = random.choice(equipePerso.getPersonnagesVivants())
-       return cible
+    def _choisirCible(self, equipePerso: EquipeDePersonnages) -> Personnage:
+        cible = random.choice(equipePerso.getPersonnagesVivants())
+        return cible
 
-
-    def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -> str :
+    def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -> str:
         pourLog = attaquant.attaquer(cible)
 
         if cible.getVie() > 0:
-            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " pour " + str(pourLog[0]) + " points de dégats. " + str(cible.getNom()) + " en reçoit : " + str(pourLog[1]) + "pv restant : " + str(cible.getVie())
+            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " pour " + str(
+                pourLog[0]) + " points de dégats. " + str(cible.getNom()) + " en reçoit : " + str(
+                pourLog[1]) + "pv restant : " + str(cible.getVie())
         else:
-            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " pour " + str(pourLog[0]) + " points de dégats. " + str(cible.getNom()) + " en reçoit : " + str(pourLog[1]) + " et meurt"
+            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " pour " + str(
+                pourLog[0]) + " points de dégats. " + str(cible.getNom()) + " en reçoit : " + str(
+                pourLog[1]) + " et meurt"
 
 
 if __name__ == "__main__":
+    # création d'une équipe
 
-
-
-    #création d'une équipe
-
-    jean = Personnage("Jean", 15, 10, 8, 2,"image")
-    bob  = Personnage("Bob", 10, 10, 6, 4,"image")
+    jean = Personnage("Jean", 15, 10, 8, 2, "image")
+    bob = Personnage("Bob", 10, 10, 6, 4, "image")
     jeanCastex = Personnage("JeanCastex", 12, 10, 4, 6, "image")
 
-
     equipe = EquipeDePersonnages(jean, bob, jeanCastex)
-
 
     c = Combat(equipe)
 
@@ -151,6 +163,3 @@ if __name__ == "__main__":
     print(c._log)
 
     print("fini")
-
-
-

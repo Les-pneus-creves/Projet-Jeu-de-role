@@ -1,0 +1,26 @@
+
+
+"Soldat": {
+  "vieMin": 19,
+  "vieMax": 38,
+  "forceMin": 6,
+  "forceMax": 11,
+  "iniMax": 18,
+  "iniMin": 10,
+  "preciMin":6,
+  "preciMax":10
+
+},
+
+  "Kv2v2v2": {
+    "vieMin": 80,
+    "vieMax": 120,
+    "forceMin": 20,
+    "forceMax": 25,
+    "iniMax": 11,
+    "iniMin": 6,
+    "preciMin":4,
+    "preciMax":6
+
+  }
+}
