@@ -7,7 +7,12 @@ class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
         """ En faite se serais plus pour l'inventaire personnage toutes ces spécificité.
-            Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'objets (les coffres)"""
+            Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'objets (les coffres)
+
+            :param nbArme: le nombre de slots d'armes
+            :param nbEquipement: le nombre de slots d'équipement
+            :param nbRessources: le nombre de slots ressources"""
+
         super(Inventaire, self).__init__()
         for i in range(nbArme):
             self.append(Slot_inventaire("Arme"))
@@ -147,7 +152,7 @@ class Inventaire(list):
         i = 1
         for slot in self:
             slot.render(window, posx, posy)
-            if i % 4:
+            if not i % 4:
                 posy += 60
                 posx = minx
             else:

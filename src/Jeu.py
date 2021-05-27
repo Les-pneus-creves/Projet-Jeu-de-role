@@ -1,6 +1,7 @@
 import pygame
 from enum import Enum
 from EquipeDePersonnages import EquipeDePersonnages
+from Personnage import Personnage
 from Expedition import Expedition
 from PlateauDeJeu import PlateauDeJeu
 from ModeEvenement import ModeEvenement
@@ -26,7 +27,7 @@ class Jeu:
         self._running = True
 
         plateau = PlateauDeJeu('src/maps/1.tmx')
-        equipe = EquipeDePersonnages([1, 2, 3])
+        equipe = EquipeDePersonnages(Personnage("Frank",40, 12, 5, 5, "euh veyez patienter"), Personnage("Albert",30, 15, 3, 2, "euh veyez patienter"))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 

@@ -1,10 +1,7 @@
 from Objet import Objet
 import pygame
 
-typeObjetImages = {"Arme": pygame.image.load("./images/Inventory/Slot_arme.jpg").convert(),
-                   "Equipemment": pygame.image.load("./images/Inventory/Slot_equipement.jpg").convert(),
-                   "Ressources": pygame.image.load("./images/Inventory/Slot_ressources.jpg").convert(),
-                   "Selection": pygame.image.load("./images/Inventory/Slot_select.jpg").convert()}
+typeObjetImages = {}
 
 
 class Slot_inventaire:
@@ -12,6 +9,7 @@ class Slot_inventaire:
         self._objet = None
         self._typeObjet = typeObjet
         self._nbContenue = 0
+        generateSlotsImages()
 
     def __str__(self):
         return "[" + str(self._objet) + ", " + self._typeObjet + ", " + str(self._nbContenue) + "]"
@@ -59,14 +57,10 @@ class Slot_inventaire:
         return None
 
     def vide(self):
-        if self._nbContenue == 0 and self._objet is None:
-            return True
-        return False
+        return self._nbContenue == 0 and self._objet is None
 
     def plein(self):
-        if self._nbContenue == self._objet.getStackable():
-            return True
-        return False
+        return self._nbContenue == self._objet.getStackable()
 
     def getNbContenue(self):
         return self._nbContenue
@@ -75,3 +69,10 @@ class Slot_inventaire:
         window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
         if not self.vide():
             window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
+
+def generateSlotsImages():
+    global typeObjetImages
+    typeObjetImages = {"Arme": pygame.image.load("src/images/Inventory/Slot_arme.jpg").convert(),
+     "Equipement": pygame.image.load("src/images/Inventory/Slot_equipement.png").convert(),
+     "Ressources": pygame.image.load("src/images/Inventory/Slot_ressources.png").convert(),
+     "Selection": pygame.image.load("src/images/Inventory/Slot_select.png").convert()}

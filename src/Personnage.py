@@ -2,6 +2,7 @@ import pygame
 from typing import Type
 from typing import Tuple
 import Personnage
+from Inventaire import Inventaire
 
 
 class Personnage:
@@ -15,6 +16,7 @@ class Personnage:
         self._initiative = initiative
        # self._image = pygame.image.load(image)
         self._estVivant = True
+        self._inventaire = Inventaire(1, 1, 6)
 
     def mourir(self) -> None:
         self._estVivant = False
@@ -43,6 +45,9 @@ class Personnage:
 
     def __str__(self) -> str:
        return "nom: " + self._nom + " vie: " + str(self._vie) + " bruh"
+
+    def getInventaire(self):
+        return self._inventaire
 
 
 if __name__ == "__main__" :
