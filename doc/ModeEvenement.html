@@ -71,9 +71,9 @@ if __name__ == &#34;__main__&#34;:
 
     window = pygame.display.set_mode((1000, 1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-    jean = Personnage(&#34;Jean&#34;, 15, 10, 8, 2,&#34;image&#34;)
-    bob  = Personnage(&#34;Bob&#34;, 10, 10, 6, 4,&#34;image&#34;)
-    jeanCastex = Personnage(&#34;JeanCastex&#34;, 12, 10, 4, 6, &#34;image&#34;)
+    jean = Personnage(&#34;Jean&#34;, 15, 7, 8, 15,None)
+    bob  = Personnage(&#34;Bob&#34;, 10, 8, 6, 12,None)
+    jeanCastex = Personnage(&#34;JeanCastex&#34;, 12, 9, 4, 4, None)
 
 
     equipe = EquipeDePersonnages(jean, bob, jeanCastex)
@@ -82,6 +82,8 @@ if __name__ == &#34;__main__&#34;:
     c = Combat(equipe)
 
     evenement = c
+
+    c.lancement()
     x = ModeEvenement(evenement)
 
     while True:

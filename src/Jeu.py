@@ -1,6 +1,6 @@
 """
 Voici la commande pour générer la doc :
-`pdoc --html --output-dir docs src/*.py --force`
+`pdoc --html --output-dir doc src/*.py --force`
 """
 
 import pygame

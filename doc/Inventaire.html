@@ -34,17 +34,17 @@ import math
 class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
-        &#34;&#34;&#34; En faite se serais plus pour l&#39;inventaire personnage toutes ces spécificité.
-            Pour l&#39;inventaire de base on ferait des slots capable d&#39;accueillir tout types d&#39;objets (les coffres)
+        &#34;&#34;&#34; Un Inventaire est une liste de plusieurs Slot_inventaire dans lequel est stocké un Objet.
 
             Parameters
             ----------
             nbArme : int
-                     le nombre de slots d&#39;armes
+                le nombre de slots d&#39;armes
             nbEquipement : int
-                           le nombre de slots d&#39;équipement
+                le nombre de slots d&#39;équipement
             nbRessources : int
-                           le nombre de slots ressources&#34;&#34;&#34;
+                le nombre de slots ressources
+        &#34;&#34;&#34;
 
         super(Inventaire, self).__init__()
         for i in range(nbArme):
@@ -56,14 +56,18 @@ class Inventaire(list):
 
     def append(self, slot: Slot_inventaire):
         &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire&#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).append(slot)
         else:
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisés&#39;)
 
     def insert(self, index, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
-            Pas forcément utile mais pour que ce soit jolie&#34;&#34;&#34;
+        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des Slot_inventaire à notre Inventaire.
+
+            Pas forcément utile mais pour que ce soit jolie
+        &#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).insert(index, slot)
         else:
@@ -71,7 +75,10 @@ class Inventaire(list):
 
     def __add__(self, slot: Slot_inventaire):
         &#34;&#34;&#34; Overload de l&#39;opérateur +, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
-            Pas forcément utile mais pour que se soit jolie&#34;&#34;&#34;
+
+            Pas forcément utile mais pour que se soit jolie
+        &#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).__add__(slot)
         else:
@@ -79,7 +86,10 @@ class Inventaire(list):
 
     def __iadd__(self, slot: Slot_inventaire):
         &#34;&#34;&#34; Overload de l&#39;opérateur +=, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
-            Pas forcément utile mais pour que se soit jolie&#34;&#34;&#34;
+
+            Pas forcément utile mais pour que se soit jolie
+        &#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).__iadd__(slot)
         else:
@@ -96,20 +106,31 @@ class Inventaire(list):
         retour += &#34;]&#34;
         return retour
 
-    def listObjetUnique(self):
+    def listObjetUnique(self) -&gt; list:
+        &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;inventaire.&#34;&#34;&#34;
+
         liste = []
         for objet in self.tolistofObjet():
             if objet not in liste and objet is not None:
                 liste.append(objet)
         return liste
 
-    def tolistofObjet(self):
+    def tolistofObjet(self) -&gt; list:
+        &#34;&#34;&#34;Retourne sous forme de liste l&#39;objet contenue dans chaque slots
+        (l&#39;emplacement de la liste est vide s&#39;il n&#39;y a pas d&#39;objet dans le slot).
+        &#34;&#34;&#34;
+
         liste = []
         for slot in self:
             liste.append(slot.getObjet())
         return liste
 
-    def slotsOfThisObjet(self, objet: Objet):
+    def slotsOfThisObjet(self, objet: Objet) -&gt; list:
+        &#34;&#34;&#34;Retourne la liste des slots dans lequel ce trouve l&#39;objet précisé en paramètre.
+
+         Si l&#39;objet n&#39;est pas dans l&#39;inventaire la méthode retourne une liste vide.
+         &#34;&#34;&#34;
+
         listePos = []
         i = 0
         for element in self.tolistofObjet():
@@ -118,7 +139,12 @@ class Inventaire(list):
             i += 1
         return listePos
 
-    def contientObjet(self, objet: Objet):
+    def contientObjet(self, objet: Objet) -&gt; int:
+        &#34;&#34;&#34;Retourne le numéro du slot dans lequel ce trouve l&#39;objet précisé en paramètre.
+
+        Si l&#39;objet n&#39;est pas dans l&#39;inventaire la méthode retourne `-1`.
+        &#34;&#34;&#34;
+
         i = 0
         for slot in self:
             slotObjet = slot.getObjet()
@@ -128,7 +154,9 @@ class Inventaire(list):
             i += 1
         return -1
 
-    def ajouter(self, objet: Objet, nombre:int=1):
+    def ajouter(self, objet: Objet, nombre: int = 1):
+        &#34;&#34;&#34;Ajoute dans l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
+
         position = self.contientObjet(objet)
         if position != -1 and not self[position].plein():
             ajout = self[position].ajouter(nombre=nombre)
@@ -149,6 +177,8 @@ class Inventaire(list):
                     return
 
     def retirer(self, objet: Objet, nombre=1):
+        &#34;&#34;&#34;Retire de l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
+
         position = self.contientObjet(objet)
         if position == -1:
             print(&#34;pas d&#39;objets de ce type dans l&#39;inventaire&#34;)
@@ -158,6 +188,8 @@ class Inventaire(list):
                 self.retirer(objet, - retrait)
 
     def trier(self):
+        &#34;&#34;&#34;Tri l&#39;inventaire de sorte à ce qu&#39;il n&#39;y ai pas plusieurs slots d&#39;un même objet à moitié vide.&#34;&#34;&#34;
+
         repetitionObjects = dict.fromkeys(self.listObjetUnique(), 0)
         # Analyse de l&#39;inventaire
         for objet in repetitionObjects:
@@ -174,11 +206,23 @@ class Inventaire(list):
 
         # Trie de l&#39;inventaire en conséquence
         for objet, (nb, nbslots) in repetitionObjects.items():
-            if math.ceil(nb/objet.getStackable()) &lt; nbslots:
+            if math.ceil(nb / objet.getStackable()) &lt; nbslots:
                 self.retirer(objet, nb)
                 self.ajouter(objet, nb)
 
     def render(self, window, minx, miny):
+        &#34;&#34;&#34;Permet d&#39;afficher l&#39;inventaire dans une fenêtre pygame à une position donné.
+
+        Parameters
+        ----------
+        window : pygame.Surface
+            La fenêtre sur laquelle on veut afficher l&#39;inventaire.
+        minx : int
+            Position x (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        miny : int
+            Position y (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        &#34;&#34;&#34;
+
         posx = minx
         posy = miny
 
@@ -231,8 +275,7 @@ if __name__ == &#34;__main__&#34;:
 <div class="desc"><p>Built-in mutable sequence.</p>
 <p>If no argument is given, the constructor creates a new empty list.
 The argument must be an iterable if specified.</p>
-<p>En faite se serais plus pour l'inventaire personnage toutes ces spécificité.
-Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'objets (les coffres)</p>
+<p>Un Inventaire est une liste de plusieurs Slot_inventaire dans lequel est stocké un Objet.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>nbArme</code></strong> :&ensp;<code>int</code></dt>
@@ -249,17 +292,17 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 <pre><code class="python">class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
-        &#34;&#34;&#34; En faite se serais plus pour l&#39;inventaire personnage toutes ces spécificité.
-            Pour l&#39;inventaire de base on ferait des slots capable d&#39;accueillir tout types d&#39;objets (les coffres)
+        &#34;&#34;&#34; Un Inventaire est une liste de plusieurs Slot_inventaire dans lequel est stocké un Objet.
 
             Parameters
             ----------
             nbArme : int
-                     le nombre de slots d&#39;armes
+                le nombre de slots d&#39;armes
             nbEquipement : int
-                           le nombre de slots d&#39;équipement
+                le nombre de slots d&#39;équipement
             nbRessources : int
-                           le nombre de slots ressources&#34;&#34;&#34;
+                le nombre de slots ressources
+        &#34;&#34;&#34;
 
         super(Inventaire, self).__init__()
         for i in range(nbArme):
@@ -271,14 +314,18 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 
     def append(self, slot: Slot_inventaire):
         &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire&#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).append(slot)
         else:
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisés&#39;)
 
     def insert(self, index, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
-            Pas forcément utile mais pour que ce soit jolie&#34;&#34;&#34;
+        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des Slot_inventaire à notre Inventaire.
+
+            Pas forcément utile mais pour que ce soit jolie
+        &#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).insert(index, slot)
         else:
@@ -286,7 +333,10 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 
     def __add__(self, slot: Slot_inventaire):
         &#34;&#34;&#34; Overload de l&#39;opérateur +, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
-            Pas forcément utile mais pour que se soit jolie&#34;&#34;&#34;
+
+            Pas forcément utile mais pour que se soit jolie
+        &#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).__add__(slot)
         else:
@@ -294,7 +344,10 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 
     def __iadd__(self, slot: Slot_inventaire):
         &#34;&#34;&#34; Overload de l&#39;opérateur +=, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
-            Pas forcément utile mais pour que se soit jolie&#34;&#34;&#34;
+
+            Pas forcément utile mais pour que se soit jolie
+        &#34;&#34;&#34;
+
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).__iadd__(slot)
         else:
@@ -311,20 +364,31 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
         retour += &#34;]&#34;
         return retour
 
-    def listObjetUnique(self):
+    def listObjetUnique(self) -&gt; list:
+        &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;inventaire.&#34;&#34;&#34;
+
         liste = []
         for objet in self.tolistofObjet():
             if objet not in liste and objet is not None:
                 liste.append(objet)
         return liste
 
-    def tolistofObjet(self):
+    def tolistofObjet(self) -&gt; list:
+        &#34;&#34;&#34;Retourne sous forme de liste l&#39;objet contenue dans chaque slots
+        (l&#39;emplacement de la liste est vide s&#39;il n&#39;y a pas d&#39;objet dans le slot).
+        &#34;&#34;&#34;
+
         liste = []
         for slot in self:
             liste.append(slot.getObjet())
         return liste
 
-    def slotsOfThisObjet(self, objet: Objet):
+    def slotsOfThisObjet(self, objet: Objet) -&gt; list:
+        &#34;&#34;&#34;Retourne la liste des slots dans lequel ce trouve l&#39;objet précisé en paramètre.
+
+         Si l&#39;objet n&#39;est pas dans l&#39;inventaire la méthode retourne une liste vide.
+         &#34;&#34;&#34;
+
         listePos = []
         i = 0
         for element in self.tolistofObjet():
@@ -333,7 +397,12 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
             i += 1
         return listePos
 
-    def contientObjet(self, objet: Objet):
+    def contientObjet(self, objet: Objet) -&gt; int:
+        &#34;&#34;&#34;Retourne le numéro du slot dans lequel ce trouve l&#39;objet précisé en paramètre.
+
+        Si l&#39;objet n&#39;est pas dans l&#39;inventaire la méthode retourne `-1`.
+        &#34;&#34;&#34;
+
         i = 0
         for slot in self:
             slotObjet = slot.getObjet()
@@ -343,7 +412,9 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
             i += 1
         return -1
 
-    def ajouter(self, objet: Objet, nombre:int=1):
+    def ajouter(self, objet: Objet, nombre: int = 1):
+        &#34;&#34;&#34;Ajoute dans l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
+
         position = self.contientObjet(objet)
         if position != -1 and not self[position].plein():
             ajout = self[position].ajouter(nombre=nombre)
@@ -364,6 +435,8 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
                     return
 
     def retirer(self, objet: Objet, nombre=1):
+        &#34;&#34;&#34;Retire de l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
+
         position = self.contientObjet(objet)
         if position == -1:
             print(&#34;pas d&#39;objets de ce type dans l&#39;inventaire&#34;)
@@ -373,6 +446,8 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
                 self.retirer(objet, - retrait)
 
     def trier(self):
+        &#34;&#34;&#34;Tri l&#39;inventaire de sorte à ce qu&#39;il n&#39;y ai pas plusieurs slots d&#39;un même objet à moitié vide.&#34;&#34;&#34;
+
         repetitionObjects = dict.fromkeys(self.listObjetUnique(), 0)
         # Analyse de l&#39;inventaire
         for objet in repetitionObjects:
@@ -389,11 +464,23 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 
         # Trie de l&#39;inventaire en conséquence
         for objet, (nb, nbslots) in repetitionObjects.items():
-            if math.ceil(nb/objet.getStackable()) &lt; nbslots:
+            if math.ceil(nb / objet.getStackable()) &lt; nbslots:
                 self.retirer(objet, nb)
                 self.ajouter(objet, nb)
 
     def render(self, window, minx, miny):
+        &#34;&#34;&#34;Permet d&#39;afficher l&#39;inventaire dans une fenêtre pygame à une position donné.
+
+        Parameters
+        ----------
+        window : pygame.Surface
+            La fenêtre sur laquelle on veut afficher l&#39;inventaire.
+        minx : int
+            Position x (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        miny : int
+            Position y (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        &#34;&#34;&#34;
+
         posx = minx
         posy = miny
 
@@ -417,12 +504,14 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 <span>def <span class="ident">ajouter</span></span>(<span>self, objet: <a title="Objet.Objet" href="Objet.html#Objet.Objet">Objet</a>, nombre: int = 1)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Ajoute dans l'inventaire l'objet donné en paramètre autant de fois que précisé (par défaut 1 seul).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def ajouter(self, objet: Objet, nombre:int=1):
+<pre><code class="python">def ajouter(self, objet: Objet, nombre: int = 1):
+    &#34;&#34;&#34;Ajoute dans l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
+
     position = self.contientObjet(objet)
     if position != -1 and not self[position].plein():
         ajout = self[position].ajouter(nombre=nombre)
@@ -454,6 +543,7 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 </summary>
 <pre><code class="python">def append(self, slot: Slot_inventaire):
     &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire&#34;&#34;&#34;
+
     if isinstance(slot, Slot_inventaire):
         super(Inventaire, self).append(slot)
     else:
@@ -461,15 +551,21 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 </details>
 </dd>
 <dt id="Inventaire.Inventaire.contientObjet"><code class="name flex">
-<span>def <span class="ident">contientObjet</span></span>(<span>self, objet: <a title="Objet.Objet" href="Objet.html#Objet.Objet">Objet</a>)</span>
+<span>def <span class="ident">contientObjet</span></span>(<span>self, objet: <a title="Objet.Objet" href="Objet.html#Objet.Objet">Objet</a>) ‑> int</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne le numéro du slot dans lequel ce trouve l'objet précisé en paramètre.</p>
+<p>Si l'objet n'est pas dans l'inventaire la méthode retourne <code>-1</code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def contientObjet(self, objet: Objet):
+<pre><code class="python">def contientObjet(self, objet: Objet) -&gt; int:
+    &#34;&#34;&#34;Retourne le numéro du slot dans lequel ce trouve l&#39;objet précisé en paramètre.
+
+    Si l&#39;objet n&#39;est pas dans l&#39;inventaire la méthode retourne `-1`.
+    &#34;&#34;&#34;
+
     i = 0
     for slot in self:
         slotObjet = slot.getObjet()
@@ -484,15 +580,18 @@ Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'
 <span>def <span class="ident">insert</span></span>(<span>self, index, slot: <a title="Slot_inventaire.Slot_inventaire" href="Slot_inventaire.html#Slot_inventaire.Slot_inventaire">Slot_inventaire</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Overload de la méthode insert des list, cela permet d'ajouter que des Slot_inventaire à notre Inventaire
-Pas forcément utile mais pour que ce soit jolie</p></div>
+<div class="desc"><p>Overload de la méthode insert des list, cela permet d'être sur d'ajouter que des Slot_inventaire à notre Inventaire.</p>
+<p>Pas forcément utile mais pour que ce soit jolie</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def insert(self, index, slot: Slot_inventaire):
-    &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
-        Pas forcément utile mais pour que ce soit jolie&#34;&#34;&#34;
+    &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des Slot_inventaire à notre Inventaire.
+
+        Pas forcément utile mais pour que ce soit jolie
+    &#34;&#34;&#34;
+
     if isinstance(slot, Slot_inventaire):
         super(Inventaire, self).insert(index, slot)
     else:
@@ -500,15 +599,17 @@ Pas forcément utile mais pour que ce soit jolie</p></div>
 </details>
 </dd>
 <dt id="Inventaire.Inventaire.listObjetUnique"><code class="name flex">
-<span>def <span class="ident">listObjetUnique</span></span>(<span>self)</span>
+<span>def <span class="ident">listObjetUnique</span></span>(<span>self) ‑> list</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne une liste des objets présent dans l'inventaire.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def listObjetUnique(self):
+<pre><code class="python">def listObjetUnique(self) -&gt; list:
+    &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;inventaire.&#34;&#34;&#34;
+
     liste = []
     for objet in self.tolistofObjet():
         if objet not in liste and objet is not None:
@@ -520,12 +621,33 @@ Pas forcément utile mais pour que ce soit jolie</p></div>
 <span>def <span class="ident">render</span></span>(<span>self, window, minx, miny)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Permet d'afficher l'inventaire dans une fenêtre pygame à une position donné.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>window</code></strong> :&ensp;<code>pygame.Surface</code></dt>
+<dd>La fenêtre sur laquelle on veut afficher l'inventaire.</dd>
+<dt><strong><code>minx</code></strong> :&ensp;<code>int</code></dt>
+<dd>Position x (en pixel) à partir de laquelle l'inventaire sera affiché sur la fenêtre.</dd>
+<dt><strong><code>miny</code></strong> :&ensp;<code>int</code></dt>
+<dd>Position y (en pixel) à partir de laquelle l'inventaire sera affiché sur la fenêtre.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def render(self, window, minx, miny):
+    &#34;&#34;&#34;Permet d&#39;afficher l&#39;inventaire dans une fenêtre pygame à une position donné.
+
+    Parameters
+    ----------
+    window : pygame.Surface
+        La fenêtre sur laquelle on veut afficher l&#39;inventaire.
+    minx : int
+        Position x (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+    miny : int
+        Position y (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+    &#34;&#34;&#34;
+
     posx = minx
     posy = miny
 
@@ -544,12 +666,14 @@ Pas forcément utile mais pour que ce soit jolie</p></div>
 <span>def <span class="ident">retirer</span></span>(<span>self, objet: <a title="Objet.Objet" href="Objet.html#Objet.Objet">Objet</a>, nombre=1)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retire de l'inventaire l'objet donné en paramètre autant de fois que précisé (par défaut 1 seul).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def retirer(self, objet: Objet, nombre=1):
+    &#34;&#34;&#34;Retire de l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
+
     position = self.contientObjet(objet)
     if position == -1:
         print(&#34;pas d&#39;objets de ce type dans l&#39;inventaire&#34;)
@@ -560,15 +684,21 @@ Pas forcément utile mais pour que ce soit jolie</p></div>
 </details>
 </dd>
 <dt id="Inventaire.Inventaire.slotsOfThisObjet"><code class="name flex">
-<span>def <span class="ident">slotsOfThisObjet</span></span>(<span>self, objet: <a title="Objet.Objet" href="Objet.html#Objet.Objet">Objet</a>)</span>
+<span>def <span class="ident">slotsOfThisObjet</span></span>(<span>self, objet: <a title="Objet.Objet" href="Objet.html#Objet.Objet">Objet</a>) ‑> list</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne la liste des slots dans lequel ce trouve l'objet précisé en paramètre.</p>
+<p>Si l'objet n'est pas dans l'inventaire la méthode retourne une liste vide.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def slotsOfThisObjet(self, objet: Objet):
+<pre><code class="python">def slotsOfThisObjet(self, objet: Objet) -&gt; list:
+    &#34;&#34;&#34;Retourne la liste des slots dans lequel ce trouve l&#39;objet précisé en paramètre.
+
+     Si l&#39;objet n&#39;est pas dans l&#39;inventaire la méthode retourne une liste vide.
+     &#34;&#34;&#34;
+
     listePos = []
     i = 0
     for element in self.tolistofObjet():
@@ -579,15 +709,20 @@ Pas forcément utile mais pour que ce soit jolie</p></div>
 </details>
 </dd>
 <dt id="Inventaire.Inventaire.tolistofObjet"><code class="name flex">
-<span>def <span class="ident">tolistofObjet</span></span>(<span>self)</span>
+<span>def <span class="ident">tolistofObjet</span></span>(<span>self) ‑> list</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne sous forme de liste l'objet contenue dans chaque slots
+(l'emplacement de la liste est vide s'il n'y a pas d'objet dans le slot).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def tolistofObjet(self):
+<pre><code class="python">def tolistofObjet(self) -&gt; list:
+    &#34;&#34;&#34;Retourne sous forme de liste l&#39;objet contenue dans chaque slots
+    (l&#39;emplacement de la liste est vide s&#39;il n&#39;y a pas d&#39;objet dans le slot).
+    &#34;&#34;&#34;
+
     liste = []
     for slot in self:
         liste.append(slot.getObjet())
@@ -598,12 +733,14 @@ Pas forcément utile mais pour que ce soit jolie</p></div>
 <span>def <span class="ident">trier</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Tri l'inventaire de sorte à ce qu'il n'y ai pas plusieurs slots d'un même objet à moitié vide.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def trier(self):
+    &#34;&#34;&#34;Tri l&#39;inventaire de sorte à ce qu&#39;il n&#39;y ai pas plusieurs slots d&#39;un même objet à moitié vide.&#34;&#34;&#34;
+
     repetitionObjects = dict.fromkeys(self.listObjetUnique(), 0)
     # Analyse de l&#39;inventaire
     for objet in repetitionObjects:
@@ -620,7 +757,7 @@ Pas forcément utile mais pour que ce soit jolie</p></div>
 
     # Trie de l&#39;inventaire en conséquence
     for objet, (nb, nbslots) in repetitionObjects.items():
-        if math.ceil(nb/objet.getStackable()) &lt; nbslots:
+        if math.ceil(nb / objet.getStackable()) &lt; nbslots:
             self.retirer(objet, nb)
             self.ajouter(objet, nb)</code></pre>
 </details>
