@@ -92,10 +92,11 @@ class PlateauDeJeu:
     def render(self, window):
         for l in range(self.__nblayers):
             for i in range(self.__width):
-                mod = 0
+                modx = 0
+                mody = 0
                 if i % 2 == 1:
-                    mod = self.__tilewidth / 2
+                    modx = self.__tilewidth / 2
                 else:
-                    mod = 0
+                    modx = 0
                 for j in range(self.__height):
-                    window.blit(pygame.transform.scale(self.__plateau[l][j][i].getImage(), (self.__tilewidth, self.__tileheight)), (j * self.__tilewidth + mod, i * self.__tileheight * 0.75))
+                    window.blit(pygame.transform.scale(self.__plateau[l][j][i].getImage(), (self.__tilewidth, self.__tileheight)), (j * self.__tilewidth + modx, i * self.__tileheight * 0.75 + mody))

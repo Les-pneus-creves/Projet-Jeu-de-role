@@ -9,9 +9,14 @@ class Inventaire(list):
         """ En faite se serais plus pour l'inventaire personnage toutes ces spécificité.
             Pour l'inventaire de base on ferait des slots capable d'accueillir tout types d'objets (les coffres)
 
-            :param nbArme: le nombre de slots d'armes
-            :param nbEquipement: le nombre de slots d'équipement
-            :param nbRessources: le nombre de slots ressources"""
+            Parameters
+            ----------
+            nbArme : int
+                     le nombre de slots d'armes
+            nbEquipement : int
+                           le nombre de slots d'équipement
+            nbRessources : int
+                           le nombre de slots ressources"""
 
         super(Inventaire, self).__init__()
         for i in range(nbArme):
@@ -95,7 +100,7 @@ class Inventaire(list):
             i += 1
         return -1
 
-    def ajouter(self, objet: Objet, nombre=1):
+    def ajouter(self, objet: Objet, nombre:int=1):
         position = self.contientObjet(objet)
         if position != -1 and not self[position].plein():
             ajout = self[position].ajouter(nombre=nombre)

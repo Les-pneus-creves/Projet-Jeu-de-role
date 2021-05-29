@@ -48,7 +48,7 @@ class Personnage:
         return self._inventaire
 
     def __str__(self) -> str:
-       return "nom: " + self._nom + " vie: " + str(self._vie) + " bruh"
+        return "nom: " + self._nom + " vie: " + str(self._vie) + " bruh"
 
     def render(self, window, minx, miny):
         posx = minx
@@ -60,8 +60,7 @@ class Personnage:
         window.blit(text, (posx, posy))
 
 
-if __name__ == "__main__" :
-
+if __name__ == "__main__":
     x = Personnage("bob", 18, 10, 10, 1, "bob")
     print(x)
     x.prendreDegat(10)

@@ -1,3 +1,8 @@
+"""
+Voici la commande pour générer la doc :
+`pdoc --html --output-dir docs src/*.py --force`
+"""
+
 import pygame
 from enum import Enum
 from EquipeDePersonnages import EquipeDePersonnages
