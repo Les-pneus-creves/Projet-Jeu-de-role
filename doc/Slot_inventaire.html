@@ -30,23 +30,42 @@
 import pygame
 
 typeObjetImages = {}
+&#34;&#34;&#34;Liste des images pour chaques types de slots.&#34;&#34;&#34;
 
 
 class Slot_inventaire:
     def __init__(self, typeObjet: str):
+        &#34;&#34;&#34;Un slot inventaire permet de stocké un type d&#39;objet bien particulier précisé lors de l&#39;instanciation du slot.
+
+        Attributes
+        ----------
+        _objet : Objet
+            L&#39;objet contenue dans le slot.
+        _typeObjet : str
+            Le type d&#39;objet que peut contenir le slot.
+        _nbContenur : int
+            La quantité de l&#39;objet dans le slot.
+        &#34;&#34;&#34;
         self._objet = None
         self._typeObjet = typeObjet
         self._nbContenue = 0
-        generateSlotsImages()
+        loadSlotsImages()
 
     def __str__(self):
         return &#34;[&#34; + str(self._objet) + &#34;, &#34; + self._typeObjet + &#34;, &#34; + str(self._nbContenue) + &#34;]&#34;
 
     def vider(self):
+        &#34;&#34;&#34;Permet de vide totalement le slot.&#34;&#34;&#34;
         self._nbContenue = 0
         self._objet = None
 
     def ajouter(self, objet: Objet = None, nombre: int = 1):
+        &#34;&#34;&#34;Ajoute dans le slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+        s&#39;il n&#39;y a pas assez de place retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu ajouter dans ce slot.
+
+        Si l&#39;objet ne peut pas être ajouté dans le slot la méthode retourne `-1`.
+        &#34;&#34;&#34;
+
         if objet is None and self._objet is not None:
             objet = self._objet
 
@@ -63,6 +82,10 @@ class Slot_inventaire:
         return -1
 
     def retirer(self, nombre: int = 1):
+        &#34;&#34;&#34;Retire du slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+        s&#39;il n&#39;y a pas assez d&#39;objet à retirer retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu retirer du slot.
+        &#34;&#34;&#34;
+
         self._nbContenue -= nombre
         if self._nbContenue &lt;= 0:
             nb = self._nbContenue
@@ -72,33 +95,56 @@ class Slot_inventaire:
             return 0
 
     def puisJeAjouter(self, objet):
+        &#34;&#34;&#34;Vérifie si on peut ajouter l&#39;objet donné en paramètre dans ce slot.&#34;&#34;&#34;
+
         if objet is not None:
             if self._objet is None:
-                return objet.getNom().split(&#34;_&#34;)[0] == self._typeObjet
+                return objet.getNom().split(&#34;_&#34;)[0] == self._typeObjet or self._typeObjet == &#34;Ressources&#34;
             else:
                 return objet.getNom() == self._objet.getNom()
         return False
 
     def getObjet(self):
+        &#34;&#34;&#34;Retourne l&#39;objet contenue dans le slot (`None` si le slot est vide).&#34;&#34;&#34;
+
         if not self.vide():
             return self._objet
         return None
 
     def vide(self):
+        &#34;&#34;&#34;Retourne `True` si le slot est vide et `False` sinon.&#34;&#34;&#34;
+
         return self._nbContenue == 0 and self._objet is None
 
     def plein(self):
+        &#34;&#34;&#34;Retourne `True` si le slot est plein et `False` sinon.&#34;&#34;&#34;
+
         return self._nbContenue == self._objet.getStackable()
 
     def getNbContenue(self):
+        &#34;&#34;&#34;Retourne la quantité de l&#39;objet contenue dans le slot (`0` si le slot est vide).&#34;&#34;&#34;
+
         return self._nbContenue
 
     def render(self, window, posx, posy):
+        &#34;&#34;&#34;Permet d&#39;afficher le slot dans une fenêtre pygame à une position donné.
+
+        Parameters
+        ----------
+        window : pygame.Surface
+            La fenêtre sur laquelle on veut afficher l&#39;inventaire.
+        posx : int
+            Position x (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        posy : int
+            Position y (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        &#34;&#34;&#34;
+
         window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
         if not self.vide():
             window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
 
-def generateSlotsImages():
+def loadSlotsImages():
+    &#34;&#34;&#34;Fonction chargeant les images pour chaque type de slots dans la variable globale `typeObjetImages`.&#34;&#34;&#34;
     global typeObjetImages
     typeObjetImages = {&#34;Arme&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_arme.png&#34;).convert(),
      &#34;Equipement&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_equipement.png&#34;).convert(),
@@ -109,20 +155,28 @@ def generateSlotsImages():
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="Slot_inventaire.typeObjetImages"><code class="name">var <span class="ident">typeObjetImages</span></code></dt>
+<dd>
+<div class="desc"><p>Liste des images pour chaques types de slots.</p></div>
+</dd>
+</dl>
 </section>
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="Slot_inventaire.generateSlotsImages"><code class="name flex">
-<span>def <span class="ident">generateSlotsImages</span></span>(<span>)</span>
+<dt id="Slot_inventaire.loadSlotsImages"><code class="name flex">
+<span>def <span class="ident">loadSlotsImages</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Fonction chargeant les images pour chaque type de slots dans la variable globale <code><a title="Slot_inventaire.typeObjetImages" href="#Slot_inventaire.typeObjetImages">typeObjetImages</a></code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def generateSlotsImages():
+<pre><code class="python">def loadSlotsImages():
+    &#34;&#34;&#34;Fonction chargeant les images pour chaque type de slots dans la variable globale `typeObjetImages`.&#34;&#34;&#34;
     global typeObjetImages
     typeObjetImages = {&#34;Arme&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_arme.png&#34;).convert(),
      &#34;Equipement&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_equipement.png&#34;).convert(),
@@ -140,26 +194,53 @@ def generateSlotsImages():
 <span>(</span><span>typeObjet: str)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Un slot inventaire permet de stocké un type d'objet bien particulier précisé lors de l'instanciation du slot.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>_objet</code></strong> :&ensp;<code><a title="Objet" href="Objet.html">Objet</a></code></dt>
+<dd>L'objet contenue dans le slot.</dd>
+<dt><strong><code>_typeObjet</code></strong> :&ensp;<code>str</code></dt>
+<dd>Le type d'objet que peut contenir le slot.</dd>
+<dt><strong><code>_nbContenur</code></strong> :&ensp;<code>int</code></dt>
+<dd>La quantité de l'objet dans le slot.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Slot_inventaire:
     def __init__(self, typeObjet: str):
+        &#34;&#34;&#34;Un slot inventaire permet de stocké un type d&#39;objet bien particulier précisé lors de l&#39;instanciation du slot.
+
+        Attributes
+        ----------
+        _objet : Objet
+            L&#39;objet contenue dans le slot.
+        _typeObjet : str
+            Le type d&#39;objet que peut contenir le slot.
+        _nbContenur : int
+            La quantité de l&#39;objet dans le slot.
+        &#34;&#34;&#34;
         self._objet = None
         self._typeObjet = typeObjet
         self._nbContenue = 0
-        generateSlotsImages()
+        loadSlotsImages()
 
     def __str__(self):
         return &#34;[&#34; + str(self._objet) + &#34;, &#34; + self._typeObjet + &#34;, &#34; + str(self._nbContenue) + &#34;]&#34;
 
     def vider(self):
+        &#34;&#34;&#34;Permet de vide totalement le slot.&#34;&#34;&#34;
         self._nbContenue = 0
         self._objet = None
 
     def ajouter(self, objet: Objet = None, nombre: int = 1):
+        &#34;&#34;&#34;Ajoute dans le slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+        s&#39;il n&#39;y a pas assez de place retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu ajouter dans ce slot.
+
+        Si l&#39;objet ne peut pas être ajouté dans le slot la méthode retourne `-1`.
+        &#34;&#34;&#34;
+
         if objet is None and self._objet is not None:
             objet = self._objet
 
@@ -176,6 +257,10 @@ def generateSlotsImages():
         return -1
 
     def retirer(self, nombre: int = 1):
+        &#34;&#34;&#34;Retire du slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+        s&#39;il n&#39;y a pas assez d&#39;objet à retirer retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu retirer du slot.
+        &#34;&#34;&#34;
+
         self._nbContenue -= nombre
         if self._nbContenue &lt;= 0:
             nb = self._nbContenue
@@ -185,28 +270,50 @@ def generateSlotsImages():
             return 0
 
     def puisJeAjouter(self, objet):
+        &#34;&#34;&#34;Vérifie si on peut ajouter l&#39;objet donné en paramètre dans ce slot.&#34;&#34;&#34;
+
         if objet is not None:
             if self._objet is None:
-                return objet.getNom().split(&#34;_&#34;)[0] == self._typeObjet
+                return objet.getNom().split(&#34;_&#34;)[0] == self._typeObjet or self._typeObjet == &#34;Ressources&#34;
             else:
                 return objet.getNom() == self._objet.getNom()
         return False
 
     def getObjet(self):
+        &#34;&#34;&#34;Retourne l&#39;objet contenue dans le slot (`None` si le slot est vide).&#34;&#34;&#34;
+
         if not self.vide():
             return self._objet
         return None
 
     def vide(self):
+        &#34;&#34;&#34;Retourne `True` si le slot est vide et `False` sinon.&#34;&#34;&#34;
+
         return self._nbContenue == 0 and self._objet is None
 
     def plein(self):
+        &#34;&#34;&#34;Retourne `True` si le slot est plein et `False` sinon.&#34;&#34;&#34;
+
         return self._nbContenue == self._objet.getStackable()
 
     def getNbContenue(self):
+        &#34;&#34;&#34;Retourne la quantité de l&#39;objet contenue dans le slot (`0` si le slot est vide).&#34;&#34;&#34;
+
         return self._nbContenue
 
     def render(self, window, posx, posy):
+        &#34;&#34;&#34;Permet d&#39;afficher le slot dans une fenêtre pygame à une position donné.
+
+        Parameters
+        ----------
+        window : pygame.Surface
+            La fenêtre sur laquelle on veut afficher l&#39;inventaire.
+        posx : int
+            Position x (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        posy : int
+            Position y (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+        &#34;&#34;&#34;
+
         window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
         if not self.vide():
             window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))</code></pre>
@@ -217,12 +324,20 @@ def generateSlotsImages():
 <span>def <span class="ident">ajouter</span></span>(<span>self, objet: <a title="Objet.Objet" href="Objet.html#Objet.Objet">Objet</a> = None, nombre: int = 1)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Ajoute dans le slot l'objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+s'il n'y a pas assez de place retourne le nombre d'objet qu'il n'a pas peu ajouter dans ce slot.</p>
+<p>Si l'objet ne peut pas être ajouté dans le slot la méthode retourne <code>-1</code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def ajouter(self, objet: Objet = None, nombre: int = 1):
+    &#34;&#34;&#34;Ajoute dans le slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+    s&#39;il n&#39;y a pas assez de place retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu ajouter dans ce slot.
+
+    Si l&#39;objet ne peut pas être ajouté dans le slot la méthode retourne `-1`.
+    &#34;&#34;&#34;
+
     if objet is None and self._objet is not None:
         objet = self._objet
 
@@ -243,12 +358,14 @@ def generateSlotsImages():
 <span>def <span class="ident">getNbContenue</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne la quantité de l'objet contenue dans le slot (<code>0</code> si le slot est vide).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getNbContenue(self):
+    &#34;&#34;&#34;Retourne la quantité de l&#39;objet contenue dans le slot (`0` si le slot est vide).&#34;&#34;&#34;
+
     return self._nbContenue</code></pre>
 </details>
 </dd>
@@ -256,12 +373,14 @@ def generateSlotsImages():
 <span>def <span class="ident">getObjet</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne l'objet contenue dans le slot (<code>None</code> si le slot est vide).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getObjet(self):
+    &#34;&#34;&#34;Retourne l&#39;objet contenue dans le slot (`None` si le slot est vide).&#34;&#34;&#34;
+
     if not self.vide():
         return self._objet
     return None</code></pre>
@@ -271,12 +390,14 @@ def generateSlotsImages():
 <span>def <span class="ident">plein</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne <code>True</code> si le slot est plein et <code>False</code> sinon.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def plein(self):
+    &#34;&#34;&#34;Retourne `True` si le slot est plein et `False` sinon.&#34;&#34;&#34;
+
     return self._nbContenue == self._objet.getStackable()</code></pre>
 </details>
 </dd>
@@ -284,15 +405,17 @@ def generateSlotsImages():
 <span>def <span class="ident">puisJeAjouter</span></span>(<span>self, objet)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Vérifie si on peut ajouter l'objet donné en paramètre dans ce slot.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def puisJeAjouter(self, objet):
+    &#34;&#34;&#34;Vérifie si on peut ajouter l&#39;objet donné en paramètre dans ce slot.&#34;&#34;&#34;
+
     if objet is not None:
         if self._objet is None:
-            return objet.getNom().split(&#34;_&#34;)[0] == self._typeObjet
+            return objet.getNom().split(&#34;_&#34;)[0] == self._typeObjet or self._typeObjet == &#34;Ressources&#34;
         else:
             return objet.getNom() == self._objet.getNom()
     return False</code></pre>
@@ -302,12 +425,33 @@ def generateSlotsImages():
 <span>def <span class="ident">render</span></span>(<span>self, window, posx, posy)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Permet d'afficher le slot dans une fenêtre pygame à une position donné.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>window</code></strong> :&ensp;<code>pygame.Surface</code></dt>
+<dd>La fenêtre sur laquelle on veut afficher l'inventaire.</dd>
+<dt><strong><code>posx</code></strong> :&ensp;<code>int</code></dt>
+<dd>Position x (en pixel) à partir de laquelle l'inventaire sera affiché sur la fenêtre.</dd>
+<dt><strong><code>posy</code></strong> :&ensp;<code>int</code></dt>
+<dd>Position y (en pixel) à partir de laquelle l'inventaire sera affiché sur la fenêtre.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def render(self, window, posx, posy):
+    &#34;&#34;&#34;Permet d&#39;afficher le slot dans une fenêtre pygame à une position donné.
+
+    Parameters
+    ----------
+    window : pygame.Surface
+        La fenêtre sur laquelle on veut afficher l&#39;inventaire.
+    posx : int
+        Position x (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+    posy : int
+        Position y (en pixel) à partir de laquelle l&#39;inventaire sera affiché sur la fenêtre.
+    &#34;&#34;&#34;
+
     window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
     if not self.vide():
         window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))</code></pre>
@@ -317,12 +461,17 @@ def generateSlotsImages():
 <span>def <span class="ident">retirer</span></span>(<span>self, nombre: int = 1)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retire du slot l'objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+s'il n'y a pas assez d'objet à retirer retourne le nombre d'objet qu'il n'a pas peu retirer du slot.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def retirer(self, nombre: int = 1):
+    &#34;&#34;&#34;Retire du slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+    s&#39;il n&#39;y a pas assez d&#39;objet à retirer retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu retirer du slot.
+    &#34;&#34;&#34;
+
     self._nbContenue -= nombre
     if self._nbContenue &lt;= 0:
         nb = self._nbContenue
@@ -336,12 +485,14 @@ def generateSlotsImages():
 <span>def <span class="ident">vide</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne <code>True</code> si le slot est vide et <code>False</code> sinon.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def vide(self):
+    &#34;&#34;&#34;Retourne `True` si le slot est vide et `False` sinon.&#34;&#34;&#34;
+
     return self._nbContenue == 0 and self._objet is None</code></pre>
 </details>
 </dd>
@@ -349,12 +500,13 @@ def generateSlotsImages():
 <span>def <span class="ident">vider</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Permet de vide totalement le slot.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def vider(self):
+    &#34;&#34;&#34;Permet de vide totalement le slot.&#34;&#34;&#34;
     self._nbContenue = 0
     self._objet = None</code></pre>
 </details>
@@ -370,9 +522,14 @@ def generateSlotsImages():
 <ul></ul>
 </div>
 <ul id="index">
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="Slot_inventaire.typeObjetImages" href="#Slot_inventaire.typeObjetImages">typeObjetImages</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="Slot_inventaire.generateSlotsImages" href="#Slot_inventaire.generateSlotsImages">generateSlotsImages</a></code></li>
+<li><code><a title="Slot_inventaire.loadSlotsImages" href="#Slot_inventaire.loadSlotsImages">loadSlotsImages</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
