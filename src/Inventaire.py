@@ -79,14 +79,26 @@ class Inventaire(list):
         return retour
 
     def getArme(self):
+        """Retourne l'arme contenue dans l'inventaire
+
+        Retourne `None` si il n'y a pas d'arme
+        """
+
         for slot in self:
             if slot.getTypeObjet() == "Arme":
                 return slot.getObjet()
+        return None
 
     def getEquipement(self):
+        """Retourne l'équipement contenue dans l'inventaire
+
+        Retourne `None` si il n'y a pas d'équipement
+        """
+
         for slot in self:
             if slot.getTypeObjet() == "Equipement":
                 return slot.getObjet()
+        return None
 
 
     def listObjetUnique(self) -> list:
