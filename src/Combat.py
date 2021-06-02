@@ -60,16 +60,16 @@ class Combat(Evenement):
 
         self._menu = pygame_menu.Menu(titre, 1000, 1000)
         self._menu.add.label(texte)
-        self._menu.add_image(image)
-        self._menu.add_button("Voir logs", self._log)
-        self._menu.add_button("ok", self.mettreFin)
+        self._menu.add.image(image)
+        self._menu.add.button("Voir logs", self._log)
+        self._menu.add.button("ok", self.mettreFin)
 
     def creerMenuCombat(self, logs):
         # création du menu log
         self._log = pygame_menu.Menu("logs de combat", 1000, 1000, center_content=False)
         for entree in logs:
             self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
-        self._log.add_button("Retour", pygame_menu.events.BACK)
+        self._log.add.button("Retour", pygame_menu.events.BACK)
 
     # Methode permettant de passer en cours a false
     def mettreFin(self):
@@ -102,7 +102,7 @@ class Combat(Evenement):
     def creerEquipeMechant(self, combat):
 
         equipetemp = []
-        if combat == "kv2":
+        if combat == "Kv2v2v2":
             nb = 1
         else:
             nb = random.randint(1, 3)
@@ -135,17 +135,15 @@ class Combat(Evenement):
     def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -> str:
         pourLog = attaquant.attaquer(cible)
 
-        if pourLog[0] == 0:
-            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " mais loupe!"
+        if pourLog == 0:
+            return "\"" + str(attaquant.getNom()) + "\" attaque \"" + str(cible.getNom()) + "\" mais loupe!"
 
         if cible.getVie() > 0:
-            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " pour " + str(
-                pourLog[0]) + " points de dégats. " + str(cible.getNom()) + " en reçoit : " + str(
-                pourLog[1]) + "pv restant : " + str(cible.getVie())
+            return "\"" + str(attaquant.getNom()) + "\" attaque \"" + str(cible.getNom()) + "\" pour " + str(
+                pourLog) + " points de dégats. " + str(cible.getNom()) + " a : " + str(cible.getVie()) + "pv"
         else:
-            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " pour " + str(
-                pourLog[0]) + " points de dégats. " + str(cible.getNom()) + " en reçoit : " + str(
-                pourLog[1]) + " et meurt"
+            return "\"" + str(attaquant.getNom()) + "\" attaque \"" + str(cible.getNom()) + "\" pour " + str(
+                pourLog) + " points de dégats. \"" + str(cible.getNom()) + "\" est mort"
 
 
 if __name__ == "__main__":

@@ -42,7 +42,7 @@ class Personnage:
             self._estVivant = False
         return degat
 
-    def attaquer(self, cible: Personnage) -> Tuple[int, int]:
+    def attaquer(self, cible: Personnage) -> int:
 
         if random.randint(1, 10) > self._initiative:
             return 0
@@ -53,13 +53,15 @@ class Personnage:
             else:
                 degat = self._force
 
-            return degat, cible.prendreDegat(degat)
+        cible.prendreDegat(degat)
+
+        return degat
 
     def getInventaire(self):
         return self._inventaire
 
     def __str__(self) -> str:
-        return "nom: " + self._nom + " vie: " + str(self._vie) + " bruh"
+        return "nom: " + self._nom + " vie: " + str(self._vie)
 
     def render(self, window, minx, miny):
         posx = minx
