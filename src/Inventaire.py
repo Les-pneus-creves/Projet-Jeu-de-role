@@ -78,6 +78,17 @@ class Inventaire(list):
         retour += "]"
         return retour
 
+    def getArme(self):
+        for slot in self:
+            if slot.getTypeObjet() == "Arme":
+                return slot.getObjet()
+
+    def getEquipement(self):
+        for slot in self:
+            if slot.getTypeObjet() == "Equipement":
+                return slot.getObjet()
+
+
     def listObjetUnique(self) -> list:
         """Retourne une liste des objets présent dans l'`Inventaire`."""
 

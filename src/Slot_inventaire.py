@@ -99,6 +99,11 @@ class Slot_inventaire:
 
         return self._nbContenue
 
+    def getTypeObjet(self):
+        """Retourne le type d'objet que peut contenir le slot"""
+
+        return self._typeObjet
+
     def render(self, window, posx, posy):
         """Permet d'afficher le slot dans une fenêtre pygame à une position donné.
 
