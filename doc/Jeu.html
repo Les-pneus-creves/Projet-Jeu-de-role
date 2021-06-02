@@ -44,6 +44,7 @@ from ModeEvenement import ModeEvenement
 from Recompense import Recompense
 
 Etats = Enum(&#39;Etats&#39;, &#39;Gestion Expedition Evenement&#39;)
+&#34;&#34;&#34;Enum permettant de gérer la machine à état du jeu de manière plus jolie&#34;&#34;&#34;
 
 
 class Jeu:
@@ -56,19 +57,20 @@ class Jeu:
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
 
-    # Méthode lancée une fois servant a initialisé tout ce qu&#39;il faut
     def on_init(self) -&gt; None:
+        &#34;&#34;&#34;Méthode lancée une fois servant a initialisé tout ce qu&#39;il faut&#34;&#34;&#34;
         pygame.init()
         self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self._running = True
 
         plateau = PlateauDeJeu(&#39;src/maps/1.tmx&#39;)
-        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;,40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;), Personnage(&#34;Albert&#34;,30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
+        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;),
+                                     Personnage(&#34;Albert&#34;, 30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 
-    # Méthode définissant la boucle de jeu principale
     def on_execute(self) -&gt; None:
+        &#34;&#34;&#34;Méthode définissant la boucle de jeu principale&#34;&#34;&#34;
         if self.on_init() == False:
             self._running = False
 
@@ -81,8 +83,8 @@ class Jeu:
             self.change_state()
         self.on_cleanup()
 
-    # lecture des evenements
     def on_event(self, events) -&gt; None:
+        &#34;&#34;&#34;Lecture des evenements pygame tel les clics&#34;&#34;&#34;
         for event in events:
             if event.type == pygame.QUIT:
                 self._running = False
@@ -100,8 +102,8 @@ class Jeu:
             else:
                 print(&#34;Etat inexistant dsl ...&#34;)
 
-    # Calcul des mises à jours
     def on_loop(self) -&gt; None:
+        &#34;&#34;&#34;Calcul des mises à jours du jeu&#34;&#34;&#34;
 
         if self._etatActuel == Etats.Gestion:
             pass
@@ -115,8 +117,8 @@ class Jeu:
         else:
             print(&#34;Etat inexistant dsl ...&#34;)
 
-    # Calcul des affichages
     def on_render(self) -&gt; None:
+        &#34;&#34;&#34;Calcul des affichages et affichage sur la fenêtre&#34;&#34;&#34;
 
         if self._etatActuel == Etats.Gestion:
             pass
@@ -134,12 +136,14 @@ class Jeu:
         pass
 
     def change_state(self) -&gt; None:
+        &#34;&#34;&#34;Calcul gérant le changement d&#39;état de la machine&#34;&#34;&#34;
         if self._etatActuel == Etats.Gestion:
             pass
         elif self._etatActuel == Etats.Expedition:
             if self._whatAppend is not None:
                 self._etatActuel = Etats.Evenement
-                self._modeEvenement = ModeEvenement(Recompense(self._expedition.returnTypeCase(self._whatAppend).split(&#34;_&#34;)[0]))
+                self._modeEvenement = ModeEvenement(
+                    Recompense(self._expedition.returnTypeCase(self._whatAppend).split(&#34;_&#34;)[0]))
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():
@@ -148,8 +152,8 @@ class Jeu:
         else:
             print(&#34;Etat inexistant dsl ...&#34;)
 
-    # Méthode pour quitter le jeu proprement
     def on_cleanup(self) -&gt; None:
+        &#34;&#34;&#34;Méthode pour quitter le jeu proprement&#34;&#34;&#34;
         pygame.quit()
 
 
@@ -212,19 +216,20 @@ if __name__ == &#34;__main__&#34;:
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
 
-    # Méthode lancée une fois servant a initialisé tout ce qu&#39;il faut
     def on_init(self) -&gt; None:
+        &#34;&#34;&#34;Méthode lancée une fois servant a initialisé tout ce qu&#39;il faut&#34;&#34;&#34;
         pygame.init()
         self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self._running = True
 
         plateau = PlateauDeJeu(&#39;src/maps/1.tmx&#39;)
-        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;,40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;), Personnage(&#34;Albert&#34;,30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
+        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;),
+                                     Personnage(&#34;Albert&#34;, 30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 
-    # Méthode définissant la boucle de jeu principale
     def on_execute(self) -&gt; None:
+        &#34;&#34;&#34;Méthode définissant la boucle de jeu principale&#34;&#34;&#34;
         if self.on_init() == False:
             self._running = False
 
@@ -237,8 +242,8 @@ if __name__ == &#34;__main__&#34;:
             self.change_state()
         self.on_cleanup()
 
-    # lecture des evenements
     def on_event(self, events) -&gt; None:
+        &#34;&#34;&#34;Lecture des evenements pygame tel les clics&#34;&#34;&#34;
         for event in events:
             if event.type == pygame.QUIT:
                 self._running = False
@@ -256,8 +261,8 @@ if __name__ == &#34;__main__&#34;:
             else:
                 print(&#34;Etat inexistant dsl ...&#34;)
 
-    # Calcul des mises à jours
     def on_loop(self) -&gt; None:
+        &#34;&#34;&#34;Calcul des mises à jours du jeu&#34;&#34;&#34;
 
         if self._etatActuel == Etats.Gestion:
             pass
@@ -271,8 +276,8 @@ if __name__ == &#34;__main__&#34;:
         else:
             print(&#34;Etat inexistant dsl ...&#34;)
 
-    # Calcul des affichages
     def on_render(self) -&gt; None:
+        &#34;&#34;&#34;Calcul des affichages et affichage sur la fenêtre&#34;&#34;&#34;
 
         if self._etatActuel == Etats.Gestion:
             pass
@@ -290,12 +295,14 @@ if __name__ == &#34;__main__&#34;:
         pass
 
     def change_state(self) -&gt; None:
+        &#34;&#34;&#34;Calcul gérant le changement d&#39;état de la machine&#34;&#34;&#34;
         if self._etatActuel == Etats.Gestion:
             pass
         elif self._etatActuel == Etats.Expedition:
             if self._whatAppend is not None:
                 self._etatActuel = Etats.Evenement
-                self._modeEvenement = ModeEvenement(Recompense(self._expedition.returnTypeCase(self._whatAppend).split(&#34;_&#34;)[0]))
+                self._modeEvenement = ModeEvenement(
+                    Recompense(self._expedition.returnTypeCase(self._whatAppend).split(&#34;_&#34;)[0]))
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():
@@ -304,8 +311,8 @@ if __name__ == &#34;__main__&#34;:
         else:
             print(&#34;Etat inexistant dsl ...&#34;)
 
-    # Méthode pour quitter le jeu proprement
     def on_cleanup(self) -&gt; None:
+        &#34;&#34;&#34;Méthode pour quitter le jeu proprement&#34;&#34;&#34;
         pygame.quit()</code></pre>
 </details>
 <h3>Methods</h3>
@@ -314,18 +321,20 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">change_state</span></span>(<span>self) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Calcul gérant le changement d'état de la machine</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def change_state(self) -&gt; None:
+    &#34;&#34;&#34;Calcul gérant le changement d&#39;état de la machine&#34;&#34;&#34;
     if self._etatActuel == Etats.Gestion:
         pass
     elif self._etatActuel == Etats.Expedition:
         if self._whatAppend is not None:
             self._etatActuel = Etats.Evenement
-            self._modeEvenement = ModeEvenement(Recompense(self._expedition.returnTypeCase(self._whatAppend).split(&#34;_&#34;)[0]))
+            self._modeEvenement = ModeEvenement(
+                Recompense(self._expedition.returnTypeCase(self._whatAppend).split(&#34;_&#34;)[0]))
 
     elif self._etatActuel == Etats.Evenement:
         if not self._modeEvenement.getEnCours():
@@ -339,12 +348,13 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">on_cleanup</span></span>(<span>self) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Méthode pour quitter le jeu proprement</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_cleanup(self) -&gt; None:
+    &#34;&#34;&#34;Méthode pour quitter le jeu proprement&#34;&#34;&#34;
     pygame.quit()</code></pre>
 </details>
 </dd>
@@ -352,12 +362,13 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">on_event</span></span>(<span>self, events) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Lecture des evenements pygame tel les clics</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_event(self, events) -&gt; None:
+    &#34;&#34;&#34;Lecture des evenements pygame tel les clics&#34;&#34;&#34;
     for event in events:
         if event.type == pygame.QUIT:
             self._running = False
@@ -380,12 +391,13 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">on_execute</span></span>(<span>self) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Méthode définissant la boucle de jeu principale</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_execute(self) -&gt; None:
+    &#34;&#34;&#34;Méthode définissant la boucle de jeu principale&#34;&#34;&#34;
     if self.on_init() == False:
         self._running = False
 
@@ -403,18 +415,20 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">on_init</span></span>(<span>self) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Méthode lancée une fois servant a initialisé tout ce qu'il faut</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_init(self) -&gt; None:
+    &#34;&#34;&#34;Méthode lancée une fois servant a initialisé tout ce qu&#39;il faut&#34;&#34;&#34;
     pygame.init()
     self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
     self._running = True
 
     plateau = PlateauDeJeu(&#39;src/maps/1.tmx&#39;)
-    equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;,40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;), Personnage(&#34;Albert&#34;,30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
+    equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;),
+                                 Personnage(&#34;Albert&#34;, 30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
     self._expedition = Expedition(equipe, plateau)
     self._modeEvenement = None</code></pre>
 </details>
@@ -423,12 +437,13 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">on_loop</span></span>(<span>self) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Calcul des mises à jours du jeu</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_loop(self) -&gt; None:
+    &#34;&#34;&#34;Calcul des mises à jours du jeu&#34;&#34;&#34;
 
     if self._etatActuel == Etats.Gestion:
         pass
@@ -447,12 +462,13 @@ if __name__ == &#34;__main__&#34;:
 <span>def <span class="ident">on_render</span></span>(<span>self) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Calcul des affichages et affichage sur la fenêtre</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_render(self) -&gt; None:
+    &#34;&#34;&#34;Calcul des affichages et affichage sur la fenêtre&#34;&#34;&#34;
 
     if self._etatActuel == Etats.Gestion:
         pass

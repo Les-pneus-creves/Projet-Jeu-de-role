@@ -6,7 +6,7 @@ import math
 class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
-        """ Un Inventaire est une liste de plusieurs Slot_inventaire dans lequel est stocké un Objet.
+        """ Un `Inventaire` est une liste de plusieurs `Slot_inventaire` dans lequel est stocké un `Objet`.
 
             Parameters
             ----------
@@ -27,7 +27,7 @@ class Inventaire(list):
             self.append(Slot_inventaire("Ressources"))
 
     def append(self, slot: Slot_inventaire):
-        """Overload de la méthode append des list, cela permet d'ajouter que des Slot_inventaire à notre Inventaire"""
+        """Overload de la méthode append des list, cela permet d'ajouter que des `Slot_inventaire` à notre Inventaire"""
 
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).append(slot)
@@ -35,7 +35,7 @@ class Inventaire(list):
             raise ValueError('Seul les Slot_inventaire sont autorisés')
 
     def insert(self, index, slot: Slot_inventaire):
-        """ Overload de la méthode insert des list, cela permet d'être sur d'ajouter que des Slot_inventaire à notre Inventaire.
+        """ Overload de la méthode insert des list, cela permet d'être sur d'ajouter que des `Slot_inventaire` à notre `Inventaire`.
 
             Pas forcément utile mais pour que ce soit jolie
         """
@@ -46,7 +46,7 @@ class Inventaire(list):
             raise ValueError('Seul les Slot_inventaire sont autorisés')
 
     def __add__(self, slot: Slot_inventaire):
-        """ Overload de l'opérateur +, cela permet d'ajouter que des Slot_inventaire à notre Inventaire
+        """ Overload de l'opérateur +, cela permet d'ajouter que des `Slot_inventaire` à notre `Inventaire`
 
             Pas forcément utile mais pour que se soit jolie
         """
@@ -57,7 +57,7 @@ class Inventaire(list):
             raise ValueError('Seul les Slot_inventaire sont autorisé')
 
     def __iadd__(self, slot: Slot_inventaire):
-        """ Overload de l'opérateur +=, cela permet d'ajouter que des Slot_inventaire à notre Inventaire
+        """ Overload de l'opérateur +=, cela permet d'ajouter que des `Slot_inventaire` à notre `Inventaire`
 
             Pas forcément utile mais pour que se soit jolie
         """
@@ -79,7 +79,7 @@ class Inventaire(list):
         return retour
 
     def listObjetUnique(self) -> list:
-        """Retourne une liste des objets présent dans l'inventaire."""
+        """Retourne une liste des objets présent dans l'`Inventaire`."""
 
         liste = []
         for objet in self.tolistofObjet():

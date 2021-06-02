@@ -45,7 +45,7 @@ class Expedition:
     def on_render(self, window) -> None:
         self._plateau.render(window)
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
-        self.renderInventaires(window)
+        self.renderPersonnageInventaire(window)
 
     # Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
     def selectPlateau(self) -> None:
@@ -70,7 +70,7 @@ class Expedition:
 
         return q, r
 
-    def renderInventaires(self, window):
+    def renderPersonnageInventaire(self, window):
         peronnages = self._equipe.getPersonnages()
         minx = 0
         miny = 830

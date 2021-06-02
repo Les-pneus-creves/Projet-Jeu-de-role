@@ -26,22 +26,42 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Objet:
-    def __init__(self, nom: str, image, stackable: int):
+<pre><code class="python">import pygame
+
+
+class Objet:
+    def __init__(self, nom: str, image, stackable: int = 1):
+        &#34;&#34;&#34;Un Objet.
+
+        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+
+        Attributes
+        ----------
+        _nom : str
+            L&#39;objet contenue dans le slot.
+        _image : str
+            Le type d&#39;objet que peut contenir le slot.
+        _stackable : int
+            La quantité de l&#39;objet dans le slot.
+        &#34;&#34;&#34;
+
         self._nom = nom
-        self._image = image
+        self._image = pygame.image.load(image).convert()
         self._stackable = stackable
 
     def __str__(self):
         return &#34;[&#34; + self._nom + &#34;, max= &#34; + str(self._stackable) + &#34;]&#34;
 
     def getImage(self):
+        &#34;&#34;&#34;Retourne l&#39;image sous forme d&#39;objet pygame prêt à être affiché&#34;&#34;&#34;
         return self._image
 
     def getNom(self) -&gt; str:
+        &#34;&#34;&#34;Retourne le nom de l&#39;objet en `str`&#34;&#34;&#34;
         return self._nom
 
     def getStackable(self) -&gt; int:
+        &#34;&#34;&#34;Retourne le nombre de fois ou on peut mettre cette objet dans un seul slot inventaire&#34;&#34;&#34;
         return self._stackable</code></pre>
 </details>
 </section>
@@ -56,30 +76,57 @@
 <dl>
 <dt id="Objet.Objet"><code class="flex name class">
 <span>class <span class="ident">Objet</span></span>
-<span>(</span><span>nom: str, image, stackable: int)</span>
+<span>(</span><span>nom: str, image, stackable: int = 1)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Un Objet.</p>
+<p>Les différents Objets sont instancié à l'avance dans <code>Jeu.py</code> à partir du fichier <code>objet.json</code>.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>_nom</code></strong> :&ensp;<code>str</code></dt>
+<dd>L'objet contenue dans le slot.</dd>
+<dt><strong><code>_image</code></strong> :&ensp;<code>str</code></dt>
+<dd>Le type d'objet que peut contenir le slot.</dd>
+<dt><strong><code>_stackable</code></strong> :&ensp;<code>int</code></dt>
+<dd>La quantité de l'objet dans le slot.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Objet:
-    def __init__(self, nom: str, image, stackable: int):
+    def __init__(self, nom: str, image, stackable: int = 1):
+        &#34;&#34;&#34;Un Objet.
+
+        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+
+        Attributes
+        ----------
+        _nom : str
+            L&#39;objet contenue dans le slot.
+        _image : str
+            Le type d&#39;objet que peut contenir le slot.
+        _stackable : int
+            La quantité de l&#39;objet dans le slot.
+        &#34;&#34;&#34;
+
         self._nom = nom
-        self._image = image
+        self._image = pygame.image.load(image).convert()
         self._stackable = stackable
 
     def __str__(self):
         return &#34;[&#34; + self._nom + &#34;, max= &#34; + str(self._stackable) + &#34;]&#34;
 
     def getImage(self):
+        &#34;&#34;&#34;Retourne l&#39;image sous forme d&#39;objet pygame prêt à être affiché&#34;&#34;&#34;
         return self._image
 
     def getNom(self) -&gt; str:
+        &#34;&#34;&#34;Retourne le nom de l&#39;objet en `str`&#34;&#34;&#34;
         return self._nom
 
     def getStackable(self) -&gt; int:
+        &#34;&#34;&#34;Retourne le nombre de fois ou on peut mettre cette objet dans un seul slot inventaire&#34;&#34;&#34;
         return self._stackable</code></pre>
 </details>
 <h3>Methods</h3>
@@ -88,12 +135,13 @@
 <span>def <span class="ident">getImage</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne l'image sous forme d'objet pygame prêt à être affiché</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getImage(self):
+    &#34;&#34;&#34;Retourne l&#39;image sous forme d&#39;objet pygame prêt à être affiché&#34;&#34;&#34;
     return self._image</code></pre>
 </details>
 </dd>
@@ -101,12 +149,13 @@
 <span>def <span class="ident">getNom</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne le nom de l'objet en <code>str</code></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getNom(self) -&gt; str:
+    &#34;&#34;&#34;Retourne le nom de l&#39;objet en `str`&#34;&#34;&#34;
     return self._nom</code></pre>
 </details>
 </dd>
@@ -114,12 +163,13 @@
 <span>def <span class="ident">getStackable</span></span>(<span>self) ‑> int</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Retourne le nombre de fois ou on peut mettre cette objet dans un seul slot inventaire</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getStackable(self) -&gt; int:
+    &#34;&#34;&#34;Retourne le nombre de fois ou on peut mettre cette objet dans un seul slot inventaire&#34;&#34;&#34;
     return self._stackable</code></pre>
 </details>
 </dd>

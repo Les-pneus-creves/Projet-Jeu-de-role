@@ -2,7 +2,7 @@ from Objet import Objet
 import pygame
 
 typeObjetImages = {}
-"""Liste des images pour chaques types de slots."""
+"""Liste des images pour chaque types de slots."""
 
 
 class Slot_inventaire:
@@ -22,6 +22,7 @@ class Slot_inventaire:
         self._typeObjet = typeObjet
         self._nbContenue = 0
         loadSlotsImages()
+        # Il faut que je fasse en sorte qu eça s'execute qu'une seul fois.
 
     def __str__(self):
         return "[" + str(self._objet) + ", " + self._typeObjet + ", " + str(self._nbContenue) + "]"
@@ -117,6 +118,7 @@ class Slot_inventaire:
 
 def loadSlotsImages():
     """Fonction chargeant les images pour chaque type de slots dans la variable globale `typeObjetImages`."""
+
     global typeObjetImages
     typeObjetImages = {"Arme": pygame.image.load("src/images/Inventory/Slot_arme.png").convert(),
      "Equipement": pygame.image.load("src/images/Inventory/Slot_equipement.png").convert(),

@@ -30,7 +30,7 @@
 import pygame
 
 typeObjetImages = {}
-&#34;&#34;&#34;Liste des images pour chaques types de slots.&#34;&#34;&#34;
+&#34;&#34;&#34;Liste des images pour chaque types de slots.&#34;&#34;&#34;
 
 
 class Slot_inventaire:
@@ -50,6 +50,7 @@ class Slot_inventaire:
         self._typeObjet = typeObjet
         self._nbContenue = 0
         loadSlotsImages()
+        # Il faut que je fasse en sorte qu eça s&#39;execute qu&#39;une seul fois.
 
     def __str__(self):
         return &#34;[&#34; + str(self._objet) + &#34;, &#34; + self._typeObjet + &#34;, &#34; + str(self._nbContenue) + &#34;]&#34;
@@ -145,6 +146,7 @@ class Slot_inventaire:
 
 def loadSlotsImages():
     &#34;&#34;&#34;Fonction chargeant les images pour chaque type de slots dans la variable globale `typeObjetImages`.&#34;&#34;&#34;
+
     global typeObjetImages
     typeObjetImages = {&#34;Arme&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_arme.png&#34;).convert(),
      &#34;Equipement&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_equipement.png&#34;).convert(),
@@ -159,7 +161,7 @@ def loadSlotsImages():
 <dl>
 <dt id="Slot_inventaire.typeObjetImages"><code class="name">var <span class="ident">typeObjetImages</span></code></dt>
 <dd>
-<div class="desc"><p>Liste des images pour chaques types de slots.</p></div>
+<div class="desc"><p>Liste des images pour chaque types de slots.</p></div>
 </dd>
 </dl>
 </section>
@@ -177,6 +179,7 @@ def loadSlotsImages():
 </summary>
 <pre><code class="python">def loadSlotsImages():
     &#34;&#34;&#34;Fonction chargeant les images pour chaque type de slots dans la variable globale `typeObjetImages`.&#34;&#34;&#34;
+
     global typeObjetImages
     typeObjetImages = {&#34;Arme&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_arme.png&#34;).convert(),
      &#34;Equipement&#34;: pygame.image.load(&#34;src/images/Inventory/Slot_equipement.png&#34;).convert(),
@@ -225,6 +228,7 @@ def loadSlotsImages():
         self._typeObjet = typeObjet
         self._nbContenue = 0
         loadSlotsImages()
+        # Il faut que je fasse en sorte qu eça s&#39;execute qu&#39;une seul fois.
 
     def __str__(self):
         return &#34;[&#34; + str(self._objet) + &#34;, &#34; + self._typeObjet + &#34;, &#34; + str(self._nbContenue) + &#34;]&#34;

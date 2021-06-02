@@ -34,7 +34,7 @@ import math
 class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
-        &#34;&#34;&#34; Un Inventaire est une liste de plusieurs Slot_inventaire dans lequel est stocké un Objet.
+        &#34;&#34;&#34; Un `Inventaire` est une liste de plusieurs `Slot_inventaire` dans lequel est stocké un `Objet`.
 
             Parameters
             ----------
@@ -55,7 +55,7 @@ class Inventaire(list):
             self.append(Slot_inventaire(&#34;Ressources&#34;))
 
     def append(self, slot: Slot_inventaire):
-        &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire&#34;&#34;&#34;
+        &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des `Slot_inventaire` à notre Inventaire&#34;&#34;&#34;
 
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).append(slot)
@@ -63,7 +63,7 @@ class Inventaire(list):
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisés&#39;)
 
     def insert(self, index, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des Slot_inventaire à notre Inventaire.
+        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des `Slot_inventaire` à notre `Inventaire`.
 
             Pas forcément utile mais pour que ce soit jolie
         &#34;&#34;&#34;
@@ -74,7 +74,7 @@ class Inventaire(list):
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisés&#39;)
 
     def __add__(self, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de l&#39;opérateur +, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
+        &#34;&#34;&#34; Overload de l&#39;opérateur +, cela permet d&#39;ajouter que des `Slot_inventaire` à notre `Inventaire`
 
             Pas forcément utile mais pour que se soit jolie
         &#34;&#34;&#34;
@@ -85,7 +85,7 @@ class Inventaire(list):
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisé&#39;)
 
     def __iadd__(self, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de l&#39;opérateur +=, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
+        &#34;&#34;&#34; Overload de l&#39;opérateur +=, cela permet d&#39;ajouter que des `Slot_inventaire` à notre `Inventaire`
 
             Pas forcément utile mais pour que se soit jolie
         &#34;&#34;&#34;
@@ -107,7 +107,7 @@ class Inventaire(list):
         return retour
 
     def listObjetUnique(self) -&gt; list:
-        &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;inventaire.&#34;&#34;&#34;
+        &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;`Inventaire`.&#34;&#34;&#34;
 
         liste = []
         for objet in self.tolistofObjet():
@@ -275,7 +275,7 @@ if __name__ == &#34;__main__&#34;:
 <div class="desc"><p>Built-in mutable sequence.</p>
 <p>If no argument is given, the constructor creates a new empty list.
 The argument must be an iterable if specified.</p>
-<p>Un Inventaire est une liste de plusieurs Slot_inventaire dans lequel est stocké un Objet.</p>
+<p>Un <code><a title="Inventaire.Inventaire" href="#Inventaire.Inventaire">Inventaire</a></code> est une liste de plusieurs <code><a title="Slot_inventaire" href="Slot_inventaire.html">Slot_inventaire</a></code> dans lequel est stocké un <code><a title="Objet" href="Objet.html">Objet</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>nbArme</code></strong> :&ensp;<code>int</code></dt>
@@ -292,7 +292,7 @@ The argument must be an iterable if specified.</p>
 <pre><code class="python">class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
-        &#34;&#34;&#34; Un Inventaire est une liste de plusieurs Slot_inventaire dans lequel est stocké un Objet.
+        &#34;&#34;&#34; Un `Inventaire` est une liste de plusieurs `Slot_inventaire` dans lequel est stocké un `Objet`.
 
             Parameters
             ----------
@@ -313,7 +313,7 @@ The argument must be an iterable if specified.</p>
             self.append(Slot_inventaire(&#34;Ressources&#34;))
 
     def append(self, slot: Slot_inventaire):
-        &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire&#34;&#34;&#34;
+        &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des `Slot_inventaire` à notre Inventaire&#34;&#34;&#34;
 
         if isinstance(slot, Slot_inventaire):
             super(Inventaire, self).append(slot)
@@ -321,7 +321,7 @@ The argument must be an iterable if specified.</p>
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisés&#39;)
 
     def insert(self, index, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des Slot_inventaire à notre Inventaire.
+        &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des `Slot_inventaire` à notre `Inventaire`.
 
             Pas forcément utile mais pour que ce soit jolie
         &#34;&#34;&#34;
@@ -332,7 +332,7 @@ The argument must be an iterable if specified.</p>
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisés&#39;)
 
     def __add__(self, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de l&#39;opérateur +, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
+        &#34;&#34;&#34; Overload de l&#39;opérateur +, cela permet d&#39;ajouter que des `Slot_inventaire` à notre `Inventaire`
 
             Pas forcément utile mais pour que se soit jolie
         &#34;&#34;&#34;
@@ -343,7 +343,7 @@ The argument must be an iterable if specified.</p>
             raise ValueError(&#39;Seul les Slot_inventaire sont autorisé&#39;)
 
     def __iadd__(self, slot: Slot_inventaire):
-        &#34;&#34;&#34; Overload de l&#39;opérateur +=, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire
+        &#34;&#34;&#34; Overload de l&#39;opérateur +=, cela permet d&#39;ajouter que des `Slot_inventaire` à notre `Inventaire`
 
             Pas forcément utile mais pour que se soit jolie
         &#34;&#34;&#34;
@@ -365,7 +365,7 @@ The argument must be an iterable if specified.</p>
         return retour
 
     def listObjetUnique(self) -&gt; list:
-        &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;inventaire.&#34;&#34;&#34;
+        &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;`Inventaire`.&#34;&#34;&#34;
 
         liste = []
         for objet in self.tolistofObjet():
@@ -536,13 +536,13 @@ The argument must be an iterable if specified.</p>
 <span>def <span class="ident">append</span></span>(<span>self, slot: <a title="Slot_inventaire.Slot_inventaire" href="Slot_inventaire.html#Slot_inventaire.Slot_inventaire">Slot_inventaire</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Overload de la méthode append des list, cela permet d'ajouter que des Slot_inventaire à notre Inventaire</p></div>
+<div class="desc"><p>Overload de la méthode append des list, cela permet d'ajouter que des <code><a title="Slot_inventaire" href="Slot_inventaire.html">Slot_inventaire</a></code> à notre Inventaire</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def append(self, slot: Slot_inventaire):
-    &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des Slot_inventaire à notre Inventaire&#34;&#34;&#34;
+    &#34;&#34;&#34;Overload de la méthode append des list, cela permet d&#39;ajouter que des `Slot_inventaire` à notre Inventaire&#34;&#34;&#34;
 
     if isinstance(slot, Slot_inventaire):
         super(Inventaire, self).append(slot)
@@ -580,14 +580,14 @@ The argument must be an iterable if specified.</p>
 <span>def <span class="ident">insert</span></span>(<span>self, index, slot: <a title="Slot_inventaire.Slot_inventaire" href="Slot_inventaire.html#Slot_inventaire.Slot_inventaire">Slot_inventaire</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Overload de la méthode insert des list, cela permet d'être sur d'ajouter que des Slot_inventaire à notre Inventaire.</p>
+<div class="desc"><p>Overload de la méthode insert des list, cela permet d'être sur d'ajouter que des <code><a title="Slot_inventaire" href="Slot_inventaire.html">Slot_inventaire</a></code> à notre <code><a title="Inventaire.Inventaire" href="#Inventaire.Inventaire">Inventaire</a></code>.</p>
 <p>Pas forcément utile mais pour que ce soit jolie</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def insert(self, index, slot: Slot_inventaire):
-    &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des Slot_inventaire à notre Inventaire.
+    &#34;&#34;&#34; Overload de la méthode insert des list, cela permet d&#39;être sur d&#39;ajouter que des `Slot_inventaire` à notre `Inventaire`.
 
         Pas forcément utile mais pour que ce soit jolie
     &#34;&#34;&#34;
@@ -602,13 +602,13 @@ The argument must be an iterable if specified.</p>
 <span>def <span class="ident">listObjetUnique</span></span>(<span>self) ‑> list</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Retourne une liste des objets présent dans l'inventaire.</p></div>
+<div class="desc"><p>Retourne une liste des objets présent dans l'<code><a title="Inventaire.Inventaire" href="#Inventaire.Inventaire">Inventaire</a></code>.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def listObjetUnique(self) -&gt; list:
-    &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;inventaire.&#34;&#34;&#34;
+    &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;`Inventaire`.&#34;&#34;&#34;
 
     liste = []
     for objet in self.tolistofObjet():

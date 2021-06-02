@@ -13,6 +13,7 @@ from ModeEvenement import ModeEvenement
 from Recompense import Recompense
 
 Etats = Enum('Etats', 'Gestion Expedition Evenement')
+"""Enum permettant de gérer la machine à état du jeu de manière plus jolie"""
 
 
 class Jeu:
@@ -25,19 +26,20 @@ class Jeu:
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
 
-    # Méthode lancée une fois servant a initialisé tout ce qu'il faut
     def on_init(self) -> None:
+        """Méthode lancée une fois servant a initialisé tout ce qu'il faut"""
         pygame.init()
         self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self._running = True
 
         plateau = PlateauDeJeu('src/maps/1.tmx')
-        equipe = EquipeDePersonnages(Personnage("Frank",40, 12, 5, 5, "src/images/Smiguel.jpg"), Personnage("Albert",30, 15, 3, 2, "src/images/kv2v2v2.jpg"))
+        equipe = EquipeDePersonnages(Personnage("Frank", 40, 12, 5, 5, "src/images/Smiguel.jpg"),
+                                     Personnage("Albert", 30, 15, 3, 2, "src/images/kv2v2v2.jpg"))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 
-    # Méthode définissant la boucle de jeu principale
     def on_execute(self) -> None:
+        """Méthode définissant la boucle de jeu principale"""
         if self.on_init() == False:
             self._running = False
 
@@ -50,8 +52,8 @@ class Jeu:
             self.change_state()
         self.on_cleanup()
 
-    # lecture des evenements
     def on_event(self, events) -> None:
+        """Lecture des evenements pygame tel les clics"""
         for event in events:
             if event.type == pygame.QUIT:
                 self._running = False
@@ -69,8 +71,8 @@ class Jeu:
             else:
                 print("Etat inexistant dsl ...")
 
-    # Calcul des mises à jours
     def on_loop(self) -> None:
+        """Calcul des mises à jours du jeu"""
 
         if self._etatActuel == Etats.Gestion:
             pass
@@ -84,8 +86,8 @@ class Jeu:
         else:
             print("Etat inexistant dsl ...")
 
-    # Calcul des affichages
     def on_render(self) -> None:
+        """Calcul des affichages et affichage sur la fenêtre"""
 
         if self._etatActuel == Etats.Gestion:
             pass
@@ -103,12 +105,14 @@ class Jeu:
         pass
 
     def change_state(self) -> None:
+        """Calcul gérant le changement d'état de la machine"""
         if self._etatActuel == Etats.Gestion:
             pass
         elif self._etatActuel == Etats.Expedition:
             if self._whatAppend is not None:
                 self._etatActuel = Etats.Evenement
-                self._modeEvenement = ModeEvenement(Recompense(self._expedition.returnTypeCase(self._whatAppend).split("_")[0]))
+                self._modeEvenement = ModeEvenement(
+                    Recompense(self._expedition.returnTypeCase(self._whatAppend).split("_")[0]))
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():
@@ -117,8 +121,8 @@ class Jeu:
         else:
             print("Etat inexistant dsl ...")
 
-    # Méthode pour quitter le jeu proprement
     def on_cleanup(self) -> None:
+        """Méthode pour quitter le jeu proprement"""
         pygame.quit()
 
 
