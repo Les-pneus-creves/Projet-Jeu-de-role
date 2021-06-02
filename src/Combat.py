@@ -135,6 +135,9 @@ class Combat(Evenement):
     def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -> str:
         pourLog = attaquant.attaquer(cible)
 
+        if pourLog[0] == 0:
+            return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " mais loupe!"
+
         if cible.getVie() > 0:
             return str(attaquant.getNom()) + " attaque " + str(cible.getNom()) + " pour " + str(
                 pourLog[0]) + " points de dégats. " + str(cible.getNom()) + " en reçoit : " + str(

@@ -1,0 +1,35 @@
+{
+  "armes": {
+    "Couteau": {
+      "modDegat": 1,
+      "modPrecision": 0
+    },
+    "Arc": {
+      "modDegat": 3,
+      "modPrecision": -2
+    },
+    "Pistolet": {
+      "modDegat": 3,
+      "modPrecision": 1
+    },
+    "Fusil": {
+      "modDegat": 5,
+      "modPrecision": 2
+    },
+    "Mitrailleuse": {
+      "modDegat": 7,
+      "modPrecision": -1
+    },
+    "Panzerschreck": {
+      "modDegat": 20,
+      "modPrecision": -6
+    }
+  },
+  "equipements": {
+    "HabitsNormaux": 4,
+    "TenueChic": 10,
+    "UniformeDeSoldat": 20
+  },
+  "ressources": {
+  }
+}

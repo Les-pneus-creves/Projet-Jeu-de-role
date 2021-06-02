@@ -1,6 +1,7 @@
 import pygame
 from typing import Type
 from typing import Tuple
+import random
 import Personnage
 from Inventaire import Inventaire
 
@@ -42,7 +43,17 @@ class Personnage:
         return degat
 
     def attaquer(self, cible: Personnage) -> Tuple[int, int]:
-        return self._force, cible.prendreDegat(self._force)
+
+        if random.randint(1, 10) > self._initiative:
+            return 0
+
+        else:
+            if self._inventaire.getArme() is not None:
+                degat = self._force + self._inventaire.getArme().getModDegat()
+            else:
+                degat = self._force
+
+            return degat, cible.prendreDegat(degat)
 
     def getInventaire(self):
         return self._inventaire
