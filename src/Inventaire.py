@@ -152,14 +152,15 @@ class Inventaire(list):
     def ajouter(self, objet: Objet, nombre: int = 1):
         """Ajoute dans l'inventaire l'objet donné en paramètre autant de fois que précisé (par défaut 1 seul)."""
 
-        position = self.contientObjet(objet)
-        if position != -1 and not self[position].plein():
-            ajout = self[position].ajouter(nombre=nombre)
-            if ajout > 0:
-                self.ajouter(objet, ajout)
-                return
-            elif ajout == 0:
-                return
+        positions = self.slotsOfThisObjet(objet)
+        for position in positions:
+            if not self[position].plein():
+                ajout = self[position].ajouter(nombre=nombre)
+                if ajout > 0:
+                    self.ajouter(objet, ajout)
+                    return
+                elif ajout == 0:
+                    return
         else:
             for slot in self:
                 ajout = slot.ajouter(objet, nombre)
@@ -181,6 +182,7 @@ class Inventaire(list):
             retrait = self[position].retirer(nombre)
             if retrait < 0:
                 self.retirer(objet, - retrait)
+        self.trier()
 
     def trier(self):
         """Tri l'inventaire de sorte à ce qu'il n'y ai pas plusieurs slots d'un même objet à moitié vide."""
@@ -245,9 +247,7 @@ if __name__ == "__main__":
 
     print(inventaire)
     inventaire.retirer(fusil)
-    inventaire.retirer(patate, 2)
-
-    print(inventaire)
-    inventaire.trier()
+    inventaire.retirer(patate, 1)
+    inventaire.ajouter(patate, 3)
 
     print(inventaire)

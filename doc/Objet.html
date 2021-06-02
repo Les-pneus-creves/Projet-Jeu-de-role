@@ -38,11 +38,11 @@ class Objet:
         Attributes
         ----------
         _nom : str
-            L&#39;objet contenue dans le slot.
+            Le nom de l&#39;objet.
         _image : str
-            Le type d&#39;objet que peut contenir le slot.
+            L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité de l&#39;objet dans le slot.
+            La quantité max de l&#39;objet dans un seul `Slot_inventaire`.
         &#34;&#34;&#34;
 
         self._nom = nom
@@ -62,7 +62,68 @@ class Objet:
 
     def getStackable(self) -&gt; int:
         &#34;&#34;&#34;Retourne le nombre de fois ou on peut mettre cette objet dans un seul slot inventaire&#34;&#34;&#34;
-        return self._stackable</code></pre>
+        return self._stackable
+
+
+class Arme(Objet):
+    def __init__(self, nom: str, image, modDegat, modPrecision):
+        &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
+
+        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+
+        Attributes
+        ----------
+        _nom : str
+            Le nom de l&#39;objet.
+        _image : str
+            L&#39;image de l&#39;objet.
+        _stackable : int
+            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+        _modDegat : int
+            Modificateur de dégats appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+        _modPrecision : int
+            Modificateur de précision appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+        &#34;&#34;&#34;
+
+        super(Arme, self).__init__(nom, image)
+        self._modDegat = modDegat
+        self._modPrecision = modPrecision
+
+    def getModDegat(self):
+        &#34;&#34;&#34;Retourne le modificateur de dégat de l&#39;arme.&#34;&#34;&#34;
+
+        return self._modDegat
+
+    def getModPrecision(self):
+        &#34;&#34;&#34;Retourne le modificateur de précision de l&#39;arme.&#34;&#34;&#34;
+
+        return self._modPrecision
+
+class Equipement(Objet):
+    def __init__(self, nom: str, image, modVie):
+        &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
+
+        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+
+        Attributes
+        ----------
+        _nom : str
+            Le nom de l&#39;objet.
+        _image : str
+            L&#39;image de l&#39;objet.
+        _stackable : int
+            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+        _modVie : int
+            Modificateur de vie appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+        &#34;&#34;&#34;
+
+        super(Arme, self).__init__(nom, image)
+        self._modVie = modVie
+
+    def getModVie(self):
+        &#34;&#34;&#34;Retourne le modificateur de vie de l&#39;arme.&#34;&#34;&#34;
+
+        return self._modVie</code></pre>
 </details>
 </section>
 <section>
@@ -74,6 +135,193 @@ class Objet:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
+<dt id="Objet.Arme"><code class="flex name class">
+<span>class <span class="ident">Arme</span></span>
+<span>(</span><span>nom: str, image, modDegat, modPrecision)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Une arme est un objet avec des attributs et des getter supplémentaire.</p>
+<p>Les différents Objets sont instancié à l'avance dans <code>Jeu.py</code> à partir du fichier <code>objet.json</code>.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>_nom</code></strong> :&ensp;<code>str</code></dt>
+<dd>Le nom de l'objet.</dd>
+<dt><strong><code>_image</code></strong> :&ensp;<code>str</code></dt>
+<dd>L'image de l'objet.</dd>
+<dt><strong><code>_stackable</code></strong> :&ensp;<code>int</code></dt>
+<dd>La quantité max de l'objet dans un seul <code><a title="Slot_inventaire" href="Slot_inventaire.html">Slot_inventaire</a></code>. (toujours égale à 1 dans le cas de l'Arme)</dd>
+<dt><strong><code>_modDegat</code></strong> :&ensp;<code>int</code></dt>
+<dd>Modificateur de dégats appliqué sur le personnage lorsque l'arme est équipé par un <code><a title="Personnage" href="Personnage.html">Personnage</a></code>.</dd>
+<dt><strong><code>_modPrecision</code></strong> :&ensp;<code>int</code></dt>
+<dd>Modificateur de précision appliqué sur le personnage lorsque l'arme est équipé par un <code><a title="Personnage" href="Personnage.html">Personnage</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Arme(Objet):
+    def __init__(self, nom: str, image, modDegat, modPrecision):
+        &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
+
+        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+
+        Attributes
+        ----------
+        _nom : str
+            Le nom de l&#39;objet.
+        _image : str
+            L&#39;image de l&#39;objet.
+        _stackable : int
+            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+        _modDegat : int
+            Modificateur de dégats appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+        _modPrecision : int
+            Modificateur de précision appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+        &#34;&#34;&#34;
+
+        super(Arme, self).__init__(nom, image)
+        self._modDegat = modDegat
+        self._modPrecision = modPrecision
+
+    def getModDegat(self):
+        &#34;&#34;&#34;Retourne le modificateur de dégat de l&#39;arme.&#34;&#34;&#34;
+
+        return self._modDegat
+
+    def getModPrecision(self):
+        &#34;&#34;&#34;Retourne le modificateur de précision de l&#39;arme.&#34;&#34;&#34;
+
+        return self._modPrecision</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="Objet.Objet" href="#Objet.Objet">Objet</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="Objet.Arme.getModDegat"><code class="name flex">
+<span>def <span class="ident">getModDegat</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retourne le modificateur de dégat de l'arme.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getModDegat(self):
+    &#34;&#34;&#34;Retourne le modificateur de dégat de l&#39;arme.&#34;&#34;&#34;
+
+    return self._modDegat</code></pre>
+</details>
+</dd>
+<dt id="Objet.Arme.getModPrecision"><code class="name flex">
+<span>def <span class="ident">getModPrecision</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retourne le modificateur de précision de l'arme.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getModPrecision(self):
+    &#34;&#34;&#34;Retourne le modificateur de précision de l&#39;arme.&#34;&#34;&#34;
+
+    return self._modPrecision</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="Objet.Objet" href="#Objet.Objet">Objet</a></b></code>:
+<ul class="hlist">
+<li><code><a title="Objet.Objet.getImage" href="#Objet.Objet.getImage">getImage</a></code></li>
+<li><code><a title="Objet.Objet.getNom" href="#Objet.Objet.getNom">getNom</a></code></li>
+<li><code><a title="Objet.Objet.getStackable" href="#Objet.Objet.getStackable">getStackable</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="Objet.Equipement"><code class="flex name class">
+<span>class <span class="ident">Equipement</span></span>
+<span>(</span><span>nom: str, image, modVie)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Une arme est un objet avec des attributs et des getter supplémentaire.</p>
+<p>Les différents Objets sont instancié à l'avance dans <code>Jeu.py</code> à partir du fichier <code>objet.json</code>.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>_nom</code></strong> :&ensp;<code>str</code></dt>
+<dd>Le nom de l'objet.</dd>
+<dt><strong><code>_image</code></strong> :&ensp;<code>str</code></dt>
+<dd>L'image de l'objet.</dd>
+<dt><strong><code>_stackable</code></strong> :&ensp;<code>int</code></dt>
+<dd>La quantité max de l'objet dans un seul <code><a title="Slot_inventaire" href="Slot_inventaire.html">Slot_inventaire</a></code>. (toujours égale à 1 dans le cas de l'Arme)</dd>
+<dt><strong><code>_modVie</code></strong> :&ensp;<code>int</code></dt>
+<dd>Modificateur de vie appliqué sur le personnage lorsque l'arme est équipé par un <code><a title="Personnage" href="Personnage.html">Personnage</a></code>.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Equipement(Objet):
+    def __init__(self, nom: str, image, modVie):
+        &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
+
+        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+
+        Attributes
+        ----------
+        _nom : str
+            Le nom de l&#39;objet.
+        _image : str
+            L&#39;image de l&#39;objet.
+        _stackable : int
+            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+        _modVie : int
+            Modificateur de vie appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+        &#34;&#34;&#34;
+
+        super(Arme, self).__init__(nom, image)
+        self._modVie = modVie
+
+    def getModVie(self):
+        &#34;&#34;&#34;Retourne le modificateur de vie de l&#39;arme.&#34;&#34;&#34;
+
+        return self._modVie</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="Objet.Objet" href="#Objet.Objet">Objet</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="Objet.Equipement.getModVie"><code class="name flex">
+<span>def <span class="ident">getModVie</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retourne le modificateur de vie de l'arme.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getModVie(self):
+    &#34;&#34;&#34;Retourne le modificateur de vie de l&#39;arme.&#34;&#34;&#34;
+
+    return self._modVie</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="Objet.Objet" href="#Objet.Objet">Objet</a></b></code>:
+<ul class="hlist">
+<li><code><a title="Objet.Objet.getImage" href="#Objet.Objet.getImage">getImage</a></code></li>
+<li><code><a title="Objet.Objet.getNom" href="#Objet.Objet.getNom">getNom</a></code></li>
+<li><code><a title="Objet.Objet.getStackable" href="#Objet.Objet.getStackable">getStackable</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
 <dt id="Objet.Objet"><code class="flex name class">
 <span>class <span class="ident">Objet</span></span>
 <span>(</span><span>nom: str, image, stackable: int = 1)</span>
@@ -84,11 +332,11 @@ class Objet:
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>_nom</code></strong> :&ensp;<code>str</code></dt>
-<dd>L'objet contenue dans le slot.</dd>
+<dd>Le nom de l'objet.</dd>
 <dt><strong><code>_image</code></strong> :&ensp;<code>str</code></dt>
-<dd>Le type d'objet que peut contenir le slot.</dd>
+<dd>L'image de l'objet.</dd>
 <dt><strong><code>_stackable</code></strong> :&ensp;<code>int</code></dt>
-<dd>La quantité de l'objet dans le slot.</dd>
+<dd>La quantité max de l'objet dans un seul <code><a title="Slot_inventaire" href="Slot_inventaire.html">Slot_inventaire</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -103,11 +351,11 @@ class Objet:
         Attributes
         ----------
         _nom : str
-            L&#39;objet contenue dans le slot.
+            Le nom de l&#39;objet.
         _image : str
-            Le type d&#39;objet que peut contenir le slot.
+            L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité de l&#39;objet dans le slot.
+            La quantité max de l&#39;objet dans un seul `Slot_inventaire`.
         &#34;&#34;&#34;
 
         self._nom = nom
@@ -129,6 +377,11 @@ class Objet:
         &#34;&#34;&#34;Retourne le nombre de fois ou on peut mettre cette objet dans un seul slot inventaire&#34;&#34;&#34;
         return self._stackable</code></pre>
 </details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="Objet.Arme" href="#Objet.Arme">Arme</a></li>
+<li><a title="Objet.Equipement" href="#Objet.Equipement">Equipement</a></li>
+</ul>
 <h3>Methods</h3>
 <dl>
 <dt id="Objet.Objet.getImage"><code class="name flex">
@@ -186,6 +439,19 @@ class Objet:
 <ul id="index">
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
+<li>
+<h4><code><a title="Objet.Arme" href="#Objet.Arme">Arme</a></code></h4>
+<ul class="">
+<li><code><a title="Objet.Arme.getModDegat" href="#Objet.Arme.getModDegat">getModDegat</a></code></li>
+<li><code><a title="Objet.Arme.getModPrecision" href="#Objet.Arme.getModPrecision">getModPrecision</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="Objet.Equipement" href="#Objet.Equipement">Equipement</a></code></h4>
+<ul class="">
+<li><code><a title="Objet.Equipement.getModVie" href="#Objet.Equipement.getModVie">getModVie</a></code></li>
+</ul>
+</li>
 <li>
 <h4><code><a title="Objet.Objet" href="#Objet.Objet">Objet</a></code></h4>
 <ul class="">

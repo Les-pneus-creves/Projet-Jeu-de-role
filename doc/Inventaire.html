@@ -106,6 +106,29 @@ class Inventaire(list):
         retour += &#34;]&#34;
         return retour
 
+    def getArme(self):
+        &#34;&#34;&#34;Retourne l&#39;arme contenue dans l&#39;inventaire
+
+        Retourne `None` si il n&#39;y a pas d&#39;arme
+        &#34;&#34;&#34;
+
+        for slot in self:
+            if slot.getTypeObjet() == &#34;Arme&#34;:
+                return slot.getObjet()
+        return None
+
+    def getEquipement(self):
+        &#34;&#34;&#34;Retourne l&#39;équipement contenue dans l&#39;inventaire
+
+        Retourne `None` si il n&#39;y a pas d&#39;équipement
+        &#34;&#34;&#34;
+
+        for slot in self:
+            if slot.getTypeObjet() == &#34;Equipement&#34;:
+                return slot.getObjet()
+        return None
+
+
     def listObjetUnique(self) -&gt; list:
         &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;`Inventaire`.&#34;&#34;&#34;
 
@@ -364,6 +387,29 @@ The argument must be an iterable if specified.</p>
         retour += &#34;]&#34;
         return retour
 
+    def getArme(self):
+        &#34;&#34;&#34;Retourne l&#39;arme contenue dans l&#39;inventaire
+
+        Retourne `None` si il n&#39;y a pas d&#39;arme
+        &#34;&#34;&#34;
+
+        for slot in self:
+            if slot.getTypeObjet() == &#34;Arme&#34;:
+                return slot.getObjet()
+        return None
+
+    def getEquipement(self):
+        &#34;&#34;&#34;Retourne l&#39;équipement contenue dans l&#39;inventaire
+
+        Retourne `None` si il n&#39;y a pas d&#39;équipement
+        &#34;&#34;&#34;
+
+        for slot in self:
+            if slot.getTypeObjet() == &#34;Equipement&#34;:
+                return slot.getObjet()
+        return None
+
+
     def listObjetUnique(self) -&gt; list:
         &#34;&#34;&#34;Retourne une liste des objets présent dans l&#39;`Inventaire`.&#34;&#34;&#34;
 
@@ -576,6 +622,50 @@ The argument must be an iterable if specified.</p>
     return -1</code></pre>
 </details>
 </dd>
+<dt id="Inventaire.Inventaire.getArme"><code class="name flex">
+<span>def <span class="ident">getArme</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retourne l'arme contenue dans l'inventaire</p>
+<p>Retourne <code>None</code> si il n'y a pas d'arme</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getArme(self):
+    &#34;&#34;&#34;Retourne l&#39;arme contenue dans l&#39;inventaire
+
+    Retourne `None` si il n&#39;y a pas d&#39;arme
+    &#34;&#34;&#34;
+
+    for slot in self:
+        if slot.getTypeObjet() == &#34;Arme&#34;:
+            return slot.getObjet()
+    return None</code></pre>
+</details>
+</dd>
+<dt id="Inventaire.Inventaire.getEquipement"><code class="name flex">
+<span>def <span class="ident">getEquipement</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retourne l'équipement contenue dans l'inventaire</p>
+<p>Retourne <code>None</code> si il n'y a pas d'équipement</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getEquipement(self):
+    &#34;&#34;&#34;Retourne l&#39;équipement contenue dans l&#39;inventaire
+
+    Retourne `None` si il n&#39;y a pas d&#39;équipement
+    &#34;&#34;&#34;
+
+    for slot in self:
+        if slot.getTypeObjet() == &#34;Equipement&#34;:
+            return slot.getObjet()
+    return None</code></pre>
+</details>
+</dd>
 <dt id="Inventaire.Inventaire.insert"><code class="name flex">
 <span>def <span class="ident">insert</span></span>(<span>self, index, slot: <a title="Slot_inventaire.Slot_inventaire" href="Slot_inventaire.html#Slot_inventaire.Slot_inventaire">Slot_inventaire</a>)</span>
 </code></dt>
@@ -781,6 +871,8 @@ The argument must be an iterable if specified.</p>
 <li><code><a title="Inventaire.Inventaire.ajouter" href="#Inventaire.Inventaire.ajouter">ajouter</a></code></li>
 <li><code><a title="Inventaire.Inventaire.append" href="#Inventaire.Inventaire.append">append</a></code></li>
 <li><code><a title="Inventaire.Inventaire.contientObjet" href="#Inventaire.Inventaire.contientObjet">contientObjet</a></code></li>
+<li><code><a title="Inventaire.Inventaire.getArme" href="#Inventaire.Inventaire.getArme">getArme</a></code></li>
+<li><code><a title="Inventaire.Inventaire.getEquipement" href="#Inventaire.Inventaire.getEquipement">getEquipement</a></code></li>
 <li><code><a title="Inventaire.Inventaire.insert" href="#Inventaire.Inventaire.insert">insert</a></code></li>
 <li><code><a title="Inventaire.Inventaire.listObjetUnique" href="#Inventaire.Inventaire.listObjetUnique">listObjetUnique</a></code></li>
 <li><code><a title="Inventaire.Inventaire.render" href="#Inventaire.Inventaire.render">render</a></code></li>

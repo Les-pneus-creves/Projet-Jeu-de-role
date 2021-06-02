@@ -127,6 +127,11 @@ class Slot_inventaire:
 
         return self._nbContenue
 
+    def getTypeObjet(self):
+        &#34;&#34;&#34;Retourne le type d&#39;objet que peut contenir le slot&#34;&#34;&#34;
+
+        return self._typeObjet
+
     def render(self, window, posx, posy):
         &#34;&#34;&#34;Permet d&#39;afficher le slot dans une fenêtre pygame à une position donné.
 
@@ -305,6 +310,11 @@ def loadSlotsImages():
 
         return self._nbContenue
 
+    def getTypeObjet(self):
+        &#34;&#34;&#34;Retourne le type d&#39;objet que peut contenir le slot&#34;&#34;&#34;
+
+        return self._typeObjet
+
     def render(self, window, posx, posy):
         &#34;&#34;&#34;Permet d&#39;afficher le slot dans une fenêtre pygame à une position donné.
 
@@ -388,6 +398,21 @@ s'il n'y a pas assez de place retourne le nombre d'objet qu'il n'a pas peu ajout
     if not self.vide():
         return self._objet
     return None</code></pre>
+</details>
+</dd>
+<dt id="Slot_inventaire.Slot_inventaire.getTypeObjet"><code class="name flex">
+<span>def <span class="ident">getTypeObjet</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retourne le type d'objet que peut contenir le slot</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getTypeObjet(self):
+    &#34;&#34;&#34;Retourne le type d&#39;objet que peut contenir le slot&#34;&#34;&#34;
+
+    return self._typeObjet</code></pre>
 </details>
 </dd>
 <dt id="Slot_inventaire.Slot_inventaire.plein"><code class="name flex">
@@ -544,6 +569,7 @@ s'il n'y a pas assez d'objet à retirer retourne le nombre d'objet qu'il n'a pas
 <li><code><a title="Slot_inventaire.Slot_inventaire.ajouter" href="#Slot_inventaire.Slot_inventaire.ajouter">ajouter</a></code></li>
 <li><code><a title="Slot_inventaire.Slot_inventaire.getNbContenue" href="#Slot_inventaire.Slot_inventaire.getNbContenue">getNbContenue</a></code></li>
 <li><code><a title="Slot_inventaire.Slot_inventaire.getObjet" href="#Slot_inventaire.Slot_inventaire.getObjet">getObjet</a></code></li>
+<li><code><a title="Slot_inventaire.Slot_inventaire.getTypeObjet" href="#Slot_inventaire.Slot_inventaire.getTypeObjet">getTypeObjet</a></code></li>
 <li><code><a title="Slot_inventaire.Slot_inventaire.plein" href="#Slot_inventaire.Slot_inventaire.plein">plein</a></code></li>
 <li><code><a title="Slot_inventaire.Slot_inventaire.puisJeAjouter" href="#Slot_inventaire.Slot_inventaire.puisJeAjouter">puisJeAjouter</a></code></li>
 <li><code><a title="Slot_inventaire.Slot_inventaire.render" href="#Slot_inventaire.Slot_inventaire.render">render</a></code></li>
