@@ -180,14 +180,15 @@ class Inventaire(list):
     def ajouter(self, objet: Objet, nombre: int = 1):
         &#34;&#34;&#34;Ajoute dans l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
 
-        position = self.contientObjet(objet)
-        if position != -1 and not self[position].plein():
-            ajout = self[position].ajouter(nombre=nombre)
-            if ajout &gt; 0:
-                self.ajouter(objet, ajout)
-                return
-            elif ajout == 0:
-                return
+        positions = self.slotsOfThisObjet(objet)
+        for position in positions:
+            if not self[position].plein():
+                ajout = self[position].ajouter(nombre=nombre)
+                if ajout &gt; 0:
+                    self.ajouter(objet, ajout)
+                    return
+                elif ajout == 0:
+                    return
         else:
             for slot in self:
                 ajout = slot.ajouter(objet, nombre)
@@ -209,6 +210,7 @@ class Inventaire(list):
             retrait = self[position].retirer(nombre)
             if retrait &lt; 0:
                 self.retirer(objet, - retrait)
+        self.trier()
 
     def trier(self):
         &#34;&#34;&#34;Tri l&#39;inventaire de sorte à ce qu&#39;il n&#39;y ai pas plusieurs slots d&#39;un même objet à moitié vide.&#34;&#34;&#34;
@@ -273,10 +275,8 @@ if __name__ == &#34;__main__&#34;:
 
     print(inventaire)
     inventaire.retirer(fusil)
-    inventaire.retirer(patate, 2)
-
-    print(inventaire)
-    inventaire.trier()
+    inventaire.retirer(patate, 1)
+    inventaire.ajouter(patate, 3)
 
     print(inventaire)</code></pre>
 </details>
@@ -461,14 +461,15 @@ The argument must be an iterable if specified.</p>
     def ajouter(self, objet: Objet, nombre: int = 1):
         &#34;&#34;&#34;Ajoute dans l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
 
-        position = self.contientObjet(objet)
-        if position != -1 and not self[position].plein():
-            ajout = self[position].ajouter(nombre=nombre)
-            if ajout &gt; 0:
-                self.ajouter(objet, ajout)
-                return
-            elif ajout == 0:
-                return
+        positions = self.slotsOfThisObjet(objet)
+        for position in positions:
+            if not self[position].plein():
+                ajout = self[position].ajouter(nombre=nombre)
+                if ajout &gt; 0:
+                    self.ajouter(objet, ajout)
+                    return
+                elif ajout == 0:
+                    return
         else:
             for slot in self:
                 ajout = slot.ajouter(objet, nombre)
@@ -490,6 +491,7 @@ The argument must be an iterable if specified.</p>
             retrait = self[position].retirer(nombre)
             if retrait &lt; 0:
                 self.retirer(objet, - retrait)
+        self.trier()
 
     def trier(self):
         &#34;&#34;&#34;Tri l&#39;inventaire de sorte à ce qu&#39;il n&#39;y ai pas plusieurs slots d&#39;un même objet à moitié vide.&#34;&#34;&#34;
@@ -558,14 +560,15 @@ The argument must be an iterable if specified.</p>
 <pre><code class="python">def ajouter(self, objet: Objet, nombre: int = 1):
     &#34;&#34;&#34;Ajoute dans l&#39;inventaire l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul).&#34;&#34;&#34;
 
-    position = self.contientObjet(objet)
-    if position != -1 and not self[position].plein():
-        ajout = self[position].ajouter(nombre=nombre)
-        if ajout &gt; 0:
-            self.ajouter(objet, ajout)
-            return
-        elif ajout == 0:
-            return
+    positions = self.slotsOfThisObjet(objet)
+    for position in positions:
+        if not self[position].plein():
+            ajout = self[position].ajouter(nombre=nombre)
+            if ajout &gt; 0:
+                self.ajouter(objet, ajout)
+                return
+            elif ajout == 0:
+                return
     else:
         for slot in self:
             ajout = slot.ajouter(objet, nombre)
@@ -770,7 +773,8 @@ The argument must be an iterable if specified.</p>
     else:
         retrait = self[position].retirer(nombre)
         if retrait &lt; 0:
-            self.retirer(objet, - retrait)</code></pre>
+            self.retirer(objet, - retrait)
+    self.trier()</code></pre>
 </details>
 </dd>
 <dt id="Inventaire.Inventaire.slotsOfThisObjet"><code class="name flex">

@@ -29,6 +29,7 @@
 <pre><code class="python">import pygame
 from typing import Type
 from typing import Tuple
+import random
 import Personnage
 from Inventaire import Inventaire
 
@@ -70,7 +71,17 @@ class Personnage:
         return degat
 
     def attaquer(self, cible: Personnage) -&gt; Tuple[int, int]:
-        return self._force, cible.prendreDegat(self._force)
+
+        if random.randint(1, 10) &gt; self._initiative:
+            return 0
+
+        else:
+            if self._inventaire.getArme() is not None:
+                degat = self._force + self._inventaire.getArme().getModDegat()
+            else:
+                degat = self._force
+
+            return degat, cible.prendreDegat(degat)
 
     def getInventaire(self):
         return self._inventaire
@@ -151,7 +162,17 @@ if __name__ == &#34;__main__&#34;:
         return degat
 
     def attaquer(self, cible: Personnage) -&gt; Tuple[int, int]:
-        return self._force, cible.prendreDegat(self._force)
+
+        if random.randint(1, 10) &gt; self._initiative:
+            return 0
+
+        else:
+            if self._inventaire.getArme() is not None:
+                degat = self._force + self._inventaire.getArme().getModDegat()
+            else:
+                degat = self._force
+
+            return degat, cible.prendreDegat(degat)
 
     def getInventaire(self):
         return self._inventaire
@@ -180,7 +201,17 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def attaquer(self, cible: Personnage) -&gt; Tuple[int, int]:
-    return self._force, cible.prendreDegat(self._force)</code></pre>
+
+    if random.randint(1, 10) &gt; self._initiative:
+        return 0
+
+    else:
+        if self._inventaire.getArme() is not None:
+            degat = self._force + self._inventaire.getArme().getModDegat()
+        else:
+            degat = self._force
+
+        return degat, cible.prendreDegat(degat)</code></pre>
 </details>
 </dd>
 <dt id="Personnage.Personnage.estVivant"><code class="name flex">

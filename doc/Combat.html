@@ -163,6 +163,9 @@ class Combat(Evenement):
     def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -&gt; str:
         pourLog = attaquant.attaquer(cible)
 
+        if pourLog[0] == 0:
+            return str(attaquant.getNom()) + &#34; attaque &#34; + str(cible.getNom()) + &#34; mais loupe!&#34;
+
         if cible.getVie() &gt; 0:
             return str(attaquant.getNom()) + &#34; attaque &#34; + str(cible.getNom()) + &#34; pour &#34; + str(
                 pourLog[0]) + &#34; points de dégats. &#34; + str(cible.getNom()) + &#34; en reçoit : &#34; + str(
@@ -339,6 +342,9 @@ inheritance.</p></div>
     def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -&gt; str:
         pourLog = attaquant.attaquer(cible)
 
+        if pourLog[0] == 0:
+            return str(attaquant.getNom()) + &#34; attaque &#34; + str(cible.getNom()) + &#34; mais loupe!&#34;
+
         if cible.getVie() &gt; 0:
             return str(attaquant.getNom()) + &#34; attaque &#34; + str(cible.getNom()) + &#34; pour &#34; + str(
                 pourLog[0]) + &#34; points de dégats. &#34; + str(cible.getNom()) + &#34; en reçoit : &#34; + str(
@@ -450,6 +456,9 @@ inheritance.</p></div>
 </summary>
 <pre><code class="python">def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -&gt; str:
     pourLog = attaquant.attaquer(cible)
+
+    if pourLog[0] == 0:
+        return str(attaquant.getNom()) + &#34; attaque &#34; + str(cible.getNom()) + &#34; mais loupe!&#34;
 
     if cible.getVie() &gt; 0:
         return str(attaquant.getNom()) + &#34; attaque &#34; + str(cible.getNom()) + &#34; pour &#34; + str(
