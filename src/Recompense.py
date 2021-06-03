@@ -14,13 +14,13 @@ class Recompense(Evenement):
         super().__init__()
         with open("src/dossierJson/recompenses.json") as fichier:
             data = json.loads(fichier.read())
-            eventJson = data[event_a_lancer]
-            self.creerMenu(eventJson["titre"], eventJson["texte"], eventJson["image"])
+            self.eventJson = data[event_a_lancer]
 
     # ----------
 
-    def lancement(self, equipePerso: EquipeDePersonnages):
+    def lancement(self):
         print("Lancement d'une récompense very nice")
+        self.creerMenu(self.eventJson["titre"], self.eventJson["texte"], self.eventJson["image"])
 
     # Methode appelée dans l'init qui modifie le menu avec ce qu'il faut
     def creerMenu(self, titre: str, texte: str, image) -> None:

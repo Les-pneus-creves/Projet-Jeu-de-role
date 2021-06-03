@@ -27,7 +27,6 @@ class ModeEvenement:
 
     # Calcul des affichages
     def on_render(self, window) -> None:
-
         if self._evenement.getEnCours():
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().draw(window)

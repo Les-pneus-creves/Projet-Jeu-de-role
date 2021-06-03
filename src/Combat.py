@@ -11,12 +11,13 @@ import random
 
 class Combat(Evenement):
 
-    def __init__(self, equipe: EquipeDePersonnages):
+    def __init__(self, equipe: EquipeDePersonnages, combat_a_lancer: str = None):
         super().__init__()
 
         with open("src/dossierJson/combats.json") as fichier:
             data = json.loads(fichier.read())
-            combat_a_lancer = random.choice(list(data))
+            if combat_a_lancer is None:
+                combat_a_lancer = random.choice(list(data))
             self.eventJson = data[combat_a_lancer]
 
         self._log = []

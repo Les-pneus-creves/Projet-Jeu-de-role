@@ -11,6 +11,7 @@ from Expedition import Expedition
 from PlateauDeJeu import PlateauDeJeu
 from ModeEvenement import ModeEvenement
 from Recompense import Recompense
+from Combat import Combat
 
 Etats = Enum('Etats', 'Gestion Expedition Evenement')
 """Enum permettant de gérer la machine à état du jeu de manière plus jolie"""
@@ -111,8 +112,21 @@ class Jeu:
         elif self._etatActuel == Etats.Expedition:
             if self._whatAppend is not None:
                 self._etatActuel = Etats.Evenement
-                self._modeEvenement = ModeEvenement(
-                    Recompense(self._expedition.returnTypeCase(self._whatAppend).split("_")[0]))
+                TypeCase = self._expedition.returnTypeCase(self._whatAppend).split("_")
+                event = Recompense(TypeCase[0])
+
+                if TypeCase[0] == "Tour" or TypeCase[1].startswith("S"):
+                    event = Combat(self._expedition.getEquipe(), "Bandit")
+                    print("Combat contre Bandit")
+                if TypeCase[0] == "Archer" or TypeCase[1].startswith("R"):
+                    event = Combat(self._expedition.getEquipe(), "Soldat")
+                    print("Combat contre Soldat")
+                if TypeCase[0] == "Arche" or TypeCase[0] == "Maison" or TypeCase[0] == "Ferme" or TypeCase[1].startswith("A"):
+                    event = Combat(self._expedition.getEquipe(), "Chien")
+                    print("Combat contre Chien")
+
+                event.lancement()
+                self._modeEvenement = ModeEvenement(event)
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():

@@ -47,17 +47,12 @@ class Expedition:
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
         self.renderPersonnageInventaire(window)
 
-    # Méthode permettant de sélectionner aléatoirement (ou non?) un plateau
-    def selectPlateau(self) -> None:
-        pass
-
     # Méthode lançant un événement précis
     def returnTypeCase(self, coord) -> str:
         return self._plateau.getCase(coord).getTypeCase()
 
-    # Méthode retournant true ou false selon si des coordonnées (En pixel ou en case/hexagone??) sont effectivement dans la map
-    def estDansLaMap(self, coord) -> bool:
-        pass
+    def getEquipe(self):
+        return self._equipe
 
     def pointToCoord(self, coord: tuple):
 
