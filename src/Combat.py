@@ -45,9 +45,9 @@ class Combat(Evenement):
                     elif perso in g.getPersonnages() and m.getVivante():
                         logs.append(self.faireAttaquer(perso, self._choisirCible(m)))
         if m.getVivante():
-            logs.append("Les méchant on gagné bruuuuh")
+            logs.append("Les méchants ont gagné")
         else:
-            logs.append("Les gentils ont gagné brubrubrubru")
+            logs.append("Les gentils ont gagné")
 
         self.creerMenuCombat(logs)
         self.creerMenu(self.eventJson["titre"], self.eventJson["texte"], self.eventJson["image"])
@@ -62,14 +62,13 @@ class Combat(Evenement):
         self._menu.add.label(texte)
         self._menu.add.image(image)
         self._menu.add.button("Voir logs", self._log)
-        self._menu.add.button("ok", self.mettreFin)
 
     def creerMenuCombat(self, logs):
         # création du menu log
         self._log = pygame_menu.Menu("logs de combat", 1000, 1000, center_content=False)
         for entree in logs:
             self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
-        self._log.add.button("Retour", pygame_menu.events.BACK)
+        self._log.add.button("Quitter", self.mettreFin)
 
     # Methode permettant de passer en cours a false
     def mettreFin(self):

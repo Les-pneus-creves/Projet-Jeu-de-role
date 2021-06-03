@@ -32,7 +32,7 @@
     }
   },
   "Soldat": {
-    "texte": "D'ancien soldat vous attaquent'",
+    "texte": "D'anciens soldats vous attaquent'",
     "titre": "Attaque de soldat",
     "image": "src/images/soldats.jpg",
     "unite": {
@@ -49,7 +49,7 @@
   },
   "Kv2v2v2": {
     "texte": "Bonne chance",
-    "titre": "Qu'est ce que c'est que ça?!",
+    "titre": "Mais qu'est ce que c'est que ça?!",
     "image": "src/images/kv2v2v2.jpg",
     "unite": {
       "nom": "Kv2v2v2",
