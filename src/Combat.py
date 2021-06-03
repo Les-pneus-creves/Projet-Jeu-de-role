@@ -125,7 +125,7 @@ class Combat(Evenement):
         ini = random.randint(modele["iniMin"], modele["iniMax"])
         preci = random.randint(modele["preciMin"], modele["preciMax"])
 
-        return Personnage(modele["nom"] + " " + str(i+1), vie, force, preci, preci, None)
+        return Personnage(modele["nom"] + " " + str(i+1), vie, force, preci, ini, None)
 
     # Méthode permmetant de selectionné une cible dans une équipe donnée
     def _choisirCible(self, equipePerso: EquipeDePersonnages) -> Personnage:
