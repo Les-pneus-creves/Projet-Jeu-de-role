@@ -44,10 +44,22 @@ class Personnage:
 
     def attaquer(self, cible: Personnage) -> int:
 
-        if random.randint(1, 10) > self._initiative:
-            return 0
+        degat = 0
+
+        if "Kv2v2v2" in cible.getNom():
+
+            if self._inventaire.getArme() is not None:
+                if self._inventaire.getArme().getNom() == "Panzerschreck":
+                    degat = self._force + self._inventaire.getArme().getModDegat()
+                else:
+                    degat = -1
+            else:
+                degat = -1
 
         else:
+            if random.randint(1, 10) > self._precision:
+                return 0
+
             if self._inventaire.getArme() is not None:
                 degat = self._force + self._inventaire.getArme().getModDegat()
             else:
@@ -57,20 +69,23 @@ class Personnage:
 
         return degat
 
-    def getInventaire(self):
-        return self._inventaire
 
-    def __str__(self) -> str:
-        return "nom: " + self._nom + " vie: " + str(self._vie)
+def getInventaire(self):
+    return self._inventaire
 
-    def render(self, window, minx, miny):
-        posx = minx
-        posy = miny
-        window.blit(pygame.transform.scale(self._image, (60, 60)), (posx, posy))
-        posx += 90
-        font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
-        text = font.render(self._nom, True, (255, 255, 255))
-        window.blit(text, (posx, posy))
+
+def __str__(self) -> str:
+    return "nom: " + self._nom + " vie: " + str(self._vie)
+
+
+def render(self, window, minx, miny):
+    posx = minx
+    posy = miny
+    window.blit(pygame.transform.scale(self._image, (60, 60)), (posx, posy))
+    posx += 90
+    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+    text = font.render(self._nom, True, (255, 255, 255))
+    window.blit(text, (posx, posy))
 
 
 if __name__ == "__main__":

@@ -137,6 +137,8 @@ class Combat(Evenement):
 
         if pourLog == 0:
             return "\"" + str(attaquant.getNom()) + "\" attaque \"" + str(cible.getNom()) + "\" mais loupe!"
+        elif pourLog == -1:
+            return "\"" + str(attaquant.getNom()) + "\" attaque sans arme antichar \"" + str(cible.getNom()) +"\""
 
         if cible.getVie() > 0:
             return "\"" + str(attaquant.getNom()) + "\" attaque \"" + str(cible.getNom()) + "\" pour " + str(
