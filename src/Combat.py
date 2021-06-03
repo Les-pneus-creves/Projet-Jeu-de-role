@@ -102,7 +102,7 @@ class Combat(Evenement):
     def creerEquipeMechant(self, combat):
 
         equipetemp = []
-        if combat == "Kv2v2v2":
+        if combat["unite"]["nom"] == "Kv2v2v2":
             nb = 1
         else:
             nb = random.randint(1, 3)
