@@ -1,14 +1,15 @@
 import Evenement
 import pygame
 import pygame_menu
+import Objet  # pour faire test
 from EquipeDePersonnages import EquipeDePersonnages
-from Personnage import Personnage #pour faire test
+from Personnage import Personnage  # pour faire test
 from Recompense import Recompense
 from Combat import Combat
 
 
 class ModeEvenement:
-    def __init__(self, evenement : Evenement):
+    def __init__(self, evenement: Evenement):
         self._evenement = evenement
         # self._surface = pygame.display.set_mode((1600,1400))
 
@@ -37,18 +38,17 @@ class ModeEvenement:
 
 if __name__ == "__main__":
 
-
     pygame.init()
 
     window = pygame.display.set_mode((1000, 1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-    jean = Personnage("Jean", 15, 7, 8, 15,None)
-    bob  = Personnage("Bob", 10, 8, 6, 12,None)
+    jean = Personnage("Jean", 15, 7, 8, 15, None)
+    bob = Personnage("Bob", 10, 8, 6, 12, None)
     jeanCastex = Personnage("JeanCastex", 12, 9, 4, 4, None)
-
+    pz = Objet.Arme("Arme_Panzerschreck", "src/images/Objets/Panzerschreck.png", 25, 2)
+    bob.addToInventaire(pz)
 
     equipe = EquipeDePersonnages(jean, bob, jeanCastex)
-
 
     c = Combat(equipe)
 
