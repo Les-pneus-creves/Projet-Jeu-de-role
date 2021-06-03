@@ -36,19 +36,23 @@ class PlateauDeJeu:
         self.__plateau = []
         images = []
         typeCase = []
+        proba = []
 
         for l in range(self.__nblayers):
             self.__plateau.append([])
             images.append([])
             typeCase.append([])
+            proba.append([])
             for i in range(self.__width):
                 self.__plateau[l].append([])
                 images[l].append([])
                 typeCase[l].append([])
+                proba[l].append([])
                 for j in range(self.__height):
                     self.__plateau[l][i].append(None)
                     images[l][i].append(0)
                     typeCase[l][i].append(0)
+                    proba[l][i].append(0)
 
         l = 0
         for layer in tmxdata.layers:
@@ -56,6 +60,8 @@ class PlateauDeJeu:
                 images[l][x][y] = image
                 try:
                     typeCase[l][x][y] = tmxdata.get_tile_properties_by_gid(layer.data[x][y])["type"]
+                    proba[l][x][y] = tmxdata.get_tile_properties_by_gid(layer.data[x][y])["proba"]
+
                 except KeyError:
                     print(x, y, "il n'y pas de type de case sur cette case ...")
 
@@ -64,7 +70,7 @@ class PlateauDeJeu:
         for l in range(self.__nblayers):
             for i in range(self.__width):
                 for j in range(self.__height):
-                    self.__plateau[l][i][j] = Case(images[l][i][j], typeCase[l][i][j])
+                    self.__plateau[l][i][j] = Case(images[l][i][j], typeCase[l][i][j], proba[l][i][j])
 
         self.__tileheight /= 2
         self.__tilewidth /= 2
