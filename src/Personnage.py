@@ -80,19 +80,18 @@ class Personnage:
     def removeFromInventaire(self, objet: Objet, nombre: int = 1):
         self._inventaire.retirer(objet, nombre)
 
+    def __str__(self) -> str:
+        return "nom: " + self._nom + " vie: " + str(self._vie)
 
-def __str__(self) -> str:
-    return "nom: " + self._nom + " vie: " + str(self._vie)
 
-
-def render(self, window, minx, miny):
-    posx = minx
-    posy = miny
-    window.blit(pygame.transform.scale(self._image, (60, 60)), (posx, posy))
-    posx += 90
-    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
-    text = font.render(self._nom, True, (255, 255, 255))
-    window.blit(text, (posx, posy))
+    def render(self, window, minx, miny):
+        posx = minx
+        posy = miny
+        window.blit(pygame.transform.scale(self._image, (60, 60)), (posx, posy))
+        posx += 90
+        font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+        text = font.render(self._nom, True, (255, 255, 255))
+        window.blit(text, (posx, posy))
 
 
 if __name__ == "__main__":
