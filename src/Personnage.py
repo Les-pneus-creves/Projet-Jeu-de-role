@@ -4,6 +4,7 @@ from typing import Tuple
 import random
 import Personnage
 from Inventaire import Inventaire
+from Objet import Objet
 
 
 class Personnage:
@@ -70,8 +71,14 @@ class Personnage:
         return degat
 
 
-def getInventaire(self):
-    return self._inventaire
+    def getInventaire(self):
+        return self._inventaire
+
+    def addToInventaire(self, objet: Objet, nombre: int = 1):
+        self._inventaire.ajouter(objet, nombre)
+
+    def removeFromInventaire(self, objet: Objet, nombre: int = 1):
+        self._inventaire.retirer(objet, nombre)
 
 
 def __str__(self) -> str:
