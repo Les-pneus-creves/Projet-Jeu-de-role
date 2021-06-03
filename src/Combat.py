@@ -59,14 +59,20 @@ class Combat(Evenement):
 
         # création du menu "principal"
 
-        self._menu = pygame_menu.Menu(titre, 1000, 1000)
+        taille = list(pygame.display.get_window_size())
+        taille[0] /= 1.25
+        taille[1] /= 1.25
+        self._menu = pygame_menu.Menu(titre, taille[0], taille[1])
         self._menu.add.label(texte)
         self._menu.add.image(image)
         self._menu.add.button("Voir logs", self._log)
 
     def creerMenuCombat(self, logs):
         # création du menu log
-        self._log = pygame_menu.Menu("logs de combat", 1000, 1000, center_content=False)
+        taille = list(pygame.display.get_window_size())
+        taille[0] /= 1.25
+        taille[1] /= 1.25
+        self._log = pygame_menu.Menu("logs de combat", taille[0], taille[1], center_content=False)
         for entree in logs:
             self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
         self._log.add.button("Quitter", self.mettreFin)
