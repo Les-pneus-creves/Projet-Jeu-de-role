@@ -118,7 +118,7 @@ class Combat(Evenement):
             return EquipeDePersonnages(equipetemp[0], equipetemp[1], equipetemp[2])
 
     # Methode qui creer un mechant avec les valeurs aléatoire du json
-    def creerMechant(selfself, modele, i: int):
+    def creerMechant(self, modele, i: int):
 
         vie = random.randint(modele["vieMin"], modele["vieMax"])
         force = random.randint(modele["forceMin"], modele["forceMax"])
