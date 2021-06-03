@@ -35,6 +35,9 @@ class ModeEvenement:
     def getEnCours(self):
         return self._evenement.getEnCours()
 
+    def getVictoire(self):
+        return self._evenement.getVictoire()
+
 
 if __name__ == "__main__":
 

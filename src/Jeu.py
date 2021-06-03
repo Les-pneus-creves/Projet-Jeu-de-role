@@ -132,6 +132,9 @@ class Jeu:
             if not self._modeEvenement.getEnCours():
                 self._etatActuel = Etats.Expedition
                 self._whatAppend = None
+                print(self._modeEvenement.getVictoire())
+                if self._modeEvenement.getVictoire() == False:
+                    self._etatActuel = Etats.Gestion
         else:
             print("Etat inexistant dsl ...")
 

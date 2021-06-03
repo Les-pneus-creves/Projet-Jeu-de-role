@@ -6,6 +6,7 @@ class Evenement(ABC):
 
     def __init__(self):
         self._enCours: bool = True
+        self._victoire = True
         self._texteDescr: str = ""
         self._menu = None
 
@@ -17,6 +18,9 @@ class Evenement(ABC):
 
     def getEnCours(self) -> bool:
         return self._enCours
+
+    def getVictoire(self):
+        return self._victoire
 
     def setEncours(self, boule: bool):
         self._enCours = boule

@@ -25,11 +25,6 @@ class Combat(Evenement):
         self._equipeMechant: EquipeDePersonnages = self.creerEquipeMechant(self.eventJson)
         self._equipe = equipe
 
-    # ----------
-
-    def getMenu(self):
-        return self._menu
-
     # Méthode permettant de donner au combat l'équipe de personnage Joueur qui va se battre et déroule la logique de combat
     def lancement(self):
         logs = []
@@ -47,6 +42,7 @@ class Combat(Evenement):
                         logs.append(self.faireAttaquer(perso, self._choisirCible(m)))
         if m.getVivante():
             logs.append("Les méchants ont gagné")
+            self._victoire = False
         else:
             logs.append("Les gentils ont gagné")
 
