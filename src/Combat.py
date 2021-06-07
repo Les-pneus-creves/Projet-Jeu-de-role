@@ -25,6 +25,11 @@ class Combat(Evenement):
         self._equipeMechant: EquipeDePersonnages = self.creerEquipeMechant(self.eventJson)
         self._equipe = equipe
 
+    # ----------
+
+    def getMenu(self):
+        return self._menu
+
     # Méthode permettant de donner au combat l'équipe de personnage Joueur qui va se battre et déroule la logique de combat
     def lancement(self):
         logs = []
@@ -42,7 +47,6 @@ class Combat(Evenement):
                         logs.append(self.faireAttaquer(perso, self._choisirCible(m)))
         if m.getVivante():
             logs.append("Les méchants ont gagné")
-            self._victoire = False
         else:
             logs.append("Les gentils ont gagné")
 
@@ -55,20 +59,14 @@ class Combat(Evenement):
 
         # création du menu "principal"
 
-        taille = list(pygame.display.get_window_size())
-        taille[0] /= 1.25
-        taille[1] /= 1.25
-        self._menu = pygame_menu.Menu(titre, taille[0], taille[1])
+        self._menu = pygame_menu.Menu(titre, 1000, 1000)
         self._menu.add.label(texte)
         self._menu.add.image(image)
         self._menu.add.button("Voir logs", self._log)
 
     def creerMenuCombat(self, logs):
         # création du menu log
-        taille = list(pygame.display.get_window_size())
-        taille[0] /= 1.25
-        taille[1] /= 1.25
-        self._log = pygame_menu.Menu("logs de combat", taille[0], taille[1], center_content=False)
+        self._log = pygame_menu.Menu("logs de combat", 1000, 1000, center_content=False)
         for entree in logs:
             self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
         self._log.add.button("Quitter", self.mettreFin)
