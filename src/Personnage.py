@@ -5,6 +5,9 @@ import random
 import Personnage
 from Inventaire import Inventaire
 from Objet import Objet
+from copy import copy
+
+coordInScreen = [0, 830]
 
 
 class Personnage:
@@ -20,6 +23,8 @@ class Personnage:
             self._image = pygame.image.load(image).convert()
         self._estVivant = True
         self._inventaire = Inventaire(1, 1, 6)
+        self.coordInScreen = copy(coordInScreen)
+        coordInScreen[0] += 4 * 60 + 30
 
     def mourir(self) -> None:
         self._estVivant = False
@@ -84,14 +89,17 @@ class Personnage:
         return "nom: " + self._nom + " vie: " + str(self._vie)
 
 
-    def render(self, window, minx, miny):
-        posx = minx
-        posy = miny
-        window.blit(pygame.transform.scale(self._image, (60, 60)), (posx, posy))
-        posx += 90
+    def render(self, window):
+        window.blit(pygame.transform.scale(self._image, (60, 60)), self.coordInScreen)
+        posx = self.coordInScreen[0] + 90
+        posy = self.coordInScreen[1]
         font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
         text = font.render(self._nom, True, (255, 255, 255))
         window.blit(text, (posx, posy))
+        self._inventaire.render(window, self.coordInScreen[0], self.coordInScreen[1] + 60)
+
+    def isInInventory(self, coord: tuple) -> bool:
+        return self.coordInScreen[0] <= coord[0] <= (self.coordInScreen[0] + (4 * 60)) and (self.coordInScreen[1] + 60) <= coord[1] <= (self.coordInScreen[1] + (3 * 60))
 
 
 if __name__ == "__main__":
