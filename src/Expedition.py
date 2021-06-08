@@ -3,6 +3,7 @@ import math
 from PlateauDeJeu import PlateauDeJeu
 import pygame
 import EquipeDePersonnages
+import Objet
 
 
 class Expedition:
@@ -12,6 +13,8 @@ class Expedition:
         self._equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
         self._eventEnCours: Evenement = None  # Even ement actuellement en cours
         self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l'éxpedition se déroule
+        for personnage in self._equipe.getPersonnages():
+            personnage.addToInventaire(Objet.objets["armes"]["Arme_Arc"])
 
     # lecture des evenements
     def on_event(self, event) -> tuple:
@@ -31,8 +34,8 @@ class Expedition:
                     return xInGrid, yInGrid
                 else:
                     return None
-            elif self.isInOneInventory((x, y)):
-                print("Dans l'inventaire GG")
+            elif self.isInOneInventory((x, y))[0]:
+                print(self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]].getObjetByCoord((x, y)))
             else:
                 return None
 
@@ -45,6 +48,7 @@ class Expedition:
 
     # Calcul des affichages
     def on_render(self, window) -> None:
+        window.fill((70, 70, 70))
         self._plateau.render(window)
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
         self.renderPersonnageInventaire(window)
@@ -76,8 +80,9 @@ class Expedition:
 
     def isInOneInventory(self, coord: tuple):
         peronnages = self._equipe.getPersonnages()
-
+        i = 0
         for peronnage in peronnages:
             if peronnage.isInInventory(coord):
-                return True
-        return False
+                return True, i
+            i += 1
+        return False, i

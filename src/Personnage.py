@@ -101,6 +101,12 @@ class Personnage:
     def isInInventory(self, coord: tuple) -> bool:
         return self.coordInScreen[0] <= coord[0] <= (self.coordInScreen[0] + (4 * 60)) and (self.coordInScreen[1] + 60) <= coord[1] <= (self.coordInScreen[1] + (3 * 60))
 
+    def getObjetByCoord(self, point: tuple):
+        if self.isInInventory(point):
+            coord = int((point[0] - self.coordInScreen[0]) / 60), int((point[1] - (self.coordInScreen[1] + 60)) / 60)
+            index = coord[0] + (coord[1] * 4)
+            return self._inventaire[index].getObjet()
+
 
 if __name__ == "__main__":
     x = Personnage("bob", 18, 10, 10, 1, "bob")

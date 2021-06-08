@@ -12,6 +12,7 @@ from PlateauDeJeu import PlateauDeJeu
 from ModeEvenement import ModeEvenement
 from Recompense import Recompense
 from Combat import Combat
+import Objet
 
 Etats = Enum('Etats', 'Gestion Expedition Evenement')
 """Enum permettant de gérer la machine à état du jeu de manière plus jolie"""
@@ -32,6 +33,7 @@ class Jeu:
         pygame.init()
         self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self._running = True
+        Objet.loadAllObjets()
 
         plateau = PlateauDeJeu('src/maps/1.tmx')
         equipe = EquipeDePersonnages(Personnage("Frank", 40, 12, 5, 5, "src/images/Smiguel.jpg"),
@@ -91,7 +93,7 @@ class Jeu:
         """Calcul des affichages et affichage sur la fenêtre"""
 
         if self._etatActuel == Etats.Gestion:
-            pass
+            self._window.fill((255, 70, 70))
 
         elif self._etatActuel == Etats.Expedition:
             self._window.fill((0, 0, 0))
