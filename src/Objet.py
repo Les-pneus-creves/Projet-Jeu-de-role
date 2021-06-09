@@ -1,4 +1,10 @@
 import pygame
+import json
+import os
+
+objets = {"armes": {},
+          "equipements": {},
+          "ressources": {}}
 
 
 class Objet:
@@ -18,7 +24,7 @@ class Objet:
         """
 
         self._nom = nom
-        self._image = pygame.image.load(image).convert()
+        self._image = pygame.image.load(image).convert_alpha()
         self._stackable = stackable
 
     def __str__(self):
@@ -89,10 +95,31 @@ class Equipement(Objet):
             Modificateur de vie appliqué sur le personnage lorsque l'arme est équipé par un `Personnage`.
         """
 
-        super(Arme, self).__init__(nom, image)
+        super(Equipement, self).__init__(nom, image)
         self._modVie = modVie
 
     def getModVie(self):
         """Retourne le modificateur de vie de l'arme."""
 
         return self._modVie
+
+def loadAllObjets():
+    with open("src/dossierJson/objets.json") as fichier:
+        data = json.loads(fichier.read())
+        for nom, arme in data["armes"].items():
+            if os.path.isfile(arme["image"]):
+                objets["armes"][nom] = (Arme(nom, arme["image"], arme["modDegat"], arme["modPrecision"]))
+            else:
+                raise FileNotFoundError("L'image de l'arme " + nom + " est introuvable ...")
+
+        for nom, equipements in data["equipements"].items():
+            if os.path.isfile(equipements["image"]):
+                objets["equipements"][nom] = (Equipement(nom, equipements["image"], equipements["modVie"]))
+            else:
+                raise FileNotFoundError("L'image de l'equipement " + nom + " est introuvable ...")
+
+        for nom, ressources in data["ressources"].items():
+            if os.path.isfile(equipements["image"]):
+                objets["ressources"][nom] = (Objet(nom, ressources["image"], ressources["stackable"]))
+            else:
+                raise FileNotFoundError("L'image de la ressource " + nom + " est introuvable ...")

@@ -116,9 +116,10 @@ class Slot_inventaire:
         posy : int
             Position y (en pixel) à partir de laquelle l'inventaire sera affiché sur la fenêtre.
         """
-
-        window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
-        if not self.vide():
+        if self.vide():
+            window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
+        else:
+            window.blit(pygame.transform.scale(typeObjetImages["Ressources"], (60, 60)), (posx, posy))
             window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
 
 def loadSlotsImages():
