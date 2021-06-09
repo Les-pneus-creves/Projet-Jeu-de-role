@@ -13,6 +13,31 @@ coordInScreen = [0, 830]
 class Personnage:
 
     def __init__(self, nom: str, vie: int, force: int, precision: int, initiative: int, image: str):
+        """ Un Personnage a différentes stats
+
+        Parameters
+        ----------
+        _nom: str
+            Nom du personnage
+        _vie: int
+            Le nombre de point actuel de vie
+        _vieMax: int
+            La vie maximale du Personnage
+        _force: int
+            Le nombre de point de dégats de base que le personnage inflige
+        _precision: int
+            Un chiffre allant representant la chance sur 10 de réussir un coup
+        _initiative: int
+            Permet de commencer plus tot dans un `Combat`
+        _image: pygame.image
+            L'image du personnage
+        _estVivant: bool
+            True: le personnage est vivant. False il est mort.
+        _inventaire: `Inventaire`
+            L'inventaire du personnage
+        _coordInScreen: tuple[int]
+            Coordonées pour l'affichage de l'équipe sur la map
+        """
         self._nom = nom
         self._vie = vie
         self._vieMax = vie
@@ -41,14 +66,34 @@ class Personnage:
     def getInitiative(self) -> int:
         return self._initiative
 
-    # Retourne un int pour la construction de log
     def prendreDegat(self, degat: int) -> int:
+        """ Methode retirant de la vie au personnage
+
+        Parameters
+        ----------
+        degat: int
+            la quantité de point de vie que le personnage va perdre
+
+
+        Retourne un int pour la construction de log
+        """
         self._vie = self._vie - degat
         if self._vie <= 0:
             self._estVivant = False
         return degat
 
     def attaquer(self, cible: Personnage) -> int:
+        """ Methode appelant la méthode prendrerDegat du Personnage ciblé
+
+        Parameters
+        ----------
+
+        Cible: Personnage
+            Personnage ciblé
+
+        Retourne un int pour la construction de log au moment du combat
+
+        """
 
         degat = 0
 
