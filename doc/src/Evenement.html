@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>Evenement API documentation</title>
+<title>src.Evenement API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>Evenement</code></h1>
+<h1 class="title">Module <code>src.Evenement</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -34,6 +34,7 @@ class Evenement(ABC):
 
     def __init__(self):
         self._enCours: bool = True
+        self._victoire = True
         self._texteDescr: str = &#34;&#34;
         self._menu = None
 
@@ -45,6 +46,9 @@ class Evenement(ABC):
 
     def getEnCours(self) -&gt; bool:
         return self._enCours
+
+    def getVictoire(self):
+        return self._victoire
 
     def setEncours(self, boule: bool):
         self._enCours = boule
@@ -67,7 +71,7 @@ class Evenement(ABC):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="Evenement.Evenement"><code class="flex name class">
+<dt id="src.Evenement.Evenement"><code class="flex name class">
 <span>class <span class="ident">Evenement</span></span>
 </code></dt>
 <dd>
@@ -81,6 +85,7 @@ inheritance.</p></div>
 
     def __init__(self):
         self._enCours: bool = True
+        self._victoire = True
         self._texteDescr: str = &#34;&#34;
         self._menu = None
 
@@ -92,6 +97,9 @@ inheritance.</p></div>
 
     def getEnCours(self) -&gt; bool:
         return self._enCours
+
+    def getVictoire(self):
+        return self._victoire
 
     def setEncours(self, boule: bool):
         self._enCours = boule
@@ -108,14 +116,9 @@ inheritance.</p></div>
 <ul class="hlist">
 <li>abc.ABC</li>
 </ul>
-<h3>Subclasses</h3>
-<ul class="hlist">
-<li><a title="Combat.Combat" href="Combat.html#Combat.Combat">Combat</a></li>
-<li><a title="Recompense.Recompense" href="Recompense.html#Recompense.Recompense">Recompense</a></li>
-</ul>
 <h3>Methods</h3>
 <dl>
-<dt id="Evenement.Evenement.creerMenu"><code class="name flex">
+<dt id="src.Evenement.Evenement.creerMenu"><code class="name flex">
 <span>def <span class="ident">creerMenu</span></span>(<span>self, titre: str, texte: str, image)</span>
 </code></dt>
 <dd>
@@ -129,7 +132,7 @@ def creerMenu(self, titre: str, texte: str, image):
     pass</code></pre>
 </details>
 </dd>
-<dt id="Evenement.Evenement.getEnCours"><code class="name flex">
+<dt id="src.Evenement.Evenement.getEnCours"><code class="name flex">
 <span>def <span class="ident">getEnCours</span></span>(<span>self) ‑> bool</span>
 </code></dt>
 <dd>
@@ -142,7 +145,7 @@ def creerMenu(self, titre: str, texte: str, image):
     return self._enCours</code></pre>
 </details>
 </dd>
-<dt id="Evenement.Evenement.getMenu"><code class="name flex">
+<dt id="src.Evenement.Evenement.getMenu"><code class="name flex">
 <span>def <span class="ident">getMenu</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -155,7 +158,7 @@ def creerMenu(self, titre: str, texte: str, image):
     return self._menu</code></pre>
 </details>
 </dd>
-<dt id="Evenement.Evenement.getTexteDescr"><code class="name flex">
+<dt id="src.Evenement.Evenement.getTexteDescr"><code class="name flex">
 <span>def <span class="ident">getTexteDescr</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -168,8 +171,21 @@ def creerMenu(self, titre: str, texte: str, image):
     return self._texteDescr</code></pre>
 </details>
 </dd>
-<dt id="Evenement.Evenement.lancement"><code class="name flex">
-<span>def <span class="ident">lancement</span></span>(<span>self, equipePerso: <module '<a title="EquipeDePersonnages" href="EquipeDePersonnages.html">EquipeDePersonnages</a>' from '/home/thomas/Documents/2I/Projet_info/Projet-<a title="Jeu" href="Jeu.html">Jeu</a>-de-role/src/EquipeDePersonnages.py'>) ‑> NoneType</span>
+<dt id="src.Evenement.Evenement.getVictoire"><code class="name flex">
+<span>def <span class="ident">getVictoire</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getVictoire(self):
+    return self._victoire</code></pre>
+</details>
+</dd>
+<dt id="src.Evenement.Evenement.lancement"><code class="name flex">
+<span>def <span class="ident">lancement</span></span>(<span>self, equipePerso: <module 'EquipeDePersonnages' from '/home/thomas/Documents/2I/Projet_info/Projet-Jeu-de-role/<a title="src" href="index.html">src</a>/EquipeDePersonnages.py'>) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -182,7 +198,7 @@ def lancement(self, equipePerso: EquipeDePersonnages) -&gt; None:
     pass</code></pre>
 </details>
 </dd>
-<dt id="Evenement.Evenement.setEncours"><code class="name flex">
+<dt id="src.Evenement.Evenement.setEncours"><code class="name flex">
 <span>def <span class="ident">setEncours</span></span>(<span>self, boule: bool)</span>
 </code></dt>
 <dd>
@@ -206,17 +222,23 @@ def lancement(self, equipePerso: EquipeDePersonnages) -&gt; None:
 <ul></ul>
 </div>
 <ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="Evenement.Evenement" href="#Evenement.Evenement">Evenement</a></code></h4>
+<h4><code><a title="src.Evenement.Evenement" href="#src.Evenement.Evenement">Evenement</a></code></h4>
 <ul class="two-column">
-<li><code><a title="Evenement.Evenement.creerMenu" href="#Evenement.Evenement.creerMenu">creerMenu</a></code></li>
-<li><code><a title="Evenement.Evenement.getEnCours" href="#Evenement.Evenement.getEnCours">getEnCours</a></code></li>
-<li><code><a title="Evenement.Evenement.getMenu" href="#Evenement.Evenement.getMenu">getMenu</a></code></li>
-<li><code><a title="Evenement.Evenement.getTexteDescr" href="#Evenement.Evenement.getTexteDescr">getTexteDescr</a></code></li>
-<li><code><a title="Evenement.Evenement.lancement" href="#Evenement.Evenement.lancement">lancement</a></code></li>
-<li><code><a title="Evenement.Evenement.setEncours" href="#Evenement.Evenement.setEncours">setEncours</a></code></li>
+<li><code><a title="src.Evenement.Evenement.creerMenu" href="#src.Evenement.Evenement.creerMenu">creerMenu</a></code></li>
+<li><code><a title="src.Evenement.Evenement.getEnCours" href="#src.Evenement.Evenement.getEnCours">getEnCours</a></code></li>
+<li><code><a title="src.Evenement.Evenement.getMenu" href="#src.Evenement.Evenement.getMenu">getMenu</a></code></li>
+<li><code><a title="src.Evenement.Evenement.getTexteDescr" href="#src.Evenement.Evenement.getTexteDescr">getTexteDescr</a></code></li>
+<li><code><a title="src.Evenement.Evenement.getVictoire" href="#src.Evenement.Evenement.getVictoire">getVictoire</a></code></li>
+<li><code><a title="src.Evenement.Evenement.lancement" href="#src.Evenement.Evenement.lancement">lancement</a></code></li>
+<li><code><a title="src.Evenement.Evenement.setEncours" href="#src.Evenement.Evenement.setEncours">setEncours</a></code></li>
 </ul>
 </li>
 </ul>

@@ -13,3 +13,8 @@ Pour faire tourner le jeu, il vous faudra avoir installé :
 
 Il suffit en suite de lancer le fichier Jeu.py depuis la racine du projet avec Python 3.8.5 :
     `python3.8 src/Jeu.py`
+
+## Instruction de mise à jour de la doc :
+
+Voici la commande pour générer la doc :
+`pdoc --html src/ --output-dir doc/ --force`

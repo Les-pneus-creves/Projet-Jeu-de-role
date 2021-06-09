@@ -9,17 +9,27 @@ import Objet
 class Expedition:
 
     def __init__(self, equipe, plateau):
+        """ Une expédition !
+
+        Parameters
+        ----------
+        _temps: int
+            Numéro du tour de l'expédition en cour (Non exploité dans la version actuel du jeu)
+        _equipe: `EquipeDePersonnages`
+            Equipe de personnage joueur du joueur
+        _plateau: `PlateauDeJeu`
+            Plateau sur lequel l'expédition se déroule
+        """
         self._temps: int = 1  # Numéro du tour de l'expédition en cour
         self._equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
-        self._eventEnCours: Evenement = None  # Even ement actuellement en cours
         self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l'éxpedition se déroule
         for personnage in self._equipe.getPersonnages():
             personnage.addToInventaire(Objet.objets["armes"]["Arc"])
 
         self.objetSelectione = None
 
-    # lecture des evenements
     def on_event(self, event) -> tuple:
+        """Lecture des évènements pygame tel les clics"""
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Lorsque je clic gauche sur une unite et que j'en ai pas de selectionnée
 
             x = int(event.pos[0])  # Enregistre la coordonnée y de l'event
@@ -59,16 +69,17 @@ class Expedition:
 
     # Calcul des mises à jours
     def on_loop(self) -> None:
+        """Calcul des mises à jours du jeu"""
         pass
 
     # Calcul des affichages
     def on_render(self, window) -> None:
+        """Calcul des affichages et affichage sur la fenêtre"""
         window.fill((70, 70, 70))
         self._plateau.render(window)
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
         self.renderPersonnageInventaire(window)
 
-    # Méthode lançant un événement précis
     def returnTypeCase(self, coord) -> str:
         return self._plateau.getCase(coord).getTypeCase()
 
@@ -76,6 +87,7 @@ class Expedition:
         return self._equipe
 
     def pointToCoord(self, coord: tuple):
+        """Méthode permettant de mettre transformer les coordonnées en pixel en coordonnées sur le plateau"""
 
         x = (coord[0] - (self._plateau.getTilewidth() / 2)) / self._plateau.getTilewidth()
 
@@ -87,13 +99,15 @@ class Expedition:
         return q, r
 
     def renderPersonnageInventaire(self, window):
+        """Méthode pour afficher les encarts de chaque personnages avec leurs inventaires"""
         peronnages = self._equipe.getPersonnages()
 
         for peronnage in peronnages:
-            """ Il faudrait aussi afficher ici les noms de chaques personnes devant leur inventaires """
+            """ Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires """
             peronnage.render(window)
 
     def isInOneInventory(self, coord: tuple):
+        """Méthode pour savoir si le clic se trouve dans un `inventaire` et si oui dans lequel"""
         peronnages = self._equipe.getPersonnages()
         i = 0
         for peronnage in peronnages:

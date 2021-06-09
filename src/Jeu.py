@@ -1,6 +1,5 @@
 """
-Voici la commande pour générer la doc :
-`pdoc --html --output-dir doc src/*.py --force`
+Programme principale
 """
 
 import pygame
@@ -56,7 +55,7 @@ class Jeu:
         self.on_cleanup()
 
     def on_event(self, events) -> None:
-        """Lecture des evenements pygame tel les clics"""
+        """Lecture des évènements pygame tel les clics"""
         for event in events:
             if event.type == pygame.QUIT:
                 self._running = False

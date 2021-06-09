@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>ModeEvenement API documentation</title>
+<title>src.ModeEvenement API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>ModeEvenement</code></h1>
+<h1 class="title">Module <code>src.ModeEvenement</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -29,14 +29,15 @@
 <pre><code class="python">import Evenement
 import pygame
 import pygame_menu
+import Objet  # pour faire test
 from EquipeDePersonnages import EquipeDePersonnages
-from Personnage import Personnage #pour faire test
+from Personnage import Personnage  # pour faire test
 from Recompense import Recompense
 from Combat import Combat
 
 
 class ModeEvenement:
-    def __init__(self, evenement : Evenement):
+    def __init__(self, evenement: Evenement):
         self._evenement = evenement
         # self._surface = pygame.display.set_mode((1600,1400))
 
@@ -55,7 +56,6 @@ class ModeEvenement:
 
     # Calcul des affichages
     def on_render(self, window) -&gt; None:
-
         if self._evenement.getEnCours():
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().draw(window)
@@ -63,21 +63,23 @@ class ModeEvenement:
     def getEnCours(self):
         return self._evenement.getEnCours()
 
+    def getVictoire(self):
+        return self._evenement.getVictoire()
+
 
 if __name__ == &#34;__main__&#34;:
-
 
     pygame.init()
 
     window = pygame.display.set_mode((1000, 1000), pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-    jean = Personnage(&#34;Jean&#34;, 15, 7, 8, 15,None)
-    bob  = Personnage(&#34;Bob&#34;, 10, 8, 6, 12,None)
+    jean = Personnage(&#34;Jean&#34;, 15, 7, 8, 15, None)
+    bob = Personnage(&#34;Bob&#34;, 10, 8, 6, 12, None)
     jeanCastex = Personnage(&#34;JeanCastex&#34;, 12, 9, 4, 4, None)
-
+    pz = Objet.Arme(&#34;Arme_Panzerschreck&#34;, &#34;src/images/Objets/Panzerschreck.png&#34;, 25, 2)
+    bob.addToInventaire(pz)
 
     equipe = EquipeDePersonnages(jean, bob, jeanCastex)
-
 
     c = Combat(equipe)
 
@@ -112,9 +114,9 @@ if __name__ == &#34;__main__&#34;:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="ModeEvenement.ModeEvenement"><code class="flex name class">
+<dt id="src.ModeEvenement.ModeEvenement"><code class="flex name class">
 <span>class <span class="ident">ModeEvenement</span></span>
-<span>(</span><span>evenement: <module '<a title="Evenement" href="Evenement.html">Evenement</a>' from '/home/thomas/Documents/2I/Projet_info/Projet-<a title="Jeu" href="Jeu.html">Jeu</a>-de-role/src/Evenement.py'>)</span>
+<span>(</span><span>evenement: <module 'Evenement' from '/home/thomas/Documents/2I/Projet_info/Projet-Jeu-de-role/<a title="src" href="index.html">src</a>/Evenement.py'>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -123,7 +125,7 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ModeEvenement:
-    def __init__(self, evenement : Evenement):
+    def __init__(self, evenement: Evenement):
         self._evenement = evenement
         # self._surface = pygame.display.set_mode((1600,1400))
 
@@ -142,17 +144,19 @@ if __name__ == &#34;__main__&#34;:
 
     # Calcul des affichages
     def on_render(self, window) -&gt; None:
-
         if self._evenement.getEnCours():
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().draw(window)
 
     def getEnCours(self):
-        return self._evenement.getEnCours()</code></pre>
+        return self._evenement.getEnCours()
+
+    def getVictoire(self):
+        return self._evenement.getVictoire()</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="ModeEvenement.ModeEvenement.getEnCours"><code class="name flex">
+<dt id="src.ModeEvenement.ModeEvenement.getEnCours"><code class="name flex">
 <span>def <span class="ident">getEnCours</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -165,7 +169,7 @@ if __name__ == &#34;__main__&#34;:
     return self._evenement.getEnCours()</code></pre>
 </details>
 </dd>
-<dt id="ModeEvenement.ModeEvenement.getEvenement"><code class="name flex">
+<dt id="src.ModeEvenement.ModeEvenement.getEvenement"><code class="name flex">
 <span>def <span class="ident">getEvenement</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -178,7 +182,20 @@ if __name__ == &#34;__main__&#34;:
     return self._evenement</code></pre>
 </details>
 </dd>
-<dt id="ModeEvenement.ModeEvenement.on_event"><code class="name flex">
+<dt id="src.ModeEvenement.ModeEvenement.getVictoire"><code class="name flex">
+<span>def <span class="ident">getVictoire</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getVictoire(self):
+    return self._evenement.getVictoire()</code></pre>
+</details>
+</dd>
+<dt id="src.ModeEvenement.ModeEvenement.on_event"><code class="name flex">
 <span>def <span class="ident">on_event</span></span>(<span>self, events) ‑> NoneType</span>
 </code></dt>
 <dd>
@@ -193,7 +210,7 @@ if __name__ == &#34;__main__&#34;:
             self._evenement.getMenu().update(events)</code></pre>
 </details>
 </dd>
-<dt id="ModeEvenement.ModeEvenement.on_loop"><code class="name flex">
+<dt id="src.ModeEvenement.ModeEvenement.on_loop"><code class="name flex">
 <span>def <span class="ident">on_loop</span></span>(<span>self) ‑> NoneType</span>
 </code></dt>
 <dd>
@@ -206,7 +223,7 @@ if __name__ == &#34;__main__&#34;:
     pass</code></pre>
 </details>
 </dd>
-<dt id="ModeEvenement.ModeEvenement.on_render"><code class="name flex">
+<dt id="src.ModeEvenement.ModeEvenement.on_render"><code class="name flex">
 <span>def <span class="ident">on_render</span></span>(<span>self, window) ‑> NoneType</span>
 </code></dt>
 <dd>
@@ -216,7 +233,6 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_render(self, window) -&gt; None:
-
     if self._evenement.getEnCours():
         if self._evenement.getMenu().is_enabled():
             self._evenement.getMenu().draw(window)</code></pre>
@@ -233,16 +249,22 @@ if __name__ == &#34;__main__&#34;:
 <ul></ul>
 </div>
 <ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src" href="index.html">src</a></code></li>
+</ul>
+</li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="ModeEvenement.ModeEvenement" href="#ModeEvenement.ModeEvenement">ModeEvenement</a></code></h4>
-<ul class="">
-<li><code><a title="ModeEvenement.ModeEvenement.getEnCours" href="#ModeEvenement.ModeEvenement.getEnCours">getEnCours</a></code></li>
-<li><code><a title="ModeEvenement.ModeEvenement.getEvenement" href="#ModeEvenement.ModeEvenement.getEvenement">getEvenement</a></code></li>
-<li><code><a title="ModeEvenement.ModeEvenement.on_event" href="#ModeEvenement.ModeEvenement.on_event">on_event</a></code></li>
-<li><code><a title="ModeEvenement.ModeEvenement.on_loop" href="#ModeEvenement.ModeEvenement.on_loop">on_loop</a></code></li>
-<li><code><a title="ModeEvenement.ModeEvenement.on_render" href="#ModeEvenement.ModeEvenement.on_render">on_render</a></code></li>
+<h4><code><a title="src.ModeEvenement.ModeEvenement" href="#src.ModeEvenement.ModeEvenement">ModeEvenement</a></code></h4>
+<ul class="two-column">
+<li><code><a title="src.ModeEvenement.ModeEvenement.getEnCours" href="#src.ModeEvenement.ModeEvenement.getEnCours">getEnCours</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.getEvenement" href="#src.ModeEvenement.ModeEvenement.getEvenement">getEvenement</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.getVictoire" href="#src.ModeEvenement.ModeEvenement.getVictoire">getVictoire</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.on_event" href="#src.ModeEvenement.ModeEvenement.on_event">on_event</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.on_loop" href="#src.ModeEvenement.ModeEvenement.on_loop">on_loop</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.on_render" href="#src.ModeEvenement.ModeEvenement.on_render">on_render</a></code></li>
 </ul>
 </li>
 </ul>
