@@ -5,7 +5,7 @@ from enum import Enum
 
 class Case:
     def __init__(self, image, typeCase: str, proba: int):  # , evenement):
-        """ Un case a une iamge pour s'afficher, un type et une probabilité d'evenement.
+        """ Un case a une image pour s'afficher, un type et une probabilité d'evenement.
 
         Parameters
         ----------
