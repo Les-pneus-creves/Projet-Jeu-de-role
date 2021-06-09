@@ -29,7 +29,7 @@ class Jeu:
         self._etatActuel: Etats = Etats.Expedition
 
     def on_init(self) -> None:
-        """Méthode lancée une fois servant a initialisé tout ce qu'il faut"""
+        """Méthode lancée une fois servant a initialise tout ce qu'il faut"""
         pygame.init()
         self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self._running = True
