@@ -6,6 +6,17 @@ from math import floor
 
 class EquipeDePersonnages:
     def __init__(self, *personnages):
+        """ Un case a une image pour s'afficher, un type et une probabilité d'evenement.
+
+                Parameters
+                ----------
+                Argument: *personnages: Liste de `Personnage`
+                    Personnages formant l'équipe
+                _coord : cordoonées de l'équipe sur la map
+                    Type de la case
+                _personnages : list(`Personnage`)
+                    Personnages formant l'équipe
+                                """
         self._coord = (0, 0)
         self._personnages: list = list(personnages)
 
@@ -16,9 +27,9 @@ class EquipeDePersonnages:
     def getPersonnages(self) -> list:
         return self._personnages
 
-    #Retourne tous les personnages vivants de l'équipe
-    def getPersonnagesVivants(self) -> list:
 
+    def getPersonnagesVivants(self) -> list:
+        """Retourne tous les personnages vivants de l'équipe"""
         temp = []
         for perso in self._personnages:
             if perso.estVivant():
@@ -27,6 +38,7 @@ class EquipeDePersonnages:
 
     #proprieté calculée
     def getVivante(self) -> bool:
+        """ Retourne true si il y a au moins un `Personnage` vivant dans l'équipe"""
         temp = False
         for p in self._personnages:
             if p.estVivant():
@@ -42,6 +54,7 @@ class EquipeDePersonnages:
 
 
     def deplacement(self, coord) -> tuple:
+        """ Change les coordonnées de l'équipe"""
         self._coord = coord
 
     def render(self, window, dimmensions) -> None:
