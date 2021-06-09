@@ -39,7 +39,7 @@ class Objet:
     def __init__(self, nom: str, image, stackable: int = 1):
         &#34;&#34;&#34;Un Objet.
 
-        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l&#39;avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -48,7 +48,7 @@ class Objet:
         _image : str
             L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité max de l&#39;objet dans un seul `Slot_inventaire`.
+            La quantité max de l&#39;objet dans un seul `src.Slot_inventaire`.
         &#34;&#34;&#34;
 
         self._nom = nom
@@ -75,7 +75,7 @@ class Arme(Objet):
     def __init__(self, nom: str, image, modDegat, modPrecision):
         &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
 
-        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l&#39;avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -84,11 +84,11 @@ class Arme(Objet):
         _image : str
             L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+            La quantité max de l&#39;objet dans un seul `src.Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
         _modDegat : int
-            Modificateur de dégats appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+            Modificateur de dégats appliqué sur le personnage lorsque l&#39;arme est équipé par un `src.Personnage`.
         _modPrecision : int
-            Modificateur de précision appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+            Modificateur de précision appliqué sur le personnage lorsque l&#39;arme est équipé par un `src.Personnage`.
         &#34;&#34;&#34;
 
         super(Arme, self).__init__(nom, image)
@@ -109,7 +109,7 @@ class Equipement(Objet):
     def __init__(self, nom: str, image, modVie):
         &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
 
-        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l&#39;avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -118,9 +118,9 @@ class Equipement(Objet):
         _image : str
             L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+            La quantité max de l&#39;objet dans un seul `src.Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
         _modVie : int
-            Modificateur de vie appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+            Modificateur de vie appliqué sur le personnage lorsque l&#39;arme est équipé par un `src.Personnage`.
         &#34;&#34;&#34;
 
         super(Equipement, self).__init__(nom, image)
@@ -208,7 +208,7 @@ def loadAllObjets():
 </code></dt>
 <dd>
 <div class="desc"><p>Une arme est un objet avec des attributs et des getter supplémentaire.</p>
-<p>Les différents Objets sont instancié à l'avance dans <code>Jeu.py</code> à partir du fichier <code>objet.json</code>.</p>
+<p>Les différents Objets sont instancié à l'avance dans <code><a title="src.Jeu" href="Jeu.html">src.Jeu</a></code> à partir du fichier <code>objet.json</code>.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>_nom</code></strong> :&ensp;<code>str</code></dt>
@@ -216,11 +216,11 @@ def loadAllObjets():
 <dt><strong><code>_image</code></strong> :&ensp;<code>str</code></dt>
 <dd>L'image de l'objet.</dd>
 <dt><strong><code>_stackable</code></strong> :&ensp;<code>int</code></dt>
-<dd>La quantité max de l'objet dans un seul <code>Slot_inventaire</code>. (toujours égale à 1 dans le cas de l'Arme)</dd>
+<dd>La quantité max de l'objet dans un seul <code><a title="src.Slot_inventaire" href="Slot_inventaire.html">src.Slot_inventaire</a></code>. (toujours égale à 1 dans le cas de l'Arme)</dd>
 <dt><strong><code>_modDegat</code></strong> :&ensp;<code>int</code></dt>
-<dd>Modificateur de dégats appliqué sur le personnage lorsque l'arme est équipé par un <code>Personnage</code>.</dd>
+<dd>Modificateur de dégats appliqué sur le personnage lorsque l'arme est équipé par un <code><a title="src.Personnage" href="Personnage.html">src.Personnage</a></code>.</dd>
 <dt><strong><code>_modPrecision</code></strong> :&ensp;<code>int</code></dt>
-<dd>Modificateur de précision appliqué sur le personnage lorsque l'arme est équipé par un <code>Personnage</code>.</dd>
+<dd>Modificateur de précision appliqué sur le personnage lorsque l'arme est équipé par un <code><a title="src.Personnage" href="Personnage.html">src.Personnage</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -230,7 +230,7 @@ def loadAllObjets():
     def __init__(self, nom: str, image, modDegat, modPrecision):
         &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
 
-        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l&#39;avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -239,11 +239,11 @@ def loadAllObjets():
         _image : str
             L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+            La quantité max de l&#39;objet dans un seul `src.Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
         _modDegat : int
-            Modificateur de dégats appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+            Modificateur de dégats appliqué sur le personnage lorsque l&#39;arme est équipé par un `src.Personnage`.
         _modPrecision : int
-            Modificateur de précision appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+            Modificateur de précision appliqué sur le personnage lorsque l&#39;arme est équipé par un `src.Personnage`.
         &#34;&#34;&#34;
 
         super(Arme, self).__init__(nom, image)
@@ -314,7 +314,7 @@ def loadAllObjets():
 </code></dt>
 <dd>
 <div class="desc"><p>Une arme est un objet avec des attributs et des getter supplémentaire.</p>
-<p>Les différents Objets sont instancié à l'avance dans <code>Jeu.py</code> à partir du fichier <code>objet.json</code>.</p>
+<p>Les différents Objets sont instancié à l'avance dans <code><a title="src.Jeu" href="Jeu.html">src.Jeu</a></code> à partir du fichier <code>objet.json</code>.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>_nom</code></strong> :&ensp;<code>str</code></dt>
@@ -322,9 +322,9 @@ def loadAllObjets():
 <dt><strong><code>_image</code></strong> :&ensp;<code>str</code></dt>
 <dd>L'image de l'objet.</dd>
 <dt><strong><code>_stackable</code></strong> :&ensp;<code>int</code></dt>
-<dd>La quantité max de l'objet dans un seul <code>Slot_inventaire</code>. (toujours égale à 1 dans le cas de l'Arme)</dd>
+<dd>La quantité max de l'objet dans un seul <code><a title="src.Slot_inventaire" href="Slot_inventaire.html">src.Slot_inventaire</a></code>. (toujours égale à 1 dans le cas de l'Arme)</dd>
 <dt><strong><code>_modVie</code></strong> :&ensp;<code>int</code></dt>
-<dd>Modificateur de vie appliqué sur le personnage lorsque l'arme est équipé par un <code>Personnage</code>.</dd>
+<dd>Modificateur de vie appliqué sur le personnage lorsque l'arme est équipé par un <code><a title="src.Personnage" href="Personnage.html">src.Personnage</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -334,7 +334,7 @@ def loadAllObjets():
     def __init__(self, nom: str, image, modVie):
         &#34;&#34;&#34;Une arme est un objet avec des attributs et des getter supplémentaire.
 
-        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l&#39;avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -343,9 +343,9 @@ def loadAllObjets():
         _image : str
             L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité max de l&#39;objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
+            La quantité max de l&#39;objet dans un seul `src.Slot_inventaire`. (toujours égale à 1 dans le cas de l&#39;Arme)
         _modVie : int
-            Modificateur de vie appliqué sur le personnage lorsque l&#39;arme est équipé par un `Personnage`.
+            Modificateur de vie appliqué sur le personnage lorsque l&#39;arme est équipé par un `src.Personnage`.
         &#34;&#34;&#34;
 
         super(Equipement, self).__init__(nom, image)
@@ -395,7 +395,7 @@ def loadAllObjets():
 </code></dt>
 <dd>
 <div class="desc"><p>Un Objet.</p>
-<p>Les différents Objets sont instancié à l'avance dans <code>Jeu.py</code> à partir du fichier <code>objet.json</code>.</p>
+<p>Les différents Objets sont instancié à l'avance dans <code><a title="src.Jeu" href="Jeu.html">src.Jeu</a></code> à partir du fichier <code>objet.json</code>.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>_nom</code></strong> :&ensp;<code>str</code></dt>
@@ -403,7 +403,7 @@ def loadAllObjets():
 <dt><strong><code>_image</code></strong> :&ensp;<code>str</code></dt>
 <dd>L'image de l'objet.</dd>
 <dt><strong><code>_stackable</code></strong> :&ensp;<code>int</code></dt>
-<dd>La quantité max de l'objet dans un seul <code>Slot_inventaire</code>.</dd>
+<dd>La quantité max de l'objet dans un seul <code><a title="src.Slot_inventaire" href="Slot_inventaire.html">src.Slot_inventaire</a></code>.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -413,7 +413,7 @@ def loadAllObjets():
     def __init__(self, nom: str, image, stackable: int = 1):
         &#34;&#34;&#34;Un Objet.
 
-        Les différents Objets sont instancié à l&#39;avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l&#39;avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -422,7 +422,7 @@ def loadAllObjets():
         _image : str
             L&#39;image de l&#39;objet.
         _stackable : int
-            La quantité max de l&#39;objet dans un seul `Slot_inventaire`.
+            La quantité max de l&#39;objet dans un seul `src.Slot_inventaire`.
         &#34;&#34;&#34;
 
         self._nom = nom

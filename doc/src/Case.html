@@ -38,21 +38,20 @@ class Case:
         Parameters
         ----------
         image : pygame.image
-            image de la case
+            Image de la case
         typeCase : str
             Type de la case
         proba : int
-            probabilité d&#39;avoir un evenement qui se lance quand l&#39;équipe se déplace sur ce type de case
+            Probabilité d&#39;avoir un évènement qui se lance quand l&#39;équipe se déplace sur ce type de case
                         &#34;&#34;&#34;
-        # self.__evenement: Evenement = evenement
         self.__proba: float = proba
         self.__typeCase: str = typeCase
         self.__image = image
 
     def eventSeLance(self) -&gt; bool:
-        &#34;&#34;&#34; Méthode renvoyant true si l&#39;évenement de la case se lance
+        &#34;&#34;&#34; Méthode renvoyant true si l&#39;évènement de la case se lance
 
-        retourne un booléen: True si l&#39;evenement se lance, False sinon
+        Retourne un booléen: True si l&#39;évènement se lance, False sinon
         &#34;&#34;&#34;
         return self.__proba &gt; random()
 
@@ -90,11 +89,11 @@ class Case:
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>image</code></strong> :&ensp;<code>pygame.image</code></dt>
-<dd>image de la case</dd>
+<dd>Image de la case</dd>
 <dt><strong><code>typeCase</code></strong> :&ensp;<code>str</code></dt>
 <dd>Type de la case</dd>
 <dt><strong><code>proba</code></strong> :&ensp;<code>int</code></dt>
-<dd>probabilité d'avoir un evenement qui se lance quand l'équipe se déplace sur ce type de case</dd>
+<dd>Probabilité d'avoir un évènement qui se lance quand l'équipe se déplace sur ce type de case</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -107,21 +106,20 @@ class Case:
         Parameters
         ----------
         image : pygame.image
-            image de la case
+            Image de la case
         typeCase : str
             Type de la case
         proba : int
-            probabilité d&#39;avoir un evenement qui se lance quand l&#39;équipe se déplace sur ce type de case
+            Probabilité d&#39;avoir un évènement qui se lance quand l&#39;équipe se déplace sur ce type de case
                         &#34;&#34;&#34;
-        # self.__evenement: Evenement = evenement
         self.__proba: float = proba
         self.__typeCase: str = typeCase
         self.__image = image
 
     def eventSeLance(self) -&gt; bool:
-        &#34;&#34;&#34; Méthode renvoyant true si l&#39;évenement de la case se lance
+        &#34;&#34;&#34; Méthode renvoyant true si l&#39;évènement de la case se lance
 
-        retourne un booléen: True si l&#39;evenement se lance, False sinon
+        Retourne un booléen: True si l&#39;évènement se lance, False sinon
         &#34;&#34;&#34;
         return self.__proba &gt; random()
 
@@ -137,16 +135,16 @@ class Case:
 <span>def <span class="ident">eventSeLance</span></span>(<span>self) ‑> bool</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Méthode renvoyant true si l'évenement de la case se lance</p>
-<p>retourne un booléen: True si l'evenement se lance, False sinon</p></div>
+<div class="desc"><p>Méthode renvoyant true si l'évènement de la case se lance</p>
+<p>Retourne un booléen: True si l'évènement se lance, False sinon</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def eventSeLance(self) -&gt; bool:
-    &#34;&#34;&#34; Méthode renvoyant true si l&#39;évenement de la case se lance
+    &#34;&#34;&#34; Méthode renvoyant true si l&#39;évènement de la case se lance
 
-    retourne un booléen: True si l&#39;evenement se lance, False sinon
+    Retourne un booléen: True si l&#39;évènement se lance, False sinon
     &#34;&#34;&#34;
     return self.__proba &gt; random()</code></pre>
 </details>

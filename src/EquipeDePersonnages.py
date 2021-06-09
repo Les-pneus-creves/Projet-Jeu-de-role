@@ -8,15 +8,19 @@ class EquipeDePersonnages:
     def __init__(self, *personnages):
         """ Un case a une image pour s'afficher, un type et une probabilité d'evenement.
 
-                Parameters
-                ----------
-                Argument: *personnages: Liste de `Personnage`
-                    Personnages formant l'équipe
-                _coord : cordoonées de l'équipe sur la map
-                    Type de la case
-                _personnages : list(`Personnage`)
-                    Personnages formant l'équipe
-                                """
+
+            Parameters
+            ----------
+            *personnages: `src.Personnage`
+                Personnages formant l'équipe
+
+            Attributes
+            ----------
+            _coord : tuple
+                Type de la case
+            _personnages : list
+                Personnages formant l'équipe
+            """
         self._coord = (0, 0)
         self._personnages: list = list(personnages)
 

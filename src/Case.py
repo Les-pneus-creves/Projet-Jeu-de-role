@@ -10,21 +10,20 @@ class Case:
         Parameters
         ----------
         image : pygame.image
-            image de la case
+            Image de la case
         typeCase : str
             Type de la case
         proba : int
-            probabilité d'avoir un evenement qui se lance quand l'équipe se déplace sur ce type de case
+            Probabilité d'avoir un évènement qui se lance quand l'équipe se déplace sur ce type de case
                         """
-        # self.__evenement: Evenement = evenement
         self.__proba: float = proba
         self.__typeCase: str = typeCase
         self.__image = image
 
     def eventSeLance(self) -> bool:
-        """ Méthode renvoyant true si l'évenement de la case se lance
+        """ Méthode renvoyant true si l'évènement de la case se lance
 
-        retourne un booléen: True si l'evenement se lance, False sinon
+        Retourne un booléen: True si l'évènement se lance, False sinon
         """
         return self.__proba > random()
 

@@ -11,7 +11,7 @@ class Slot_inventaire:
 
         Attributes
         ----------
-        _objet : Objet
+        _objet : `src.Objet`
             L'objet contenue dans le slot.
         _typeObjet : str
             Le type d'objet que peut contenir le slot.

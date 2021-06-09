@@ -36,15 +36,19 @@ class EquipeDePersonnages:
     def __init__(self, *personnages):
         &#34;&#34;&#34; Un case a une image pour s&#39;afficher, un type et une probabilité d&#39;evenement.
 
-                Parameters
-                ----------
-                Argument: *personnages: Liste de `Personnage`
-                    Personnages formant l&#39;équipe
-                _coord : cordoonées de l&#39;équipe sur la map
-                    Type de la case
-                _personnages : list(`Personnage`)
-                    Personnages formant l&#39;équipe
-                                &#34;&#34;&#34;
+
+            Parameters
+            ----------
+            *personnages: `src.Personnage`
+                Personnages formant l&#39;équipe
+
+            Attributes
+            ----------
+            _coord : tuple
+                Type de la case
+            _personnages : list
+                Personnages formant l&#39;équipe
+            &#34;&#34;&#34;
         self._coord = (0, 0)
         self._personnages: list = list(personnages)
 
@@ -126,11 +130,14 @@ class EquipeDePersonnages:
 <div class="desc"><p>Un case a une image pour s'afficher, un type et une probabilité d'evenement.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>Argument</code></strong> :&ensp;<code>*personnages: Liste de</code>Personnage``</dt>
+<dt><strong><code>*personnages</code></strong> :&ensp;<code><a title="src.Personnage" href="Personnage.html">src.Personnage</a></code></dt>
 <dd>Personnages formant l'équipe</dd>
-<dt><strong><code>_coord</code></strong> :&ensp;<code>cordoonées de l'équipe sur la map</code></dt>
+</dl>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>_coord</code></strong> :&ensp;<code>tuple</code></dt>
 <dd>Type de la case</dd>
-<dt><strong><code>_personnages</code></strong> :&ensp;<code>list(</code>Personnage<code>)</code></dt>
+<dt><strong><code>_personnages</code></strong> :&ensp;<code>list</code></dt>
 <dd>Personnages formant l'équipe</dd>
 </dl></div>
 <details class="source">
@@ -141,15 +148,19 @@ class EquipeDePersonnages:
     def __init__(self, *personnages):
         &#34;&#34;&#34; Un case a une image pour s&#39;afficher, un type et une probabilité d&#39;evenement.
 
-                Parameters
-                ----------
-                Argument: *personnages: Liste de `Personnage`
-                    Personnages formant l&#39;équipe
-                _coord : cordoonées de l&#39;équipe sur la map
-                    Type de la case
-                _personnages : list(`Personnage`)
-                    Personnages formant l&#39;équipe
-                                &#34;&#34;&#34;
+
+            Parameters
+            ----------
+            *personnages: `src.Personnage`
+                Personnages formant l&#39;équipe
+
+            Attributes
+            ----------
+            _coord : tuple
+                Type de la case
+            _personnages : list
+                Personnages formant l&#39;équipe
+            &#34;&#34;&#34;
         self._coord = (0, 0)
         self._personnages: list = list(personnages)
 

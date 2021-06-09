@@ -6,7 +6,7 @@ import math
 class Inventaire(list):
 
     def __init__(self, nbArme, nbEquipement, nbRessources):
-        """ Un `Inventaire` est une liste de plusieurs `Slot_inventaire` dans lequel est stocké un `Objet`.
+        """ Un `Inventaire` est une liste de plusieurs `src.Slot_inventaire` dans lequel est stocké un `src.Objet`.
 
             Parameters
             ----------

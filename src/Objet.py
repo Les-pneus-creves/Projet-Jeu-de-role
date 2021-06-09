@@ -11,7 +11,7 @@ class Objet:
     def __init__(self, nom: str, image, stackable: int = 1):
         """Un Objet.
 
-        Les différents Objets sont instancié à l'avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l'avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -20,7 +20,7 @@ class Objet:
         _image : str
             L'image de l'objet.
         _stackable : int
-            La quantité max de l'objet dans un seul `Slot_inventaire`.
+            La quantité max de l'objet dans un seul `src.Slot_inventaire`.
         """
 
         self._nom = nom
@@ -47,7 +47,7 @@ class Arme(Objet):
     def __init__(self, nom: str, image, modDegat, modPrecision):
         """Une arme est un objet avec des attributs et des getter supplémentaire.
 
-        Les différents Objets sont instancié à l'avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l'avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -56,11 +56,11 @@ class Arme(Objet):
         _image : str
             L'image de l'objet.
         _stackable : int
-            La quantité max de l'objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l'Arme)
+            La quantité max de l'objet dans un seul `src.Slot_inventaire`. (toujours égale à 1 dans le cas de l'Arme)
         _modDegat : int
-            Modificateur de dégats appliqué sur le personnage lorsque l'arme est équipé par un `Personnage`.
+            Modificateur de dégats appliqué sur le personnage lorsque l'arme est équipé par un `src.Personnage`.
         _modPrecision : int
-            Modificateur de précision appliqué sur le personnage lorsque l'arme est équipé par un `Personnage`.
+            Modificateur de précision appliqué sur le personnage lorsque l'arme est équipé par un `src.Personnage`.
         """
 
         super(Arme, self).__init__(nom, image)
@@ -81,7 +81,7 @@ class Equipement(Objet):
     def __init__(self, nom: str, image, modVie):
         """Une arme est un objet avec des attributs et des getter supplémentaire.
 
-        Les différents Objets sont instancié à l'avance dans `Jeu.py` à partir du fichier `objet.json`.
+        Les différents Objets sont instancié à l'avance dans `src.Jeu` à partir du fichier `objet.json`.
 
         Attributes
         ----------
@@ -90,9 +90,9 @@ class Equipement(Objet):
         _image : str
             L'image de l'objet.
         _stackable : int
-            La quantité max de l'objet dans un seul `Slot_inventaire`. (toujours égale à 1 dans le cas de l'Arme)
+            La quantité max de l'objet dans un seul `src.Slot_inventaire`. (toujours égale à 1 dans le cas de l'Arme)
         _modVie : int
-            Modificateur de vie appliqué sur le personnage lorsque l'arme est équipé par un `Personnage`.
+            Modificateur de vie appliqué sur le personnage lorsque l'arme est équipé par un `src.Personnage`.
         """
 
         super(Equipement, self).__init__(nom, image)
