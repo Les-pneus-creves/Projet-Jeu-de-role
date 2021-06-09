@@ -126,6 +126,9 @@ class Jeu:
                 if TypeCase[0] == "Arche" or TypeCase[0] == "Maison" or TypeCase[0] == "Ferme" or TypeCase[1].startswith("A"):
                     event = Combat(self._expedition.getEquipe(), "Chien")
                     print("Combat contre Chien")
+                if TypeCase[0] == "Mine":
+                    event = Combat(self._expedition.getEquipe(), "Kv2v2v2")
+                    print("Combat contre Kv2v2v2")
 
                 event.lancement()
                 self._modeEvenement = ModeEvenement(event)

@@ -1,4 +1,4 @@
-from Objet import Objet
+import Objet
 import pygame
 
 typeObjetImages = {}
@@ -72,7 +72,7 @@ class Slot_inventaire:
 
         if objet is not None:
             if self._objet is None:
-                return objet.getNom().split("_")[0] == self._typeObjet or self._typeObjet == "Ressources"
+                return isinstance(objet, self._typeObjet) or self._typeObjet == "Ressources"
             else:
                 return objet.getNom() == self._objet.getNom()
         return False
@@ -119,14 +119,15 @@ class Slot_inventaire:
         if self.vide():
             window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
         else:
-            window.blit(pygame.transform.scale(typeObjetImages["Ressources"], (60, 60)), (posx, posy))
+            window.blit(pygame.transform.scale(typeObjetImages[Objet.Objet], (60, 60)), (posx, posy))
             window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
+
 
 def loadSlotsImages():
     """Fonction chargeant les images pour chaque type de slots dans la variable globale `typeObjetImages`."""
 
     global typeObjetImages
-    typeObjetImages = {"Arme": pygame.image.load("src/images/Inventory/Slot_arme.png").convert(),
-     "Equipement": pygame.image.load("src/images/Inventory/Slot_equipement.png").convert(),
-     "Ressources": pygame.image.load("src/images/Inventory/Slot_ressources.png").convert(),
-     "Selection": pygame.image.load("src/images/Inventory/Slot_select.png").convert()}
+    typeObjetImages = {Objet.Arme: pygame.image.load("src/images/Inventory/Slot_arme.png").convert(),
+                       Objet.Equipement: pygame.image.load("src/images/Inventory/Slot_equipement.png").convert(),
+                       Objet.Objet: pygame.image.load("src/images/Inventory/Slot_ressources.png").convert(),
+                       "Selection": pygame.image.load("src/images/Inventory/Slot_select.png").convert()}

@@ -1,5 +1,5 @@
 from Slot_inventaire import Slot_inventaire
-from Objet import Objet
+import Objet
 import math
 
 
@@ -20,11 +20,11 @@ class Inventaire(list):
 
         super(Inventaire, self).__init__()
         for i in range(nbArme):
-            self.append(Slot_inventaire("Arme"))
+            self.append(Slot_inventaire(Objet.Arme))
         for i in range(nbEquipement):
-            self.append(Slot_inventaire("Equipement"))
+            self.append(Slot_inventaire(Objet.Equipement))
         for i in range(nbRessources):
-            self.append(Slot_inventaire("Ressources"))
+            self.append(Slot_inventaire(Objet.Objet))
 
     def append(self, slot: Slot_inventaire):
         """Overload de la méthode append des list, cela permet d'ajouter que des `Slot_inventaire` à notre Inventaire"""
@@ -236,9 +236,9 @@ class Inventaire(list):
 
 if __name__ == "__main__":
     inventaire = Inventaire(1, 1, 5)
-    patate = Objet("Ressources_Patate", "prout", 3)
-    oignon = Objet("Ressources_Oignons", "prout", 4)
-    fusil = Objet("Arme_Fusil", "prout", 1)
+    patate = Objet.Objet("Patate", "prout", 3)
+    oignon = Objet.Objet("Oignons", "prout", 4)
+    fusil = Objet.Arme("Fusil", "prout", 1)
 
     inventaire.ajouter(patate, 2)
     inventaire.ajouter(patate, 3)
