@@ -14,7 +14,9 @@ class Expedition:
         self._eventEnCours: Evenement = None  # Even ement actuellement en cours
         self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l'éxpedition se déroule
         for personnage in self._equipe.getPersonnages():
-            personnage.addToInventaire(Objet.objets["armes"]["Arme_Arc"])
+            personnage.addToInventaire(Objet.objets["armes"]["Arc"])
+
+        self.objetSelectione = None
 
     # lecture des evenements
     def on_event(self, event) -> tuple:
@@ -35,7 +37,20 @@ class Expedition:
                 else:
                     return None
             elif self.isInOneInventory((x, y))[0]:
-                print(self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]].getObjetByCoord((x, y)))
+                personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
+                if self.objetSelectione is None:
+                    self.objetSelectione = personnageSelection.getObjetByCoord((x, y))
+                    if self.objetSelectione is not None:
+                        personnageSelection.removeFromInventaire(self.objetSelectione)
+                else:
+                    objetDestination = personnageSelection.getObjetByCoord((x, y))
+                    if objetDestination is None:
+                        personnageSelection.addToInventaire(self.objetSelectione)
+                        self.objetSelectione = None
+                    else:
+                        personnageSelection.removeFromInventaire(objetDestination)
+                        personnageSelection.addToInventaire(self.objetSelectione)
+                        self.objetSelectione = objetDestination
             else:
                 return None
 

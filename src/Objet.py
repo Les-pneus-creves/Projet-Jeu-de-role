@@ -109,17 +109,22 @@ def loadAllObjets():
         for nom, arme in data["armes"].items():
             if os.path.isfile(arme["image"]):
                 objets["armes"][nom] = (Arme(nom, arme["image"], arme["modDegat"], arme["modPrecision"]))
+                print(objets["armes"][nom])
             else:
                 raise FileNotFoundError("L'image de l'arme " + nom + " est introuvable ...")
 
         for nom, equipements in data["equipements"].items():
             if os.path.isfile(equipements["image"]):
                 objets["equipements"][nom] = (Equipement(nom, equipements["image"], equipements["modVie"]))
+                print(objets["equipements"][nom])
             else:
                 raise FileNotFoundError("L'image de l'equipement " + nom + " est introuvable ...")
 
         for nom, ressources in data["ressources"].items():
             if os.path.isfile(equipements["image"]):
                 objets["ressources"][nom] = (Objet(nom, ressources["image"], ressources["stackable"]))
+                print(objets["ressources"][nom])
             else:
                 raise FileNotFoundError("L'image de la ressource " + nom + " est introuvable ...")
+
+
