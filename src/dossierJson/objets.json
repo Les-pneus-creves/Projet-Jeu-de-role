@@ -1,6 +1,6 @@
 {
   "armes": {
-    "Arme_Couteau": {
+    "Couteau": {
       "modDegat": 1,
       "modPrecision": 0,
       "image": "src/images/Objets/Couteau.png"
@@ -32,15 +32,15 @@
     }
   },
   "equipements": {
-    "Equipement_HabitsNormaux": {
+    "HabitsNormaux": {
       "modVie": 4,
       "image": "src/images/Objets/HabitsNormaux.png"
     },
-    "Equipement_TenueChic": {
+    "TenueChic": {
       "modVie": 10,
       "image": "src/images/Objets/TenueChic.png"
     },
-    "Equipement_UniformeDeSoldat": {
+    "UniformeDeSoldat": {
       "modVie": 20,
       "image": "src/images/Objets/UniformeDeSoldat.png"
     }
