@@ -207,6 +207,12 @@ class Inventaire(list):
                 self.retirer(objet, nb)
                 self.ajouter(objet, nb)
 
+    def vide(self):
+        for slot in self:
+            if not slot.vide():
+                return False
+        return True
+
     def render(self, window, minx, miny):
         """Permet d'afficher l'inventaire dans une fenêtre pygame à une position donné.
 

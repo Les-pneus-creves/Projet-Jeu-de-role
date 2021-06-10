@@ -67,7 +67,7 @@ class Jeu:
                 self._whatAppend = self._expedition.on_event(event)
 
             elif self._etatActuel == Etats.Evenement:
-                self._modeEvenement.on_event(events)
+                self._modeEvenement.on_event(events, event)
                 break
 
             else:
@@ -130,7 +130,7 @@ class Jeu:
                     print("Combat contre Kv2v2v2")
 
                 event.lancement()
-                self._modeEvenement = ModeEvenement(event)
+                self._modeEvenement = ModeEvenement(event, self._expedition.getEquipe())
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():

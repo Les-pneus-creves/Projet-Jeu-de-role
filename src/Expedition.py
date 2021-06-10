@@ -78,7 +78,7 @@ class Expedition:
         window.fill((70, 70, 70))
         self._plateau.render(window)
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
-        self.renderPersonnageInventaire(window)
+        self._equipe.renderPersonnageInventaire(window)
 
     def returnTypeCase(self, coord) -> str:
         return self._plateau.getCase(coord).getTypeCase()
@@ -97,14 +97,6 @@ class Expedition:
         q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r / 2)
 
         return q, r
-
-    def renderPersonnageInventaire(self, window):
-        """Méthode pour afficher les encarts de chaque personnages avec leurs inventaires"""
-        peronnages = self._equipe.getPersonnages()
-
-        for peronnage in peronnages:
-            """ Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires """
-            peronnage.render(window)
 
     def isInOneInventory(self, coord: tuple):
         """Méthode pour savoir si le clic se trouve dans un `inventaire` et si oui dans lequel"""

@@ -83,3 +83,10 @@ class EquipeDePersonnages:
             pygame.draw.circle(window, (0, 0, 255), (coordPixel[0], coordPixel[1] + 7), 5, 4)
         else:
             print("wtf tu as mis combiens de personnes dans ton Equipe mec !!")
+
+    def renderPersonnageInventaire(self, window):
+        """Méthode pour afficher les encarts de chaque personnages avec leurs inventaires"""
+
+        for peronnage in self._personnages:
+            """ Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires """
+            peronnage.render(window)
