@@ -59,7 +59,7 @@ class Combat(Evenement):
         self.creerMenuCombat(logs)
         self.creerMenu(self.eventJson["titre"], self.eventJson["texte"], self.eventJson["image"])
 
-d
+
     def creerMenu(self, titre: str, texte: str, image) -> None:
         """Methode appelée dans l'init qui crée le menu du combat avec les infos du combat
 
