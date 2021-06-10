@@ -26,6 +26,11 @@ class Evenement(ABC):
         self._enCours = boule
 
     @abstractmethod
+    def getLoot(self):
+        """ Retourne un inventaire qui sera donné au joueur à la fin de l'evenement"""
+        pass
+
+    @abstractmethod
     def lancement(self, equipePerso: EquipeDePersonnages) -> None:
         pass
 

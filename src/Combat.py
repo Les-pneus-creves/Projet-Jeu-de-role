@@ -238,6 +238,7 @@ class Combat(Evenement):
                 pourLog) + " points de dégats. \"" + str(cible.getNom()) + "\" est mort"
 
 
+
 if __name__ == "__main__":
     # création d'une équipe
 
