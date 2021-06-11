@@ -1,5 +1,7 @@
 """
 Programme principale
+
+Plus que faire manger et limiter les déplacements.
 """
 
 import pygame
@@ -21,8 +23,8 @@ class Jeu:
     def __init__(self):
         self._nbTour: int = 0
         self._running: bool = True
-        self._width: int = 1080
-        self._height: int = 1080
+        self._width: int = 0
+        self._height: int = 0
         self._size: tuple = self._width, self._height
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
@@ -31,7 +33,7 @@ class Jeu:
     def on_init(self) -> None:
         """Méthode lancée une fois servant a initialise tout ce qu'il faut"""
         pygame.init()
-        self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+        self._window = pygame.display.set_mode(self._size, pygame.RESIZABLE)
         self._running = True
         Objet.loadAllObjets()
 
