@@ -61,7 +61,8 @@ class Jeu:
                 self._running = False
 
             if self._etatActuel == Etats.Gestion:
-                pass
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    self._running = False
 
             elif self._etatActuel == Etats.Expedition:
                 self._whatAppend = self._expedition.on_event(event)
@@ -93,11 +94,13 @@ class Jeu:
 
         if self._etatActuel == Etats.Gestion:
             self._window.fill((255, 70, 70))
-            font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+            font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 100)
             text = font.render(self._whatAppend, True, (255, 255, 255))
             posx, posy = pygame.display.get_window_size()
-            posx /= 2 - text.get_size()[0]
-            posy /= 2 - text.get_size()[1]
+            posx /= 2
+            posy /= 2
+            posx -= text.get_size()[0] / 2
+            posy -= text.get_size()[1] / 2
             self._window.blit(text, (posx, posy))
 
         elif self._etatActuel == Etats.Expedition:
