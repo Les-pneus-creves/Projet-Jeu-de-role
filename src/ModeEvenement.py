@@ -84,7 +84,8 @@ class ModeEvenement:
                 self._evenement.getMenu().draw(window)
         else:
             self._equipe.renderPersonnageInventaire(window)
-            self._loot.render(window, self._lootCoord[0], self._lootCoord[1])
+            if self._loot is not None:
+                self._loot.render(window, self._lootCoord[0], self._lootCoord[1])
             pygame.draw.rect(window, (255, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1], 60, 60))
             pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1]), (self._lootCoord[0], self._lootCoord[1] + 60))
             pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1] + 60), (self._lootCoord[0], self._lootCoord[1]))

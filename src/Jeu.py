@@ -96,8 +96,8 @@ class Jeu:
             font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
             text = font.render(self._whatAppend, True, (255, 255, 255))
             posx, posy = pygame.display.get_window_size()
-            posx /= 2
-            posy /= 2
+            posx /= 2 - text.get_size()[0]
+            posy /= 2 - text.get_size()[1]
             self._window.blit(text, (posx, posy))
 
         elif self._etatActuel == Etats.Expedition:

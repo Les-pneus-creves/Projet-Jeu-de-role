@@ -121,6 +121,16 @@ class Slot_inventaire:
         else:
             window.blit(pygame.transform.scale(typeObjetImages[Objet.Objet], (60, 60)), (posx, posy))
             window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
+            if self._nbContenue > 1:
+                pygame.draw.circle(window, (255, 255, 255), (posx+15, posy+15), 12)
+                if self._nbContenue < 10:
+                    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+                    text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                    window.blit(text, (posx+9, posy+6))
+                else:
+                    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 25)
+                    text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                    window.blit(text, (posx+5, posy+6))
 
 
 def loadSlotsImages():

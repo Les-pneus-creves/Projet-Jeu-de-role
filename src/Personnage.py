@@ -1,6 +1,4 @@
 import pygame
-from typing import Type
-from typing import Tuple
 import random
 import Personnage
 from Inventaire import Inventaire
