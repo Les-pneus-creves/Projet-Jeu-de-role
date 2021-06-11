@@ -1,47 +1,47 @@
 {
   "armes": {
     "Couteau": {
-      "modDegat": 1,
+      "modDegat": 2,
       "modPrecision": 0,
       "image": "src/images/Objets/Couteau.png"
     },
     "Arc": {
-      "modDegat": 3,
+      "modDegat": 4,
       "modPrecision": -2,
       "image": "src/images/Objets/Arc.png"
     },
     "Pistolet": {
-      "modDegat": 3,
+      "modDegat": 5,
       "modPrecision": 1,
       "image": "src/images/Objets/Pistolet.png"
     },
     "Fusil": {
-      "modDegat": 5,
+      "modDegat": 7,
       "modPrecision": 2,
       "image": "src/images/Objets/Fusil.png"
     },
     "Mitrailleuse": {
-      "modDegat": 7,
+      "modDegat": 9,
       "modPrecision": -1,
       "image": "src/images/Objets/Mitrailleuse.png"
     },
     "Panzerschreck": {
-      "modDegat": 20,
+      "modDegat": 30,
       "modPrecision": -6,
       "image": "src/images/Objets/Panzerschreck.png"
     }
   },
   "equipements": {
     "HabitsNormaux": {
-      "modDegat": 1,
+      "modDegat": 2,
       "image": "src/images/Objets/HabitsNormaux.png"
     },
     "TenueChic": {
-      "modDegat": 2,
+      "modDegat": 3,
       "image": "src/images/Objets/TenueChic.png"
     },
     "UniformeDeSoldat": {
-      "modDegat": 3,
+      "modDegat": 5,
       "image": "src/images/Objets/UniformeDeSoldat.png"
     }
   },

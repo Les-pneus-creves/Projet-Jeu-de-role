@@ -12,7 +12,7 @@
       "iniMax": 15,
       "iniMin": 8,
       "preciMin": 4,
-      "preciMax": 9
+      "preciMax": 8
     },
     "loot": ["Couteau", "Arc", "Pistolet", "HabitsNormaux", "TenueChic", "Patate", "Fusil"]
   },
@@ -41,13 +41,13 @@
     "unite": {
       "nom": "Soldat",
       "vieMin": 18,
-      "vieMax": 36,
+      "vieMax": 30,
       "forceMin": 5,
       "forceMax": 10,
-      "iniMax": 18,
+      "iniMax": 16,
       "iniMin": 9,
       "preciMin": 6,
-      "preciMax": 9
+      "preciMax": 8
     },
     "loot": ["Panzerschreck", "Fusil", "UniformeDeSoldat", "Mitrailleuse"]
   },

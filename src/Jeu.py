@@ -39,8 +39,9 @@ class Jeu:
         Objet.loadAllObjets()
 
         plateau = PlateauDeJeu('src/maps/1.tmx')
-        equipe = EquipeDePersonnages(Personnage("Frank", 40, 12, 5, 5, "src/images/Smiguel.jpg"),
-                                     Personnage("Albert", 30, 15, 3, 2, "src/images/kv2v2v2.jpg"))
+        equipe = EquipeDePersonnages(Personnage("Frank", 40, 12, 7, 12, "src/images/Frank.png"),
+                                     Personnage("Albert", 30, 15, 6, 9, "src/images/Albert.png"),
+                                     Personnage("John", 30, 15, 6, 9, "src/images/John.png"))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 
