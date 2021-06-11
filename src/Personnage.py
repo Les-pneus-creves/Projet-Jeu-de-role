@@ -66,6 +66,9 @@ class Personnage:
     def getInitiative(self) -> int:
         return self._initiative
 
+    def soigner(self, soin: int):
+        self._vie += soin
+
     def prendreDegat(self, degat: int) -> int:
         """ Methode retirant de la vie au personnage
 

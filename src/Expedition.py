@@ -51,6 +51,16 @@ class Expedition:
                 else:
                     return None
 
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+            if self.isInOneInventory(event.pos)[0]:
+                personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory(event.pos)[1]]
+                objetSelectione = personnageSelection.getObjetByCoord(event.pos)
+                if objetSelectione is not None:
+                    if objetSelectione.getNom() == "Patate":
+                        personnageSelection.removeFromInventaire(objetSelectione)
+                        personnageSelection.soigner(2)
+
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Lorsque je clic gauche sur une unite et que j'en ai pas de selectionnée
 
             x = int(event.pos[0])  # Enregistre la coordonnée y de l'event

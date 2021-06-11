@@ -29,6 +29,7 @@ class Jeu:
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
         self._combatdispute = 0
+        self._patateMange = 0
 
     def on_init(self) -> None:
         """Méthode lancée une fois servant a initialise tout ce qu'il faut"""
@@ -110,12 +111,12 @@ class Jeu:
             posy = centrey - (text.get_size()[1] / 2) - 100
             self._window.blit(text, (posx, posy))
 
-            text = font.render("Nb de combat disputé : " + str(self._combatdispute), True, (255, 255, 255))
+            text = font.render("Nb de combat(s) disputé(s) : " + str(self._combatdispute), True, (255, 255, 255))
             posx = centrex - (text.get_size()[0] / 2)
             posy = centrey - (text.get_size()[1] / 2)
             self._window.blit(text, (posx, posy))
 
-            text = font.render("Nb de patate récolté : " + self.nbDePatateEnString(), True, (255, 255, 255))
+            text = font.render("Nb de patate(s) récoltée(s) : " + self.nbDePatateEnString(), True, (255, 255, 255))
             posx = centrex - (text.get_size()[0] / 2)
             posy = centrey - (text.get_size()[1] / 2) + 100
             self._window.blit(text, (posx, posy))
@@ -148,7 +149,7 @@ class Jeu:
                 if TypeCase[0] == "Archer" or TypeCase[1].startswith("R"):
                     event = Combat(self._expedition.getEquipe(), "Soldat")
                     print("Combat contre Soldat")
-                if TypeCase[0] == "Arche" or TypeCase[0] == "Maison" or TypeCase[0] == "Ferme" or TypeCase[1].startswith("A"):
+                if TypeCase[0] == "Arche" or TypeCase[1].startswith("A"):
                     event = Combat(self._expedition.getEquipe(), "Chien")
                     print("Combat contre Chien")
                 if TypeCase[0] == "Mine":
