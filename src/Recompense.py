@@ -1,11 +1,10 @@
 from abc import ABC, abstractmethod
 from Evenement import Evenement  # Heritage
-import EquipeDePersonnages
-# import Personnage
 import pygame
 import pygame_menu
 import json
 import random
+import Objet
 from Inventaire import Inventaire
 
 class Recompense(Evenement):
@@ -17,8 +16,6 @@ class Recompense(Evenement):
             self.eventJson = data[event_a_lancer]
 
         self.nom = event_a_lancer
-
-    # ----------
 
     def lancement(self):
         print("Lancement d'une récompense very nice")
@@ -40,4 +37,23 @@ class Recompense(Evenement):
         self._menu._close()
 
     def getLoot(self):
-        return Inventaire(0,0,4)
+        """Methode qui retourne un `src.Inventaire `de deux objets en fonction du loot possible au combat.
+
+        Return
+        ------
+        inv: `src.Invetaire`
+            inventaire lootable par le joueur.
+
+        """
+
+        listeObjet = self.eventJson["loot"]
+
+        inv = Inventaire(0,0,4)
+
+        if len(listeObjet) > 0:
+            objet = random.choice(listeObjet)
+            if objet == "Patate":
+                inv.ajouter(Objet.objets[objet], random.randint(1,7))
+            else:
+                inv.ajouter(Objet.objets[objet])
+        return inv

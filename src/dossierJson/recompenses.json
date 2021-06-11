@@ -2,90 +2,105 @@
     "Herbe": {
         "titre": "Herbe",
         "texte": "L'herbe est verte !",
-        "image": "src/images/Tiles/Terrain/Grass/grass_05.png"
+        "image": "src/images/Tiles/Terrain/Grass/grass_05.png",
+        "loot": []
     },
 
     "Terre": {
         "titre": "Terre",
         "texte": "La terre est marron \n(mais ça n'existe pas le marron c'est du orange en vrai)",
-        "image": "src/images/Tiles/Terrain/Dirt/dirt_06.png"
+        "image": "src/images/Tiles/Terrain/Dirt/dirt_06.png",
+        "loot": []
     },
 
     "Pierre": {
         "titre": "Pierre",
         "texte": "La pierre est grise",
-        "image": "src/images/Tiles/Terrain/Stone/stone_07.png"
+        "image": "src/images/Tiles/Terrain/Stone/stone_07.png",
+        "loot": []
     },
     
     "Archer": {
         "titre": "Archer",
         "texte": "L'archerie est jolie ! Merci !",
-        "image": "src/images/Tiles/Medieval/medieval_archery.png"
+        "image": "src/images/Tiles/Medieval/medieval_archery.png",
+        "loot": ["Arc"]
     },
 
     "Arche": {
         "titre": "Arche",
         "texte": "Mais c une arche et on peut passer dessous !",
-        "image": "src/images/Tiles/Medieval/medieval_archway.png"
+        "image": "src/images/Tiles/Medieval/medieval_archway.png",
+        "loot": []
     },
     
     "Forgeron": {
         "titre": "Forgeron",
         "texte": "Je te forge ce que tu veux mon gars !",
-        "image": "src/images/Tiles/Medieval/medieval_blacksmith.png"
+        "image": "src/images/Tiles/Medieval/medieval_blacksmith.png",
+        "loot": ["Couteau"]
     },
 
     "Maison": {
         "titre": "Maison",
         "texte": "Home sweet home ! Mais mince c'est pas ma maison !!!",
-        "image": "src/images/Tiles/Medieval/medieval_cabin.png"
+        "image": "src/images/Tiles/Medieval/medieval_cabin.png",
+        "loot": ["Patate"]
     },
 
     "Eglise": {
         "titre": "Eglise",
         "texte": "Amen",
-        "image": "src/images/Tiles/Medieval/medieval_church.png"
+        "image": "src/images/Tiles/Medieval/medieval_church.png",
+        "loot": ["Patate"]
     },
 
     "Ferme": {
         "titre": "Ferme",
         "texte": "Oh une ferme ! Quelle ferme ? La ferme ta gu***** pauvre c**",
-        "image": "src/images/Tiles/Medieval/medieval_farm.png"
+        "image": "src/images/Tiles/Medieval/medieval_farm.png",
+        "loot": ["Patate"]
     },
 
     "Chateau": {
         "titre": "Chateau",
         "texte": "Bienvenue au chateau gente dame",
-        "image": "src/images/Tiles/Medieval/medieval_largeCastle.png"
+        "image": "src/images/Tiles/Medieval/medieval_largeCastle.png",
+        "loot": ["Fusil"]
     },
 
     "Mine": {
         "titre": "Mine",
         "texte": "Ici on cherche de l'or mais on trouve du fer",
-        "image": "src/images/Tiles/Medieval/medieval_mine.png"
+        "image": "src/images/Tiles/Medieval/medieval_mine.png",
+        "loot": []
     },
 
     "Ruine": {
         "titre": "Ruine",
         "texte": "Ah le chateau à l'air cassé dit donc",
-        "image": "src/images/Tiles/Medieval/medieval_ruins.png"
+        "image": "src/images/Tiles/Medieval/medieval_ruins.png",
+        "loot": ["Pistolet"]
     },
 
     "Tour": {
         "titre": "Tour",
         "texte": "Tiens il y a peut être une princesse là haut !",
-        "image": "src/images/Tiles/Medieval/medieval_tower.png"
+        "image": "src/images/Tiles/Medieval/medieval_tower.png",
+        "loot": []
     },
 
     "Bucheron": {
         "titre": "Bucheron",
         "texte": "Ça bucheronne par ici !",
-        "image": "src/images/Tiles/Mill/mill_crane.png"
+        "image": "src/images/Tiles/Mill/mill_crane.png",
+        "loot": ["Couteau"]
     },
 
     "Cratere": {
         "titre": "Cratere",
         "texte": "Encore un trou d'obus !",
-        "image": "src/images/Tiles/Customs/Bomba_01.png"
+        "image": "src/images/Tiles/Customs/Bomba_01.png",
+        "loot": []
     }
 }

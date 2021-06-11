@@ -2,7 +2,7 @@ import pygame
 import random
 import Personnage
 from Inventaire import Inventaire
-from Objet import Objet
+import Objet
 from copy import copy
 
 coordInScreen = [0, 830]
@@ -152,7 +152,7 @@ class Personnage:
         text = font.render(self._nom, True, (255, 255, 255))
         window.blit(text, (posx, posy))
         posy += 30
-        text = font.render("Vie:" + str(self._vie), True, (255, 255, 255))
+        text = font.render("Vie : " + str(self._vie), True, (255, 255, 255))
         window.blit(text, (posx, posy))
 
         self._inventaire.render(window, self.coordInScreen[0], self.coordInScreen[1] + 60)
@@ -172,6 +172,11 @@ class Personnage:
             return self._inventaire[index].getObjet()
         return None
 
+    def nbDePatate(self):
+        patate = 0
+        for slot in self._inventaire.slotsOfThisObjet(Objet.objets["Patate"]):
+            patate += self._inventaire[slot].getNbContenue()
+        return patate
 
 if __name__ == "__main__":
     x = Personnage("bob", 18, 10, 10, 1, "bob")
