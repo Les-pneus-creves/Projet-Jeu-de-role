@@ -2,9 +2,7 @@ import pygame
 import json
 import os
 
-objets = {"armes": {},
-          "equipements": {},
-          "ressources": {}}
+objets = {}
 
 
 class Objet:
@@ -108,22 +106,19 @@ def loadAllObjets():
         data = json.loads(fichier.read())
         for nom, arme in data["armes"].items():
             if os.path.isfile(arme["image"]):
-                objets["armes"][nom] = (Arme(nom, arme["image"], arme["modDegat"], arme["modPrecision"]))
-                print(objets["armes"][nom])
+                objets[nom] = (Arme(nom, arme["image"], arme["modDegat"], arme["modPrecision"]))
             else:
                 raise FileNotFoundError("L'image de l'arme " + nom + " est introuvable ...")
 
         for nom, equipements in data["equipements"].items():
             if os.path.isfile(equipements["image"]):
-                objets["equipements"][nom] = (Equipement(nom, equipements["image"], equipements["modVie"]))
-                print(objets["equipements"][nom])
+                objets[nom] = (Equipement(nom, equipements["image"], equipements["modVie"]))
             else:
                 raise FileNotFoundError("L'image de l'equipement " + nom + " est introuvable ...")
 
         for nom, ressources in data["ressources"].items():
             if os.path.isfile(equipements["image"]):
-                objets["ressources"][nom] = (Objet(nom, ressources["image"], ressources["stackable"]))
-                print(objets["ressources"][nom])
+                objets[nom] = (Objet(nom, ressources["image"], ressources["stackable"]))
             else:
                 raise FileNotFoundError("L'image de la ressource " + nom + " est introuvable ...")
 

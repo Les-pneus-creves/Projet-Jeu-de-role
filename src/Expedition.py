@@ -24,7 +24,7 @@ class Expedition:
         self._equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
         self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l'éxpedition se déroule
         for personnage in self._equipe.getPersonnages():
-            personnage.addToInventaire(Objet.objets["armes"]["Arc"])
+            personnage.addToInventaire(Objet.objets["Arc"])
 
         self.objetSelectione = None
 

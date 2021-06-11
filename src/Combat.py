@@ -31,6 +31,7 @@ class Combat(Evenement):
                 combat_a_lancer = random.choice(list(data))
             self.eventJson = data[combat_a_lancer]
 
+        self.nom = combat_a_lancer
         self._log = []
         self._menu = None
         self._equipeMechant: EquipeDePersonnages = self.creerEquipeMechant(self.eventJson)

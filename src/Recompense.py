@@ -16,6 +16,8 @@ class Recompense(Evenement):
             data = json.loads(fichier.read())
             self.eventJson = data[event_a_lancer]
 
+        self.nom = event_a_lancer
+
     # ----------
 
     def lancement(self):

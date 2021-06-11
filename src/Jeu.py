@@ -93,6 +93,12 @@ class Jeu:
 
         if self._etatActuel == Etats.Gestion:
             self._window.fill((255, 70, 70))
+            font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+            text = font.render(self._whatAppend, True, (255, 255, 255))
+            posx, posy = pygame.display.get_window_size()
+            posx /= 2
+            posy /= 2
+            self._window.blit(text, (posx, posy))
 
         elif self._etatActuel == Etats.Expedition:
             self._window.fill((0, 0, 0))
@@ -136,9 +142,13 @@ class Jeu:
             if not self._modeEvenement.getEnCours():
                 self._etatActuel = Etats.Expedition
                 self._whatAppend = None
-                print(self._modeEvenement.getVictoire())
                 if self._modeEvenement.getVictoire() == False:
                     self._etatActuel = Etats.Gestion
+                    self._whatAppend = "DEFAITE"
+                elif self._modeEvenement.getEvenement().nom == "Kv2v2v2":
+                    self._whatAppend = "VICTOIRE"
+                    self._etatActuel = Etats.Gestion
+
         else:
             print("Etat inexistant dsl ...")
 
