@@ -30,7 +30,7 @@ class ModeEvenement:
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().update(events)
         elif self._loot is not None:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_KP_ENTER:
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
                 self._enCours = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
