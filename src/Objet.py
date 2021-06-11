@@ -76,7 +76,7 @@ class Arme(Objet):
         return self._modPrecision
 
 class Equipement(Objet):
-    def __init__(self, nom: str, image, modVie):
+    def __init__(self, nom: str, image, modDegat):
         """Une arme est un objet avec des attributs et des getter supplémentaire.
 
         Les différents Objets sont instancié à l'avance dans `src.Jeu` à partir du fichier `objet.json`.
@@ -112,7 +112,7 @@ def loadAllObjets():
 
         for nom, equipements in data["equipements"].items():
             if os.path.isfile(equipements["image"]):
-                objets[nom] = (Equipement(nom, equipements["image"], equipements["modVie"]))
+                objets[nom] = (Equipement(nom, equipements["image"], equipements["modDegat"]))
             else:
                 raise FileNotFoundError("L'image de l'equipement " + nom + " est introuvable ...")
 

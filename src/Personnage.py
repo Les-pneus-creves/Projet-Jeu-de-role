@@ -76,7 +76,7 @@ class Personnage:
 
         Retourne un int pour la construction de log
         """
-        if self._inventaire.getEquipement is not None:
+        if self._inventaire.getEquipement() is not None:
             degatReduit = degat-self._inventaire.getEquipement().getModDegat()
             if degatReduit < 0:
                 degatReduit = 0
@@ -113,8 +113,12 @@ class Personnage:
                 degat = -1
 
         else:
-            if random.randint(1, 10) > self._precision+self._inventaire.getArme().getModPrecision():
-                return 0
+            if self._inventaire.getArme() is not None:
+                if random.randint(1, 10) > self._precision+self._inventaire.getArme().getModPrecision():
+                    return 0
+            else:
+                if random.randint(1, 10) > self._precision:
+                    return 0
 
             if self._inventaire.getArme() is not None:
                 degat = self._force + self._inventaire.getArme().getModDegat()
