@@ -67,7 +67,7 @@ class Personnage:
         return self._initiative
 
     def soigner(self, soin: int):
-        if not self._estVivant:
+        if self._estVivant:
             self._vie += soin
 
     def prendreDegat(self, degat: int) -> int:
