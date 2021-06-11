@@ -110,7 +110,7 @@ class Personnage:
         if "Kv2v2v2" in cible.getNom():
 
             if self._inventaire.getArme() is not None:
-                if self._inventaire.getArme().getNom() == "Arme_Panzerschreck":   #attention il y a arme_ ...
+                if self._inventaire.getArme().getNom() == "Panzerschreck":   #attention il y a arme_ ...
                     degat = self._force + self._inventaire.getArme().getModDegat()
                 else:
                     degat = -1
