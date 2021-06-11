@@ -33,15 +33,15 @@
   },
   "equipements": {
     "HabitsNormaux": {
-      "modVie": 4,
+      "modDegat": 1,
       "image": "src/images/Objets/HabitsNormaux.png"
     },
     "TenueChic": {
-      "modVie": 10,
+      "modDegat": 2,
       "image": "src/images/Objets/TenueChic.png"
     },
     "UniformeDeSoldat": {
-      "modVie": 20,
+      "modDegat": 3,
       "image": "src/images/Objets/UniformeDeSoldat.png"
     }
   },

@@ -40,14 +40,14 @@
     "image": "src/images/soldats.jpg",
     "unite": {
       "nom": "Soldat",
-      "vieMin": 19,
-      "vieMax": 38,
-      "forceMin": 6,
-      "forceMax": 11,
+      "vieMin": 18,
+      "vieMax": 36,
+      "forceMin": 5,
+      "forceMax": 10,
       "iniMax": 18,
-      "iniMin": 10,
+      "iniMin": 9,
       "preciMin": 6,
-      "preciMax": 10
+      "preciMax": 9
     },
     "loot": ["Panzerschreck", "Fusil", "UniformeDeSoldat", "Mitrailleuse"]
   },
