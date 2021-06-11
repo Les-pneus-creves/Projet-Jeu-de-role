@@ -30,8 +30,9 @@ class ModeEvenement:
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().update(events)
         elif self._loot is not None:
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
-                self._enCours = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    self._enCours = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x = int(event.pos[0])  # Enregistre la coordonnée y de l'event
