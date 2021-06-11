@@ -5,7 +5,7 @@ import math
 
 class Inventaire(list):
 
-    def __init__(self, nbArme, nbEquipement, nbRessources):
+    def __init__(self, nbArme, nbEquipement, nbRessource):
         """ Un `Inventaire` est une liste de plusieurs `src.Slot_inventaire` dans lequel est stocké un `src.Objet`.
 
             Parameters
@@ -23,7 +23,7 @@ class Inventaire(list):
             self.append(Slot_inventaire(Objet.Arme))
         for i in range(nbEquipement):
             self.append(Slot_inventaire(Objet.Equipement))
-        for i in range(nbRessources):
+        for i in range(nbRessource):
             self.append(Slot_inventaire(Objet.Objet))
 
     def append(self, slot: Slot_inventaire):

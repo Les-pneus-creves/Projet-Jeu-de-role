@@ -57,7 +57,7 @@ class EquipeDePersonnages:
         return temp
 
 
-    def deplacement(self, coord) -> tuple:
+    def deplacement(self, coord) -> None:
         """ Change les coordonnées de l'équipe"""
         self._coord = coord
 
