@@ -29,7 +29,7 @@
 
     "Arche": {
         "titre": "Arche",
-        "texte": "Mais c une arche et on peut passer dessous !",
+        "texte": "Mais c'est une arche et on peut passer dessous !",
         "image": "src/images/Tiles/Medieval/medieval_archway.png",
         "loot": []
     },
@@ -57,7 +57,7 @@
 
     "Ferme": {
         "titre": "Ferme",
-        "texte": "Oh une ferme ! Quelle ferme ? La ferme ta gu***** pauvre c**",
+        "texte": "Oh une ferme ! Quelle ferme ? Ferme la!",
         "image": "src/images/Tiles/Medieval/medieval_farm.png",
         "loot": ["Patate"]
     },
