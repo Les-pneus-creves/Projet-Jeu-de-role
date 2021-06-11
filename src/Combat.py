@@ -7,6 +7,8 @@ import pygame_menu
 import json
 import pygame
 import random
+from Inventaire import Inventaire
+import Objet
 
 
 class Combat(Evenement):
@@ -236,6 +238,30 @@ class Combat(Evenement):
         else:
             return "\"" + str(attaquant.getNom()) + "\" attaque \"" + str(cible.getNom()) + "\" pour " + str(
                 pourLog) + " points de dégats. \"" + str(cible.getNom()) + "\" est mort"
+
+    def getLoot(self):
+        """Methode qui retourne un `src.Inventaire `de deux objets en fonction du loot possible au combat.
+
+        Return
+        ------
+        inv: `src.Invetaire`
+            inventaire lootable par le joueur.
+
+        """
+
+        listeObjet = self.eventJson["loot"]
+
+        inv = Inventaire(0,0,4)
+
+        for i in range(2):
+            objet = random.choice(listeObjet)
+            if objet == "Patate":
+                inv.ajouter(Objet.objets[objet], random.randint(1,7))
+            else:
+                inv.ajouter(Objet.objets[objet])
+        return inv
+
+
 
 
 

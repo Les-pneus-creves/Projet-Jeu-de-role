@@ -14,7 +14,7 @@
       "preciMin": 4,
       "preciMax": 9
     },
-    "loot": ["Couteau", "Arc", "pistolet", "HabitsNormaux", "TenueChic", "Patate"]
+    "loot": ["Couteau", "Arc", "Pistolet", "HabitsNormaux", "TenueChic", "Patate", "Fusil"]
   },
   "Chien": {
     "texte": "Des chiens sauvages vous prennent en chasse!",
@@ -31,7 +31,7 @@
       "preciMin": 2,
       "preciMax": 7
     },
-    "loot": ["Couteau", "Patate", "pistolet"]
+    "loot": ["Couteau", "Patate", "Pistolet","HabitsNormaux" ]
 
   },
   "Soldat": {
@@ -49,7 +49,7 @@
       "preciMin": 6,
       "preciMax": 10
     },
-    "loot": ["Panzerschreck", "Fusil", "UniformeDeSoldat", "Mitrailleuse", "pistolet"]
+    "loot": ["Panzerschreck", "Fusil", "UniformeDeSoldat", "Mitrailleuse", "Pistolet"]
   },
   "Kv2v2v2": {
     "texte": "Bonne chance",

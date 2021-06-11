@@ -6,7 +6,7 @@ import pygame
 import pygame_menu
 import json
 import random
-
+from Inventaire import Inventaire
 
 class Recompense(Evenement):
 
@@ -36,3 +36,6 @@ class Recompense(Evenement):
     def mettreFin(self):
         self._enCours = False
         self._menu._close()
+
+    def getLoot(self):
+        return Inventaire(0,0,4)

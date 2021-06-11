@@ -45,5 +45,10 @@
       "image": "src/images/Objets/UniformeDeSoldat.png"
     }
   },
-  "Patate": {}
+  "ressources": {
+    "Patate": {
+      "image": "src/images/Objets/Patate.png",
+      "stackable": 64
+    }
+  }
 }
