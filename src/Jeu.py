@@ -26,6 +26,7 @@ class Jeu:
         self._size: tuple = self._width, self._height
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
+        self._combatdispute = 0
 
     def on_init(self) -> None:
         """Méthode lancée une fois servant a initialise tout ce qu'il faut"""
@@ -93,14 +94,28 @@ class Jeu:
         """Calcul des affichages et affichage sur la fenêtre"""
 
         if self._etatActuel == Etats.Gestion:
-            self._window.fill((255, 70, 70))
+            if self._whatAppend == "DEFAITE":
+                self._window.fill((255, 70, 70))
+            else:
+                self._window.fill((70, 255, 70))
+
             font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 100)
             text = font.render(self._whatAppend, True, (255, 255, 255))
-            posx, posy = pygame.display.get_window_size()
-            posx /= 2
-            posy /= 2
-            posx -= text.get_size()[0] / 2
-            posy -= text.get_size()[1] / 2
+            centrex, centrey = pygame.display.get_window_size()
+            centrex /= 2
+            centrey /= 2
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2) - 100
+            self._window.blit(text, (posx, posy))
+
+            text = font.render("Nb de combat disputé : " + str(self._combatdispute), True, (255, 255, 255))
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2)
+            self._window.blit(text, (posx, posy))
+
+            text = font.render("Nb de patate récolté : " + self.nbDePatateEnString(), True, (255, 255, 255))
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2) + 100
             self._window.blit(text, (posx, posy))
 
         elif self._etatActuel == Etats.Expedition:
@@ -151,6 +166,8 @@ class Jeu:
                 elif self._modeEvenement.getEvenement().nom == "Kv2v2v2":
                     self._whatAppend = "VICTOIRE"
                     self._etatActuel = Etats.Gestion
+                else:
+                    self._combatdispute += 1
 
         else:
             print("Etat inexistant dsl ...")
@@ -158,6 +175,12 @@ class Jeu:
     def on_cleanup(self) -> None:
         """Méthode pour quitter le jeu proprement"""
         pygame.quit()
+
+    def nbDePatateEnString(self):
+        patate = 0
+        for personnage in self._expedition.getEquipe().getPersonnages():
+            patate += personnage.nbDePatate()
+        return str(patate)
 
 
 if __name__ == "__main__":
