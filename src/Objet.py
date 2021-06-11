@@ -94,12 +94,12 @@ class Equipement(Objet):
         """
 
         super(Equipement, self).__init__(nom, image)
-        self._modVie = modVie
+        self._modDegat = modDegat
 
-    def getModVie(self):
-        """Retourne le modificateur de vie de l'arme."""
+    def getModDegat(self):
+        """Retourne le modificateur (réduction) de degat de l'équipement."""
 
-        return self._modVie
+        return self._modDegat
 
 def loadAllObjets():
     with open("src/dossierJson/objets.json") as fichier:

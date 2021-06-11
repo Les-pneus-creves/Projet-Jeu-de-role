@@ -76,10 +76,17 @@ class Personnage:
 
         Retourne un int pour la construction de log
         """
-        self._vie = self._vie - degat
+        if self._inventaire.getEquipement is not None:
+            degatReduit = degat-self._inventaire.getEquipement().getModDegat()
+            if degatReduit < 0:
+                degatReduit = 0
+        else:
+            degatReduit = degat
+
+        self._vie = self._vie - degatReduit
         if self._vie <= 0:
             self._estVivant = False
-        return degat
+        return degatReduit
 
     def attaquer(self, cible: Personnage) -> int:
         """ Methode appelant la méthode prendrerDegat du Personnage ciblé
