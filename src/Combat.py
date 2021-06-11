@@ -254,12 +254,13 @@ class Combat(Evenement):
 
         inv = Inventaire(0,0,4)
 
-        for i in range(2):
-            objet = random.choice(listeObjet)
-            if objet == "Patate":
-                inv.ajouter(Objet.objets[objet], random.randint(1,7))
-            else:
-                inv.ajouter(Objet.objets[objet])
+        if len(listeObjet) > 0:
+            for i in range(2):
+                objet = random.choice(listeObjet)
+                if objet == "Patate":
+                    inv.ajouter(Objet.objets[objet], random.randint(1,7))
+                else:
+                    inv.ajouter(Objet.objets[objet])
         return inv
 
 

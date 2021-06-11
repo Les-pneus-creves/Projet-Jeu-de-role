@@ -23,9 +23,6 @@ class Expedition:
         self._temps: int = 1  # Numéro du tour de l'expédition en cour
         self._equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
         self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l'éxpedition se déroule
-        for personnage in self._equipe.getPersonnages():
-            personnage.addToInventaire(Objet.objets["Arc"])
-
         self.objetSelectione = None
 
     def on_event(self, event) -> tuple:
