@@ -31,6 +31,8 @@ class EquipeDePersonnages:
     def getPersonnages(self) -> list:
         return self._personnages
 
+    def getCoord(self):
+        return self._coord
 
     def getPersonnagesVivants(self) -> list:
         """Retourne tous les personnages vivants de l'équipe"""

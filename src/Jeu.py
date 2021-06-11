@@ -64,7 +64,7 @@ class Jeu:
                 self._running = False
 
             if self._etatActuel == Etats.Gestion:
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if (event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) or event.type == pygame.KEYDOWN:
                     self._running = False
 
             elif self._etatActuel == Etats.Expedition:

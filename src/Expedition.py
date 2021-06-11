@@ -27,6 +27,30 @@ class Expedition:
 
     def on_event(self, event) -> tuple:
         """Lecture des évènements pygame tel les clics"""
+        if event.type == pygame.KEYDOWN:
+            coord = list(self._equipe.getCoord())
+            if event.key == pygame.K_w or event.key == pygame.K_UP:
+                print("Move the character forwards")
+                coord[1] -= 1
+
+            elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                print("Move the character backwards")
+                coord[1] += 1
+
+            elif event.key == pygame.K_q or event.key == pygame.K_LEFT:
+                print("Move the character left")
+                coord[0] -= 1
+
+            elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                print("Move the character right")
+                coord[0] += 1
+            if self._plateau.isInTheMap(coord):
+                self._equipe.deplacement(coord)  # Déplacement de l'équipe
+                if self._plateau.getCase(coord).eventSeLance():
+                    return coord
+                else:
+                    return None
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Lorsque je clic gauche sur une unite et que j'en ai pas de selectionnée
 
             x = int(event.pos[0])  # Enregistre la coordonnée y de l'event
