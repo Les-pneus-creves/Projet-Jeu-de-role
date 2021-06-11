@@ -55,18 +55,18 @@ class Expedition:
 
             x = int(event.pos[0])  # Enregistre la coordonnée y de l'event
             y = int(event.pos[1])  # Enregistre la coordonnée y de l'event
-            print("clic :", x, y)
 
             xInGrid, yInGrid = self.pointToCoord((x, y))
 
             if self._plateau.isInTheMap((xInGrid, yInGrid)):
-                print((xInGrid, yInGrid))
-                self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l'équipe
+                coord = list(self._equipe.getCoord())
+                if  (coord[0] - 1) <= xInGrid <= (coord[0] + 1) and (coord[1] - 1) <= yInGrid <= (coord[1] + 1):
+                    self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l'équipe
 
-                if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
-                    return xInGrid, yInGrid
-                else:
-                    return None
+                    if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
+                        return xInGrid, yInGrid
+                    else:
+                        return None
             elif self.isInOneInventory((x, y))[0]:
                 personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
                 if self.objetSelectione is None:
