@@ -49,7 +49,7 @@
       "preciMin": 6,
       "preciMax": 10
     },
-    "loot": ["Panzerschreck", "Fusil", "UniformeDeSoldat", "Mitrailleuse", "Pistolet"]
+    "loot": ["Panzerschreck", "Fusil", "UniformeDeSoldat", "Mitrailleuse"]
   },
   "Kv2v2v2": {
     "texte": "Bonne chance",
