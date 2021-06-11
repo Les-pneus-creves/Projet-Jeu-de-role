@@ -46,7 +46,6 @@ class Combat(Evenement):
         listeOrdre = self.__creerOrdreTour(m, g)
 
         while m.getVivante() and g.getVivante():
-            print(self._equipe)
             for perso in listeOrdre:
                 if perso.estVivant():
                     if perso in m.getPersonnages() and g.getVivante():

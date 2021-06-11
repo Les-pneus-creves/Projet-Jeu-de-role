@@ -85,7 +85,7 @@ class Inventaire(list):
         """
 
         for slot in self:
-            if isinstance(slot.getTypeObjet(), Objet.Arme):
+            if slot.getTypeObjet() is Objet.Arme:
                 return slot.getObjet()
         return None
 
@@ -96,7 +96,7 @@ class Inventaire(list):
         """
 
         for slot in self:
-            if isinstance(slot.getTypeObjet(), Objet.Equipement):
+            if slot.getTypeObjet() is Objet.Equipement:
                 return slot.getObjet()
         return None
 

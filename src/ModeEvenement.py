@@ -134,17 +134,19 @@ if __name__ == "__main__":
     jean = Personnage("Jean", 15, 7, 8, 15, None)
     bob = Personnage("Bob", 10, 8, 6, 12, None)
     jeanCastex = Personnage("JeanCastex", 12, 9, 4, 4, None)
-    pz = Objet.Arme("Arme_Panzerschreck", "src/images/Objets/Panzerschreck.png", 25, 2)
+    pz = Objet.Arme("Panzerschreck", "src/images/Objets/Panzerschreck.png", 25, 2)
     bob.addToInventaire(pz)
 
     equipe = EquipeDePersonnages(jean, bob, jeanCastex)
+
+    print(bob.getInventaire().getArme().getNom())
 
     c = Combat(equipe)
 
     evenement = c
 
     c.lancement()
-    x = ModeEvenement(evenement)
+    x = ModeEvenement(evenement, equipe)
 
     while True:
         events = pygame.event.get()
