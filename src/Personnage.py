@@ -108,7 +108,7 @@ class Personnage:
                 degat = -1
 
         else:
-            if random.randint(1, 10) > self._precision:
+            if random.randint(1, 10) > self._precision+self._inventaire.getArme().getModPrecision():
                 return 0
 
             if self._inventaire.getArme() is not None:
