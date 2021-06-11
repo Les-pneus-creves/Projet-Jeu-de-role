@@ -54,7 +54,7 @@ class Expedition:
                         personnageSelection.removeFromInventaire(self.objetSelectione)
                 else:
                     objetDestination = personnageSelection.getObjetByCoord((x, y))
-                    if objetDestination is None:
+                    if objetDestination is None or objetDestination.getNom() == self._objetSelectione.getNom():
                         personnageSelection.addToInventaire(self.objetSelectione)
                         self.objetSelectione = None
                     else:

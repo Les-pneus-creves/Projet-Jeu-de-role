@@ -52,6 +52,7 @@ class Personnage:
 
     def mourir(self) -> None:
         self._estVivant = False
+        self._vie = 0
 
     def getNom(self) -> str:
         return self._nom
@@ -85,7 +86,7 @@ class Personnage:
 
         self._vie = self._vie - degatReduit
         if self._vie <= 0:
-            self._estVivant = False
+            self.mourir()
         return degatReduit
 
     def attaquer(self, cible: Personnage) -> int:
@@ -145,11 +146,15 @@ class Personnage:
 
     def render(self, window):
         window.blit(pygame.transform.scale(self._image, (60, 60)), self.coordInScreen)
-        posx = self.coordInScreen[0] + 90
-        posy = self.coordInScreen[1]
+        posx = self.coordInScreen[0] + 80
+        posy = self.coordInScreen[1] + 5
         font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
         text = font.render(self._nom, True, (255, 255, 255))
         window.blit(text, (posx, posy))
+        posy += 30
+        text = font.render("Vie:" + str(self._vie), True, (255, 255, 255))
+        window.blit(text, (posx, posy))
+
         self._inventaire.render(window, self.coordInScreen[0], self.coordInScreen[1] + 60)
 
     def isInInventory(self, coord: tuple) -> bool:

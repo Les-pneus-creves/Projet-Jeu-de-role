@@ -33,8 +33,6 @@ class ModeEvenement:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x = int(event.pos[0])  # Enregistre la coordonnée y de l'event
                 y = int(event.pos[1])  # Enregistre la coordonnée y de l'event
-                print("La croix", self.isSurLaCroix((x, y)))
-                print("La un inventaire", self.isInOneInventory((x, y)))
                 if self.isSurLaCroix((x, y)):
                     self._enCours = False
                 elif self.isInOneInventory((x, y))[0]:
@@ -46,7 +44,7 @@ class ModeEvenement:
                                 personnageSelection.removeFromInventaire(self._objetSelectione)
                         else:
                             objetDestination = personnageSelection.getObjetByCoord((x, y))
-                            if objetDestination is None:
+                            if objetDestination is None or objetDestination.getNom() == self._objetSelectione.getNom():
                                 personnageSelection.addToInventaire(self._objetSelectione)
                                 self._objetSelectione = None
                             else:
