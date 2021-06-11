@@ -7,7 +7,6 @@ class Evenement(ABC):
     def __init__(self):
         self._enCours: bool = True
         self._victoire = True
-        self._texteDescr: str = ""
         self._menu = None
 
     def getTexteDescr(self):

@@ -55,7 +55,7 @@ class Slot_inventaire:
         return -1
 
     def retirer(self, nombre: int = 1):
-        """Retire du slot l'objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+        """Retire du slot l'objet contenu autant de fois que précisé (par défaut 1 seul) et
         s'il n'y a pas assez d'objet à retirer retourne le nombre d'objet qu'il n'a pas peu retirer du slot.
         """
 
