@@ -67,7 +67,8 @@ class Personnage:
         return self._initiative
 
     def soigner(self, soin: int):
-        self._vie += soin
+        if not self._estVivant:
+            self._vie += soin
 
     def prendreDegat(self, degat: int) -> int:
         """ Methode retirant de la vie au personnage
@@ -148,6 +149,7 @@ class Personnage:
 
 
     def render(self, window):
+        pygame.draw.rect(window, (5, 5, 5), (self.coordInScreen[0], self.coordInScreen[1], 240, 180), border_radius=5)
         window.blit(pygame.transform.scale(self._image, (60, 60)), self.coordInScreen)
         posx = self.coordInScreen[0] + 80
         posy = self.coordInScreen[1] + 5

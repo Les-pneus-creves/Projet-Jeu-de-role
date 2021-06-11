@@ -17,7 +17,7 @@ class ModeEvenement:
         self._loot = self._evenement.getLoot()
         if self._loot.vide():
             self._loot = None
-        self._lootCoord = 500, 500
+        self._lootCoord = 1000, 850
         self._objetSelectione = None
         self._enCours = True
 
