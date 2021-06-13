@@ -33,7 +33,7 @@ import math
 
 class Inventaire(list):
 
-    def __init__(self, nbArme, nbEquipement, nbRessources):
+    def __init__(self, nbArme, nbEquipement, nbRessource):
         &#34;&#34;&#34; Un `Inventaire` est une liste de plusieurs `src.Slot_inventaire` dans lequel est stocké un `src.Objet`.
 
             Parameters
@@ -51,7 +51,7 @@ class Inventaire(list):
             self.append(Slot_inventaire(Objet.Arme))
         for i in range(nbEquipement):
             self.append(Slot_inventaire(Objet.Equipement))
-        for i in range(nbRessources):
+        for i in range(nbRessource):
             self.append(Slot_inventaire(Objet.Objet))
 
     def append(self, slot: Slot_inventaire):
@@ -113,7 +113,7 @@ class Inventaire(list):
         &#34;&#34;&#34;
 
         for slot in self:
-            if slot.getTypeObjet() == &#34;Arme&#34;:
+            if slot.getTypeObjet() is Objet.Arme:
                 return slot.getObjet()
         return None
 
@@ -124,7 +124,7 @@ class Inventaire(list):
         &#34;&#34;&#34;
 
         for slot in self:
-            if slot.getTypeObjet() == &#34;Equipement&#34;:
+            if slot.getTypeObjet() is Objet.Equipement:
                 return slot.getObjet()
         return None
 
@@ -234,6 +234,12 @@ class Inventaire(list):
             if math.ceil(nb / objet.getStackable()) &lt; nbslots:
                 self.retirer(objet, nb)
                 self.ajouter(objet, nb)
+
+    def vide(self):
+        for slot in self:
+            if not slot.vide():
+                return False
+        return True
 
     def render(self, window, minx, miny):
         &#34;&#34;&#34;Permet d&#39;afficher l&#39;inventaire dans une fenêtre pygame à une position donné.
@@ -292,7 +298,7 @@ if __name__ == &#34;__main__&#34;:
 <dl>
 <dt id="src.Inventaire.Inventaire"><code class="flex name class">
 <span>class <span class="ident">Inventaire</span></span>
-<span>(</span><span>nbArme, nbEquipement, nbRessources)</span>
+<span>(</span><span>nbArme, nbEquipement, nbRessource)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Built-in mutable sequence.</p>
@@ -314,7 +320,7 @@ The argument must be an iterable if specified.</p>
 </summary>
 <pre><code class="python">class Inventaire(list):
 
-    def __init__(self, nbArme, nbEquipement, nbRessources):
+    def __init__(self, nbArme, nbEquipement, nbRessource):
         &#34;&#34;&#34; Un `Inventaire` est une liste de plusieurs `src.Slot_inventaire` dans lequel est stocké un `src.Objet`.
 
             Parameters
@@ -332,7 +338,7 @@ The argument must be an iterable if specified.</p>
             self.append(Slot_inventaire(Objet.Arme))
         for i in range(nbEquipement):
             self.append(Slot_inventaire(Objet.Equipement))
-        for i in range(nbRessources):
+        for i in range(nbRessource):
             self.append(Slot_inventaire(Objet.Objet))
 
     def append(self, slot: Slot_inventaire):
@@ -394,7 +400,7 @@ The argument must be an iterable if specified.</p>
         &#34;&#34;&#34;
 
         for slot in self:
-            if slot.getTypeObjet() == &#34;Arme&#34;:
+            if slot.getTypeObjet() is Objet.Arme:
                 return slot.getObjet()
         return None
 
@@ -405,7 +411,7 @@ The argument must be an iterable if specified.</p>
         &#34;&#34;&#34;
 
         for slot in self:
-            if slot.getTypeObjet() == &#34;Equipement&#34;:
+            if slot.getTypeObjet() is Objet.Equipement:
                 return slot.getObjet()
         return None
 
@@ -515,6 +521,12 @@ The argument must be an iterable if specified.</p>
             if math.ceil(nb / objet.getStackable()) &lt; nbslots:
                 self.retirer(objet, nb)
                 self.ajouter(objet, nb)
+
+    def vide(self):
+        for slot in self:
+            if not slot.vide():
+                return False
+        return True
 
     def render(self, window, minx, miny):
         &#34;&#34;&#34;Permet d&#39;afficher l&#39;inventaire dans une fenêtre pygame à une position donné.
@@ -642,7 +654,7 @@ The argument must be an iterable if specified.</p>
     &#34;&#34;&#34;
 
     for slot in self:
-        if slot.getTypeObjet() == &#34;Arme&#34;:
+        if slot.getTypeObjet() is Objet.Arme:
             return slot.getObjet()
     return None</code></pre>
 </details>
@@ -664,7 +676,7 @@ The argument must be an iterable if specified.</p>
     &#34;&#34;&#34;
 
     for slot in self:
-        if slot.getTypeObjet() == &#34;Equipement&#34;:
+        if slot.getTypeObjet() is Objet.Equipement:
             return slot.getObjet()
     return None</code></pre>
 </details>
@@ -856,6 +868,22 @@ The argument must be an iterable if specified.</p>
             self.ajouter(objet, nb)</code></pre>
 </details>
 </dd>
+<dt id="src.Inventaire.Inventaire.vide"><code class="name flex">
+<span>def <span class="ident">vide</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def vide(self):
+    for slot in self:
+        if not slot.vide():
+            return False
+    return True</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -889,6 +917,7 @@ The argument must be an iterable if specified.</p>
 <li><code><a title="src.Inventaire.Inventaire.slotsOfThisObjet" href="#src.Inventaire.Inventaire.slotsOfThisObjet">slotsOfThisObjet</a></code></li>
 <li><code><a title="src.Inventaire.Inventaire.tolistofObjet" href="#src.Inventaire.Inventaire.tolistofObjet">tolistofObjet</a></code></li>
 <li><code><a title="src.Inventaire.Inventaire.trier" href="#src.Inventaire.Inventaire.trier">trier</a></code></li>
+<li><code><a title="src.Inventaire.Inventaire.vide" href="#src.Inventaire.Inventaire.vide">vide</a></code></li>
 </ul>
 </li>
 </ul>

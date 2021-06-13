@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
 <title>src.Jeu API documentation</title>
-<meta name="description" content="Programme principale" />
+<meta name="description" content="Programme principale …" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -23,12 +23,15 @@
 </header>
 <section id="section-intro">
 <p>Programme principale</p>
+<p>Plus que faire manger et limiter les déplacements.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
 Programme principale
+
+Plus que faire manger et limiter les déplacements.
 &#34;&#34;&#34;
 
 import pygame
@@ -50,22 +53,25 @@ class Jeu:
     def __init__(self):
         self._nbTour: int = 0
         self._running: bool = True
-        self._width: int = 1080
-        self._height: int = 1080
+        self._width: int = 0
+        self._height: int = 0
         self._size: tuple = self._width, self._height
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
+        self._combatdispute = 0
+        self._patateMange = 0
 
     def on_init(self) -&gt; None:
         &#34;&#34;&#34;Méthode lancée une fois servant a initialise tout ce qu&#39;il faut&#34;&#34;&#34;
         pygame.init()
-        self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+        self._window = pygame.display.set_mode(self._size, pygame.RESIZABLE)
         self._running = True
         Objet.loadAllObjets()
 
         plateau = PlateauDeJeu(&#39;src/maps/1.tmx&#39;)
-        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;),
-                                     Personnage(&#34;Albert&#34;, 30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
+        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 37, 8, 7, 10, &#34;src/images/Frank.png&#34;),
+                                     Personnage(&#34;Albert&#34;, 30, 10, 6, 11, &#34;src/images/Albert.png&#34;),
+                                     Personnage(&#34;John&#34;, 33, 15, 6, 9, &#34;src/images/John.png&#34;))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 
@@ -90,13 +96,14 @@ class Jeu:
                 self._running = False
 
             if self._etatActuel == Etats.Gestion:
-                pass
+                if (event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) or event.type == pygame.KEYDOWN:
+                    self._running = False
 
             elif self._etatActuel == Etats.Expedition:
                 self._whatAppend = self._expedition.on_event(event)
 
             elif self._etatActuel == Etats.Evenement:
-                self._modeEvenement.on_event(events)
+                self._modeEvenement.on_event(events, event)
                 break
 
             else:
@@ -121,7 +128,29 @@ class Jeu:
         &#34;&#34;&#34;Calcul des affichages et affichage sur la fenêtre&#34;&#34;&#34;
 
         if self._etatActuel == Etats.Gestion:
-            self._window.fill((255, 70, 70))
+            if self._whatAppend == &#34;DEFAITE&#34;:
+                self._window.fill((255, 70, 70))
+            else:
+                self._window.fill((70, 255, 70))
+
+            font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 100)
+            text = font.render(self._whatAppend, True, (255, 255, 255))
+            centrex, centrey = pygame.display.get_window_size()
+            centrex /= 2
+            centrey /= 2
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2) - 100
+            self._window.blit(text, (posx, posy))
+
+            text = font.render(&#34;Nb de combat(s) disputé(s) : &#34; + str(self._combatdispute), True, (255, 255, 255))
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2)
+            self._window.blit(text, (posx, posy))
+
+            text = font.render(&#34;Nb de patate(s) récoltée(s) : &#34; + self.nbDePatateEnString(), True, (255, 255, 255))
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2) + 100
+            self._window.blit(text, (posx, posy))
 
         elif self._etatActuel == Etats.Expedition:
             self._window.fill((0, 0, 0))
@@ -151,7 +180,7 @@ class Jeu:
                 if TypeCase[0] == &#34;Archer&#34; or TypeCase[1].startswith(&#34;R&#34;):
                     event = Combat(self._expedition.getEquipe(), &#34;Soldat&#34;)
                     print(&#34;Combat contre Soldat&#34;)
-                if TypeCase[0] == &#34;Arche&#34; or TypeCase[0] == &#34;Maison&#34; or TypeCase[0] == &#34;Ferme&#34; or TypeCase[1].startswith(&#34;A&#34;):
+                if TypeCase[0] == &#34;Arche&#34; or TypeCase[1].startswith(&#34;A&#34;):
                     event = Combat(self._expedition.getEquipe(), &#34;Chien&#34;)
                     print(&#34;Combat contre Chien&#34;)
                 if TypeCase[0] == &#34;Mine&#34;:
@@ -159,21 +188,33 @@ class Jeu:
                     print(&#34;Combat contre Kv2v2v2&#34;)
 
                 event.lancement()
-                self._modeEvenement = ModeEvenement(event)
+                self._modeEvenement = ModeEvenement(event, self._expedition.getEquipe())
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():
                 self._etatActuel = Etats.Expedition
                 self._whatAppend = None
-                print(self._modeEvenement.getVictoire())
                 if self._modeEvenement.getVictoire() == False:
                     self._etatActuel = Etats.Gestion
+                    self._whatAppend = &#34;DEFAITE&#34;
+                elif self._modeEvenement.getEvenement().nom == &#34;Kv2v2v2&#34;:
+                    self._whatAppend = &#34;VICTOIRE&#34;
+                    self._etatActuel = Etats.Gestion
+                else:
+                    self._combatdispute += 1
+
         else:
             print(&#34;Etat inexistant dsl ...&#34;)
 
     def on_cleanup(self) -&gt; None:
         &#34;&#34;&#34;Méthode pour quitter le jeu proprement&#34;&#34;&#34;
         pygame.quit()
+
+    def nbDePatateEnString(self):
+        patate = 0
+        for personnage in self._expedition.getEquipe().getPersonnages():
+            patate += personnage.nbDePatate()
+        return str(patate)
 
 
 if __name__ == &#34;__main__&#34;:
@@ -229,22 +270,25 @@ if __name__ == &#34;__main__&#34;:
     def __init__(self):
         self._nbTour: int = 0
         self._running: bool = True
-        self._width: int = 1080
-        self._height: int = 1080
+        self._width: int = 0
+        self._height: int = 0
         self._size: tuple = self._width, self._height
         self._window = None
         self._etatActuel: Etats = Etats.Expedition
+        self._combatdispute = 0
+        self._patateMange = 0
 
     def on_init(self) -&gt; None:
         &#34;&#34;&#34;Méthode lancée une fois servant a initialise tout ce qu&#39;il faut&#34;&#34;&#34;
         pygame.init()
-        self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+        self._window = pygame.display.set_mode(self._size, pygame.RESIZABLE)
         self._running = True
         Objet.loadAllObjets()
 
         plateau = PlateauDeJeu(&#39;src/maps/1.tmx&#39;)
-        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;),
-                                     Personnage(&#34;Albert&#34;, 30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
+        equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 37, 8, 7, 10, &#34;src/images/Frank.png&#34;),
+                                     Personnage(&#34;Albert&#34;, 30, 10, 6, 11, &#34;src/images/Albert.png&#34;),
+                                     Personnage(&#34;John&#34;, 33, 15, 6, 9, &#34;src/images/John.png&#34;))
         self._expedition = Expedition(equipe, plateau)
         self._modeEvenement = None
 
@@ -269,13 +313,14 @@ if __name__ == &#34;__main__&#34;:
                 self._running = False
 
             if self._etatActuel == Etats.Gestion:
-                pass
+                if (event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) or event.type == pygame.KEYDOWN:
+                    self._running = False
 
             elif self._etatActuel == Etats.Expedition:
                 self._whatAppend = self._expedition.on_event(event)
 
             elif self._etatActuel == Etats.Evenement:
-                self._modeEvenement.on_event(events)
+                self._modeEvenement.on_event(events, event)
                 break
 
             else:
@@ -300,7 +345,29 @@ if __name__ == &#34;__main__&#34;:
         &#34;&#34;&#34;Calcul des affichages et affichage sur la fenêtre&#34;&#34;&#34;
 
         if self._etatActuel == Etats.Gestion:
-            self._window.fill((255, 70, 70))
+            if self._whatAppend == &#34;DEFAITE&#34;:
+                self._window.fill((255, 70, 70))
+            else:
+                self._window.fill((70, 255, 70))
+
+            font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 100)
+            text = font.render(self._whatAppend, True, (255, 255, 255))
+            centrex, centrey = pygame.display.get_window_size()
+            centrex /= 2
+            centrey /= 2
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2) - 100
+            self._window.blit(text, (posx, posy))
+
+            text = font.render(&#34;Nb de combat(s) disputé(s) : &#34; + str(self._combatdispute), True, (255, 255, 255))
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2)
+            self._window.blit(text, (posx, posy))
+
+            text = font.render(&#34;Nb de patate(s) récoltée(s) : &#34; + self.nbDePatateEnString(), True, (255, 255, 255))
+            posx = centrex - (text.get_size()[0] / 2)
+            posy = centrey - (text.get_size()[1] / 2) + 100
+            self._window.blit(text, (posx, posy))
 
         elif self._etatActuel == Etats.Expedition:
             self._window.fill((0, 0, 0))
@@ -330,7 +397,7 @@ if __name__ == &#34;__main__&#34;:
                 if TypeCase[0] == &#34;Archer&#34; or TypeCase[1].startswith(&#34;R&#34;):
                     event = Combat(self._expedition.getEquipe(), &#34;Soldat&#34;)
                     print(&#34;Combat contre Soldat&#34;)
-                if TypeCase[0] == &#34;Arche&#34; or TypeCase[0] == &#34;Maison&#34; or TypeCase[0] == &#34;Ferme&#34; or TypeCase[1].startswith(&#34;A&#34;):
+                if TypeCase[0] == &#34;Arche&#34; or TypeCase[1].startswith(&#34;A&#34;):
                     event = Combat(self._expedition.getEquipe(), &#34;Chien&#34;)
                     print(&#34;Combat contre Chien&#34;)
                 if TypeCase[0] == &#34;Mine&#34;:
@@ -338,21 +405,33 @@ if __name__ == &#34;__main__&#34;:
                     print(&#34;Combat contre Kv2v2v2&#34;)
 
                 event.lancement()
-                self._modeEvenement = ModeEvenement(event)
+                self._modeEvenement = ModeEvenement(event, self._expedition.getEquipe())
 
         elif self._etatActuel == Etats.Evenement:
             if not self._modeEvenement.getEnCours():
                 self._etatActuel = Etats.Expedition
                 self._whatAppend = None
-                print(self._modeEvenement.getVictoire())
                 if self._modeEvenement.getVictoire() == False:
                     self._etatActuel = Etats.Gestion
+                    self._whatAppend = &#34;DEFAITE&#34;
+                elif self._modeEvenement.getEvenement().nom == &#34;Kv2v2v2&#34;:
+                    self._whatAppend = &#34;VICTOIRE&#34;
+                    self._etatActuel = Etats.Gestion
+                else:
+                    self._combatdispute += 1
+
         else:
             print(&#34;Etat inexistant dsl ...&#34;)
 
     def on_cleanup(self) -&gt; None:
         &#34;&#34;&#34;Méthode pour quitter le jeu proprement&#34;&#34;&#34;
-        pygame.quit()</code></pre>
+        pygame.quit()
+
+    def nbDePatateEnString(self):
+        patate = 0
+        for personnage in self._expedition.getEquipe().getPersonnages():
+            patate += personnage.nbDePatate()
+        return str(patate)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -381,7 +460,7 @@ if __name__ == &#34;__main__&#34;:
             if TypeCase[0] == &#34;Archer&#34; or TypeCase[1].startswith(&#34;R&#34;):
                 event = Combat(self._expedition.getEquipe(), &#34;Soldat&#34;)
                 print(&#34;Combat contre Soldat&#34;)
-            if TypeCase[0] == &#34;Arche&#34; or TypeCase[0] == &#34;Maison&#34; or TypeCase[0] == &#34;Ferme&#34; or TypeCase[1].startswith(&#34;A&#34;):
+            if TypeCase[0] == &#34;Arche&#34; or TypeCase[1].startswith(&#34;A&#34;):
                 event = Combat(self._expedition.getEquipe(), &#34;Chien&#34;)
                 print(&#34;Combat contre Chien&#34;)
             if TypeCase[0] == &#34;Mine&#34;:
@@ -389,17 +468,39 @@ if __name__ == &#34;__main__&#34;:
                 print(&#34;Combat contre Kv2v2v2&#34;)
 
             event.lancement()
-            self._modeEvenement = ModeEvenement(event)
+            self._modeEvenement = ModeEvenement(event, self._expedition.getEquipe())
 
     elif self._etatActuel == Etats.Evenement:
         if not self._modeEvenement.getEnCours():
             self._etatActuel = Etats.Expedition
             self._whatAppend = None
-            print(self._modeEvenement.getVictoire())
             if self._modeEvenement.getVictoire() == False:
                 self._etatActuel = Etats.Gestion
+                self._whatAppend = &#34;DEFAITE&#34;
+            elif self._modeEvenement.getEvenement().nom == &#34;Kv2v2v2&#34;:
+                self._whatAppend = &#34;VICTOIRE&#34;
+                self._etatActuel = Etats.Gestion
+            else:
+                self._combatdispute += 1
+
     else:
         print(&#34;Etat inexistant dsl ...&#34;)</code></pre>
+</details>
+</dd>
+<dt id="src.Jeu.Jeu.nbDePatateEnString"><code class="name flex">
+<span>def <span class="ident">nbDePatateEnString</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def nbDePatateEnString(self):
+    patate = 0
+    for personnage in self._expedition.getEquipe().getPersonnages():
+        patate += personnage.nbDePatate()
+    return str(patate)</code></pre>
 </details>
 </dd>
 <dt id="src.Jeu.Jeu.on_cleanup"><code class="name flex">
@@ -432,13 +533,14 @@ if __name__ == &#34;__main__&#34;:
             self._running = False
 
         if self._etatActuel == Etats.Gestion:
-            pass
+            if (event.type == pygame.MOUSEBUTTONDOWN and event.button == 1) or event.type == pygame.KEYDOWN:
+                self._running = False
 
         elif self._etatActuel == Etats.Expedition:
             self._whatAppend = self._expedition.on_event(event)
 
         elif self._etatActuel == Etats.Evenement:
-            self._modeEvenement.on_event(events)
+            self._modeEvenement.on_event(events, event)
             break
 
         else:
@@ -481,13 +583,14 @@ if __name__ == &#34;__main__&#34;:
 <pre><code class="python">def on_init(self) -&gt; None:
     &#34;&#34;&#34;Méthode lancée une fois servant a initialise tout ce qu&#39;il faut&#34;&#34;&#34;
     pygame.init()
-    self._window = pygame.display.set_mode(self._size, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+    self._window = pygame.display.set_mode(self._size, pygame.RESIZABLE)
     self._running = True
     Objet.loadAllObjets()
 
     plateau = PlateauDeJeu(&#39;src/maps/1.tmx&#39;)
-    equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 40, 12, 5, 5, &#34;src/images/Smiguel.jpg&#34;),
-                                 Personnage(&#34;Albert&#34;, 30, 15, 3, 2, &#34;src/images/kv2v2v2.jpg&#34;))
+    equipe = EquipeDePersonnages(Personnage(&#34;Frank&#34;, 37, 8, 7, 10, &#34;src/images/Frank.png&#34;),
+                                 Personnage(&#34;Albert&#34;, 30, 10, 6, 11, &#34;src/images/Albert.png&#34;),
+                                 Personnage(&#34;John&#34;, 33, 15, 6, 9, &#34;src/images/John.png&#34;))
     self._expedition = Expedition(equipe, plateau)
     self._modeEvenement = None</code></pre>
 </details>
@@ -530,7 +633,29 @@ if __name__ == &#34;__main__&#34;:
     &#34;&#34;&#34;Calcul des affichages et affichage sur la fenêtre&#34;&#34;&#34;
 
     if self._etatActuel == Etats.Gestion:
-        self._window.fill((255, 70, 70))
+        if self._whatAppend == &#34;DEFAITE&#34;:
+            self._window.fill((255, 70, 70))
+        else:
+            self._window.fill((70, 255, 70))
+
+        font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 100)
+        text = font.render(self._whatAppend, True, (255, 255, 255))
+        centrex, centrey = pygame.display.get_window_size()
+        centrex /= 2
+        centrey /= 2
+        posx = centrex - (text.get_size()[0] / 2)
+        posy = centrey - (text.get_size()[1] / 2) - 100
+        self._window.blit(text, (posx, posy))
+
+        text = font.render(&#34;Nb de combat(s) disputé(s) : &#34; + str(self._combatdispute), True, (255, 255, 255))
+        posx = centrex - (text.get_size()[0] / 2)
+        posy = centrey - (text.get_size()[1] / 2)
+        self._window.blit(text, (posx, posy))
+
+        text = font.render(&#34;Nb de patate(s) récoltée(s) : &#34; + self.nbDePatateEnString(), True, (255, 255, 255))
+        posx = centrex - (text.get_size()[0] / 2)
+        posy = centrey - (text.get_size()[1] / 2) + 100
+        self._window.blit(text, (posx, posy))
 
     elif self._etatActuel == Etats.Expedition:
         self._window.fill((0, 0, 0))
@@ -575,6 +700,7 @@ if __name__ == &#34;__main__&#34;:
 <h4><code><a title="src.Jeu.Jeu" href="#src.Jeu.Jeu">Jeu</a></code></h4>
 <ul class="two-column">
 <li><code><a title="src.Jeu.Jeu.change_state" href="#src.Jeu.Jeu.change_state">change_state</a></code></li>
+<li><code><a title="src.Jeu.Jeu.nbDePatateEnString" href="#src.Jeu.Jeu.nbDePatateEnString">nbDePatateEnString</a></code></li>
 <li><code><a title="src.Jeu.Jeu.on_cleanup" href="#src.Jeu.Jeu.on_cleanup">on_cleanup</a></code></li>
 <li><code><a title="src.Jeu.Jeu.on_event" href="#src.Jeu.Jeu.on_event">on_event</a></code></li>
 <li><code><a title="src.Jeu.Jeu.on_execute" href="#src.Jeu.Jeu.on_execute">on_execute</a></code></li>

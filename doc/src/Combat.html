@@ -35,11 +35,22 @@ import pygame_menu
 import json
 import pygame
 import random
+from Inventaire import Inventaire
+import Objet
 
 
 class Combat(Evenement):
 
     def __init__(self, equipe: EquipeDePersonnages, combat_a_lancer: str = None):
+        &#34;&#34;&#34; Un `Combat` fait combattre l&#39;équipe de personnages joueurs et une équipe de méchant créée par le combat.
+
+            Parameters
+            ----------
+            equipe : `EquipeDePersonnages`
+                Equipe de personnage joueur
+            combat_a_lancer : str
+                Optionel: Permet de forcer un type de combat.
+        &#34;&#34;&#34;
         super().__init__()
 
         with open(&#34;src/dossierJson/combats.json&#34;) as fichier:
@@ -48,20 +59,21 @@ class Combat(Evenement):
                 combat_a_lancer = random.choice(list(data))
             self.eventJson = data[combat_a_lancer]
 
+        self.nom = combat_a_lancer
         self._log = []
         self._menu = None
         self._equipeMechant: EquipeDePersonnages = self.creerEquipeMechant(self.eventJson)
         self._equipe = equipe
 
-    # Méthode permettant de donner au combat l&#39;équipe de personnage Joueur qui va se battre et déroule la logique de combat
     def lancement(self):
+        &#34;&#34;&#34; Méthode qui déroule la logique de combat&#34;&#34;&#34;
+
         logs = []
         m = self._equipeMechant
         g = self._equipe
         listeOrdre = self.__creerOrdreTour(m, g)
 
         while m.getVivante() and g.getVivante():
-            print(self._equipe)
             for perso in listeOrdre:
                 if perso.estVivant():
                     if perso in m.getPersonnages() and g.getVivante():
@@ -77,11 +89,21 @@ class Combat(Evenement):
         self.creerMenuCombat(logs)
         self.creerMenu(self.eventJson[&#34;titre&#34;], self.eventJson[&#34;texte&#34;], self.eventJson[&#34;image&#34;])
 
-        # Methode appelée dans l&#39;init qui modifie le menu avec ce qu&#39;il faut
 
     def creerMenu(self, titre: str, texte: str, image) -&gt; None:
+        &#34;&#34;&#34;Methode appelée dans l&#39;init qui crée le menu du combat avec les infos du combat
 
-        # création du menu &#34;principal&#34;
+        Parameters
+        ----------
+        titre: str
+            Titre du combat
+        texte: str
+            Texte du combat
+        image: pygame.image
+            Image du combat
+
+        Retourne None
+        &#34;&#34;&#34;
 
         taille = list(pygame.display.get_window_size())
         taille[0] /= 1.25
@@ -92,7 +114,17 @@ class Combat(Evenement):
         self._menu.add.button(&#34;Voir logs&#34;, self._log)
 
     def creerMenuCombat(self, logs):
-        # création du menu log
+        &#34;&#34;&#34; Création du menu de logs.
+
+        Parameters
+        ----------
+
+        logs: str[]
+            Array de string
+
+        Retourne None
+
+        &#34;&#34;&#34;
         taille = list(pygame.display.get_window_size())
         taille[0] /= 1.25
         taille[1] /= 1.25
@@ -101,14 +133,25 @@ class Combat(Evenement):
             self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
         self._log.add.button(&#34;Quitter&#34;, self.mettreFin)
 
-    # Methode permettant de passer en cours a false
     def mettreFin(self):
+        &#34;&#34;&#34; Methode mettant fin a l&#39;évenement combat
+
+        Retourne None
+        &#34;&#34;&#34;
         self._enCours = False
         self._menu._close()
 
-    # Méthode permettant de déterminer l&#39;ordre des tours des personnages lors du combat
     def __creerOrdreTour(self, ep1: EquipeDePersonnages, ep2: EquipeDePersonnages) -&gt; list:
+        &#34;&#34;&#34; Méthode permettant de faire une liste de personnage par initiative décroissante à partir de 2 `EquipeDePersonnages`
 
+         Parameters
+         ----------
+
+         ep1: `EquipeDePersonnages`
+         ep2: `EquipeDePersonnages`
+
+        Retourne list[`Personnage`]
+         &#34;&#34;&#34;
         listeDesordre = ep1.getPersonnages() + ep2.getPersonnages()
         listeOrdre = []
 
@@ -120,6 +163,17 @@ class Combat(Evenement):
         return listeOrdre
 
     def getInitmax(self, ep: list) -&gt; Personnage:
+        &#34;&#34;&#34; Methode qui retourne le personnage ayant la plus grande initiative dans une liste de personnage
+
+        Parameters
+        ----------
+
+        ep: list[`Personnage`]
+            Liste de personnages
+
+        Retourne Une liste de personnage triée par initiative décroissant
+
+        &#34;&#34;&#34;
         persoReturned = ep[0]
 
         for perso in ep:
@@ -128,9 +182,16 @@ class Combat(Evenement):
 
         return persoReturned
 
-    # Methode qui retourne une equipe de personnage en fonction du combat lancé
     def creerEquipeMechant(self, combat):
+        &#34;&#34;&#34;  Methode qui retourne une equipe de personnage en fonction du combat a lancer
 
+        Parameters
+        ----------
+        combat: Dictionnaire
+            Dictionnaire qui contient les données du combat (Par exemple les ennemis a instancier)
+
+        Retourne None
+        &#34;&#34;&#34;
         equipetemp = []
         if combat[&#34;unite&#34;][&#34;nom&#34;] == &#34;Kv2v2v2&#34;:
             nb = 1
@@ -147,9 +208,19 @@ class Combat(Evenement):
         else:
             return EquipeDePersonnages(equipetemp[0], equipetemp[1], equipetemp[2])
 
-    # Methode qui creer un mechant avec les valeurs aléatoire du json
     def creerMechant(self, modele, i: int):
+        &#34;&#34;&#34; Methode qui creer un personnage &#34;mechant&#34; avec les valeurs aléatoire du json
 
+        Parameters
+        ----------
+        modele: Dictionnaire
+            Dictionnaire qui contient les fourchettes de stats pour le personnage a créer
+
+        i: int
+            Int permettant d&#39;incrémenter le nom du personnage
+
+        retourne un `src.Personnage`
+        &#34;&#34;&#34;
         vie = random.randint(modele[&#34;vieMin&#34;], modele[&#34;vieMax&#34;])
         force = random.randint(modele[&#34;forceMin&#34;], modele[&#34;forceMax&#34;])
         ini = random.randint(modele[&#34;iniMin&#34;], modele[&#34;iniMax&#34;])
@@ -157,12 +228,31 @@ class Combat(Evenement):
 
         return Personnage(modele[&#34;nom&#34;] + &#34; &#34; + str(i+1), vie, force, preci, ini, None)
 
-    # Méthode permmetant de selectionné une cible dans une équipe donnée
     def _choisirCible(self, equipePerso: EquipeDePersonnages) -&gt; Personnage:
+        &#34;&#34;&#34; Méthode permmetant de selectionné une cible dans une équipe donnée
+
+        Parameters
+        ----------
+        equiperPerso: `EquipeDePersonnage`
+            Equipe dans laquelle on cherche une cible
+
+        Retourne une `Personnage` selectionné aléatoirement
+        &#34;&#34;&#34;
         cible = random.choice(equipePerso.getPersonnagesVivants())
         return cible
 
     def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -&gt; str:
+        &#34;&#34;&#34; Methode appelant la méthode attaquer d&#39;un `Personnage` et retourne un string pour construire le log
+
+        Parameters
+        ----------
+        attaquant: `Personnage`
+            `Personnage` attaquant
+        cible: `Personnage`
+            `Personnage` ciblé
+
+        retourne un string
+        &#34;&#34;&#34;
         pourLog = attaquant.attaquer(cible)
 
         if pourLog == 0:
@@ -176,6 +266,32 @@ class Combat(Evenement):
         else:
             return &#34;\&#34;&#34; + str(attaquant.getNom()) + &#34;\&#34; attaque \&#34;&#34; + str(cible.getNom()) + &#34;\&#34; pour &#34; + str(
                 pourLog) + &#34; points de dégats. \&#34;&#34; + str(cible.getNom()) + &#34;\&#34; est mort&#34;
+
+    def getLoot(self):
+        &#34;&#34;&#34;Methode qui retourne un `src.Inventaire `de deux objets en fonction du loot possible au combat.
+
+        Return
+        ------
+        inv: `src.Invetaire`
+            inventaire lootable par le joueur.
+
+        &#34;&#34;&#34;
+
+        listeObjet = self.eventJson[&#34;loot&#34;]
+
+        inv = Inventaire(0,0,4)
+
+        if len(listeObjet) &gt; 0:
+            for i in range(2):
+                objet = random.choice(listeObjet)
+                if objet == &#34;Patate&#34;:
+                    inv.ajouter(Objet.objets[objet], random.randint(1,7))
+                else:
+                    inv.ajouter(Objet.objets[objet])
+        return inv
+
+
+
 
 
 if __name__ == &#34;__main__&#34;:
@@ -213,7 +329,15 @@ if __name__ == &#34;__main__&#34;:
 </code></dt>
 <dd>
 <div class="desc"><p>Helper class that provides a standard way to create an ABC using
-inheritance.</p></div>
+inheritance.</p>
+<p>Un <code><a title="src.Combat.Combat" href="#src.Combat.Combat">Combat</a></code> fait combattre l'équipe de personnages joueurs et une équipe de méchant créée par le combat.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>equipe</code></strong> :&ensp;<code>EquipeDePersonnages</code></dt>
+<dd>Equipe de personnage joueur</dd>
+<dt><strong><code>combat_a_lancer</code></strong> :&ensp;<code>str</code></dt>
+<dd>Optionel: Permet de forcer un type de combat.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -221,6 +345,15 @@ inheritance.</p></div>
 <pre><code class="python">class Combat(Evenement):
 
     def __init__(self, equipe: EquipeDePersonnages, combat_a_lancer: str = None):
+        &#34;&#34;&#34; Un `Combat` fait combattre l&#39;équipe de personnages joueurs et une équipe de méchant créée par le combat.
+
+            Parameters
+            ----------
+            equipe : `EquipeDePersonnages`
+                Equipe de personnage joueur
+            combat_a_lancer : str
+                Optionel: Permet de forcer un type de combat.
+        &#34;&#34;&#34;
         super().__init__()
 
         with open(&#34;src/dossierJson/combats.json&#34;) as fichier:
@@ -229,20 +362,21 @@ inheritance.</p></div>
                 combat_a_lancer = random.choice(list(data))
             self.eventJson = data[combat_a_lancer]
 
+        self.nom = combat_a_lancer
         self._log = []
         self._menu = None
         self._equipeMechant: EquipeDePersonnages = self.creerEquipeMechant(self.eventJson)
         self._equipe = equipe
 
-    # Méthode permettant de donner au combat l&#39;équipe de personnage Joueur qui va se battre et déroule la logique de combat
     def lancement(self):
+        &#34;&#34;&#34; Méthode qui déroule la logique de combat&#34;&#34;&#34;
+
         logs = []
         m = self._equipeMechant
         g = self._equipe
         listeOrdre = self.__creerOrdreTour(m, g)
 
         while m.getVivante() and g.getVivante():
-            print(self._equipe)
             for perso in listeOrdre:
                 if perso.estVivant():
                     if perso in m.getPersonnages() and g.getVivante():
@@ -258,11 +392,21 @@ inheritance.</p></div>
         self.creerMenuCombat(logs)
         self.creerMenu(self.eventJson[&#34;titre&#34;], self.eventJson[&#34;texte&#34;], self.eventJson[&#34;image&#34;])
 
-        # Methode appelée dans l&#39;init qui modifie le menu avec ce qu&#39;il faut
 
     def creerMenu(self, titre: str, texte: str, image) -&gt; None:
+        &#34;&#34;&#34;Methode appelée dans l&#39;init qui crée le menu du combat avec les infos du combat
 
-        # création du menu &#34;principal&#34;
+        Parameters
+        ----------
+        titre: str
+            Titre du combat
+        texte: str
+            Texte du combat
+        image: pygame.image
+            Image du combat
+
+        Retourne None
+        &#34;&#34;&#34;
 
         taille = list(pygame.display.get_window_size())
         taille[0] /= 1.25
@@ -273,7 +417,17 @@ inheritance.</p></div>
         self._menu.add.button(&#34;Voir logs&#34;, self._log)
 
     def creerMenuCombat(self, logs):
-        # création du menu log
+        &#34;&#34;&#34; Création du menu de logs.
+
+        Parameters
+        ----------
+
+        logs: str[]
+            Array de string
+
+        Retourne None
+
+        &#34;&#34;&#34;
         taille = list(pygame.display.get_window_size())
         taille[0] /= 1.25
         taille[1] /= 1.25
@@ -282,14 +436,25 @@ inheritance.</p></div>
             self._log.add.label(entree, align=pygame_menu.locals.ALIGN_LEFT)
         self._log.add.button(&#34;Quitter&#34;, self.mettreFin)
 
-    # Methode permettant de passer en cours a false
     def mettreFin(self):
+        &#34;&#34;&#34; Methode mettant fin a l&#39;évenement combat
+
+        Retourne None
+        &#34;&#34;&#34;
         self._enCours = False
         self._menu._close()
 
-    # Méthode permettant de déterminer l&#39;ordre des tours des personnages lors du combat
     def __creerOrdreTour(self, ep1: EquipeDePersonnages, ep2: EquipeDePersonnages) -&gt; list:
+        &#34;&#34;&#34; Méthode permettant de faire une liste de personnage par initiative décroissante à partir de 2 `EquipeDePersonnages`
 
+         Parameters
+         ----------
+
+         ep1: `EquipeDePersonnages`
+         ep2: `EquipeDePersonnages`
+
+        Retourne list[`Personnage`]
+         &#34;&#34;&#34;
         listeDesordre = ep1.getPersonnages() + ep2.getPersonnages()
         listeOrdre = []
 
@@ -301,6 +466,17 @@ inheritance.</p></div>
         return listeOrdre
 
     def getInitmax(self, ep: list) -&gt; Personnage:
+        &#34;&#34;&#34; Methode qui retourne le personnage ayant la plus grande initiative dans une liste de personnage
+
+        Parameters
+        ----------
+
+        ep: list[`Personnage`]
+            Liste de personnages
+
+        Retourne Une liste de personnage triée par initiative décroissant
+
+        &#34;&#34;&#34;
         persoReturned = ep[0]
 
         for perso in ep:
@@ -309,9 +485,16 @@ inheritance.</p></div>
 
         return persoReturned
 
-    # Methode qui retourne une equipe de personnage en fonction du combat lancé
     def creerEquipeMechant(self, combat):
+        &#34;&#34;&#34;  Methode qui retourne une equipe de personnage en fonction du combat a lancer
 
+        Parameters
+        ----------
+        combat: Dictionnaire
+            Dictionnaire qui contient les données du combat (Par exemple les ennemis a instancier)
+
+        Retourne None
+        &#34;&#34;&#34;
         equipetemp = []
         if combat[&#34;unite&#34;][&#34;nom&#34;] == &#34;Kv2v2v2&#34;:
             nb = 1
@@ -328,9 +511,19 @@ inheritance.</p></div>
         else:
             return EquipeDePersonnages(equipetemp[0], equipetemp[1], equipetemp[2])
 
-    # Methode qui creer un mechant avec les valeurs aléatoire du json
     def creerMechant(self, modele, i: int):
+        &#34;&#34;&#34; Methode qui creer un personnage &#34;mechant&#34; avec les valeurs aléatoire du json
 
+        Parameters
+        ----------
+        modele: Dictionnaire
+            Dictionnaire qui contient les fourchettes de stats pour le personnage a créer
+
+        i: int
+            Int permettant d&#39;incrémenter le nom du personnage
+
+        retourne un `src.Personnage`
+        &#34;&#34;&#34;
         vie = random.randint(modele[&#34;vieMin&#34;], modele[&#34;vieMax&#34;])
         force = random.randint(modele[&#34;forceMin&#34;], modele[&#34;forceMax&#34;])
         ini = random.randint(modele[&#34;iniMin&#34;], modele[&#34;iniMax&#34;])
@@ -338,12 +531,31 @@ inheritance.</p></div>
 
         return Personnage(modele[&#34;nom&#34;] + &#34; &#34; + str(i+1), vie, force, preci, ini, None)
 
-    # Méthode permmetant de selectionné une cible dans une équipe donnée
     def _choisirCible(self, equipePerso: EquipeDePersonnages) -&gt; Personnage:
+        &#34;&#34;&#34; Méthode permmetant de selectionné une cible dans une équipe donnée
+
+        Parameters
+        ----------
+        equiperPerso: `EquipeDePersonnage`
+            Equipe dans laquelle on cherche une cible
+
+        Retourne une `Personnage` selectionné aléatoirement
+        &#34;&#34;&#34;
         cible = random.choice(equipePerso.getPersonnagesVivants())
         return cible
 
     def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -&gt; str:
+        &#34;&#34;&#34; Methode appelant la méthode attaquer d&#39;un `Personnage` et retourne un string pour construire le log
+
+        Parameters
+        ----------
+        attaquant: `Personnage`
+            `Personnage` attaquant
+        cible: `Personnage`
+            `Personnage` ciblé
+
+        retourne un string
+        &#34;&#34;&#34;
         pourLog = attaquant.attaquer(cible)
 
         if pourLog == 0:
@@ -356,7 +568,30 @@ inheritance.</p></div>
                 pourLog) + &#34; points de dégats. &#34; + str(cible.getNom()) + &#34; a : &#34; + str(cible.getVie()) + &#34;pv&#34;
         else:
             return &#34;\&#34;&#34; + str(attaquant.getNom()) + &#34;\&#34; attaque \&#34;&#34; + str(cible.getNom()) + &#34;\&#34; pour &#34; + str(
-                pourLog) + &#34; points de dégats. \&#34;&#34; + str(cible.getNom()) + &#34;\&#34; est mort&#34;</code></pre>
+                pourLog) + &#34; points de dégats. \&#34;&#34; + str(cible.getNom()) + &#34;\&#34; est mort&#34;
+
+    def getLoot(self):
+        &#34;&#34;&#34;Methode qui retourne un `src.Inventaire `de deux objets en fonction du loot possible au combat.
+
+        Return
+        ------
+        inv: `src.Invetaire`
+            inventaire lootable par le joueur.
+
+        &#34;&#34;&#34;
+
+        listeObjet = self.eventJson[&#34;loot&#34;]
+
+        inv = Inventaire(0,0,4)
+
+        if len(listeObjet) &gt; 0:
+            for i in range(2):
+                objet = random.choice(listeObjet)
+                if objet == &#34;Patate&#34;:
+                    inv.ajouter(Objet.objets[objet], random.randint(1,7))
+                else:
+                    inv.ajouter(Objet.objets[objet])
+        return inv</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -369,13 +604,27 @@ inheritance.</p></div>
 <span>def <span class="ident">creerEquipeMechant</span></span>(<span>self, combat)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Methode qui retourne une equipe de personnage en fonction du combat a lancer</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>combat</code></strong> :&ensp;<code>Dictionnaire</code></dt>
+<dd>Dictionnaire qui contient les données du combat (Par exemple les ennemis a instancier)</dd>
+</dl>
+<p>Retourne None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def creerEquipeMechant(self, combat):
+    &#34;&#34;&#34;  Methode qui retourne une equipe de personnage en fonction du combat a lancer
 
+    Parameters
+    ----------
+    combat: Dictionnaire
+        Dictionnaire qui contient les données du combat (Par exemple les ennemis a instancier)
+
+    Retourne None
+    &#34;&#34;&#34;
     equipetemp = []
     if combat[&#34;unite&#34;][&#34;nom&#34;] == &#34;Kv2v2v2&#34;:
         nb = 1
@@ -397,13 +646,32 @@ inheritance.</p></div>
 <span>def <span class="ident">creerMechant</span></span>(<span>self, modele, i: int)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Methode qui creer un personnage "mechant" avec les valeurs aléatoire du json</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>modele</code></strong> :&ensp;<code>Dictionnaire</code></dt>
+<dd>Dictionnaire qui contient les fourchettes de stats pour le personnage a créer</dd>
+<dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
+<dd>Int permettant d'incrémenter le nom du personnage</dd>
+</dl>
+<p>retourne un <code><a title="src.Personnage" href="Personnage.html">src.Personnage</a></code></p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def creerMechant(self, modele, i: int):
+    &#34;&#34;&#34; Methode qui creer un personnage &#34;mechant&#34; avec les valeurs aléatoire du json
 
+    Parameters
+    ----------
+    modele: Dictionnaire
+        Dictionnaire qui contient les fourchettes de stats pour le personnage a créer
+
+    i: int
+        Int permettant d&#39;incrémenter le nom du personnage
+
+    retourne un `src.Personnage`
+    &#34;&#34;&#34;
     vie = random.randint(modele[&#34;vieMin&#34;], modele[&#34;vieMax&#34;])
     force = random.randint(modele[&#34;forceMin&#34;], modele[&#34;forceMax&#34;])
     ini = random.randint(modele[&#34;iniMin&#34;], modele[&#34;iniMax&#34;])
@@ -416,14 +684,35 @@ inheritance.</p></div>
 <span>def <span class="ident">creerMenu</span></span>(<span>self, titre: str, texte: str, image) ‑> NoneType</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Methode appelée dans l'init qui crée le menu du combat avec les infos du combat</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>titre</code></strong> :&ensp;<code>str</code></dt>
+<dd>Titre du combat</dd>
+<dt><strong><code>texte</code></strong> :&ensp;<code>str</code></dt>
+<dd>Texte du combat</dd>
+<dt><strong><code>image</code></strong> :&ensp;<code>pygame.image</code></dt>
+<dd>Image du combat</dd>
+</dl>
+<p>Retourne None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def creerMenu(self, titre: str, texte: str, image) -&gt; None:
+    &#34;&#34;&#34;Methode appelée dans l&#39;init qui crée le menu du combat avec les infos du combat
 
-    # création du menu &#34;principal&#34;
+    Parameters
+    ----------
+    titre: str
+        Titre du combat
+    texte: str
+        Texte du combat
+    image: pygame.image
+        Image du combat
+
+    Retourne None
+    &#34;&#34;&#34;
 
     taille = list(pygame.display.get_window_size())
     taille[0] /= 1.25
@@ -438,13 +727,29 @@ inheritance.</p></div>
 <span>def <span class="ident">creerMenuCombat</span></span>(<span>self, logs)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Création du menu de logs.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>logs</code></strong> :&ensp;<code>str[]</code></dt>
+<dd>Array de string</dd>
+</dl>
+<p>Retourne None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def creerMenuCombat(self, logs):
-    # création du menu log
+    &#34;&#34;&#34; Création du menu de logs.
+
+    Parameters
+    ----------
+
+    logs: str[]
+        Array de string
+
+    Retourne None
+
+    &#34;&#34;&#34;
     taille = list(pygame.display.get_window_size())
     taille[0] /= 1.25
     taille[1] /= 1.25
@@ -458,12 +763,31 @@ inheritance.</p></div>
 <span>def <span class="ident">faireAttaquer</span></span>(<span>self, attaquant: Personnage.Personnage, cible: Personnage.Personnage) ‑> str</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Methode appelant la méthode attaquer d'un <code>Personnage</code> et retourne un string pour construire le log</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>attaquant</code></strong> :&ensp;<code>Personnage</code></dt>
+<dd><code>Personnage</code> attaquant</dd>
+<dt><strong><code>cible</code></strong> :&ensp;<code>Personnage</code></dt>
+<dd><code>Personnage</code> ciblé</dd>
+</dl>
+<p>retourne un string</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def faireAttaquer(self, attaquant: Personnage, cible: Personnage) -&gt; str:
+    &#34;&#34;&#34; Methode appelant la méthode attaquer d&#39;un `Personnage` et retourne un string pour construire le log
+
+    Parameters
+    ----------
+    attaquant: `Personnage`
+        `Personnage` attaquant
+    cible: `Personnage`
+        `Personnage` ciblé
+
+    retourne un string
+    &#34;&#34;&#34;
     pourLog = attaquant.attaquer(cible)
 
     if pourLog == 0:
@@ -483,12 +807,29 @@ inheritance.</p></div>
 <span>def <span class="ident">getInitmax</span></span>(<span>self, ep: list) ‑> Personnage.Personnage</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Methode qui retourne le personnage ayant la plus grande initiative dans une liste de personnage</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>ep</code></strong> :&ensp;<code>list[</code>Personnage<code>]</code></dt>
+<dd>Liste de personnages</dd>
+</dl>
+<p>Retourne Une liste de personnage triée par initiative décroissant</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getInitmax(self, ep: list) -&gt; Personnage:
+    &#34;&#34;&#34; Methode qui retourne le personnage ayant la plus grande initiative dans une liste de personnage
+
+    Parameters
+    ----------
+
+    ep: list[`Personnage`]
+        Liste de personnages
+
+    Retourne Une liste de personnage triée par initiative décroissant
+
+    &#34;&#34;&#34;
     persoReturned = ep[0]
 
     for perso in ep:
@@ -498,23 +839,60 @@ inheritance.</p></div>
     return persoReturned</code></pre>
 </details>
 </dd>
+<dt id="src.Combat.Combat.getLoot"><code class="name flex">
+<span>def <span class="ident">getLoot</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Methode qui retourne un <code><a title="src.Inventaire" href="Inventaire.html">src.Inventaire</a> </code>de deux objets en fonction du loot possible au combat.</p>
+<h2 id="return">Return</h2>
+<p>inv: <code>src.Invetaire</code>
+inventaire lootable par le joueur.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getLoot(self):
+    &#34;&#34;&#34;Methode qui retourne un `src.Inventaire `de deux objets en fonction du loot possible au combat.
+
+    Return
+    ------
+    inv: `src.Invetaire`
+        inventaire lootable par le joueur.
+
+    &#34;&#34;&#34;
+
+    listeObjet = self.eventJson[&#34;loot&#34;]
+
+    inv = Inventaire(0,0,4)
+
+    if len(listeObjet) &gt; 0:
+        for i in range(2):
+            objet = random.choice(listeObjet)
+            if objet == &#34;Patate&#34;:
+                inv.ajouter(Objet.objets[objet], random.randint(1,7))
+            else:
+                inv.ajouter(Objet.objets[objet])
+    return inv</code></pre>
+</details>
+</dd>
 <dt id="src.Combat.Combat.lancement"><code class="name flex">
 <span>def <span class="ident">lancement</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Méthode qui déroule la logique de combat</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def lancement(self):
+    &#34;&#34;&#34; Méthode qui déroule la logique de combat&#34;&#34;&#34;
+
     logs = []
     m = self._equipeMechant
     g = self._equipe
     listeOrdre = self.__creerOrdreTour(m, g)
 
     while m.getVivante() and g.getVivante():
-        print(self._equipe)
         for perso in listeOrdre:
             if perso.estVivant():
                 if perso in m.getPersonnages() and g.getVivante():
@@ -535,12 +913,17 @@ inheritance.</p></div>
 <span>def <span class="ident">mettreFin</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Methode mettant fin a l'évenement combat</p>
+<p>Retourne None</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def mettreFin(self):
+    &#34;&#34;&#34; Methode mettant fin a l&#39;évenement combat
+
+    Retourne None
+    &#34;&#34;&#34;
     self._enCours = False
     self._menu._close()</code></pre>
 </details>
@@ -572,6 +955,7 @@ inheritance.</p></div>
 <li><code><a title="src.Combat.Combat.creerMenuCombat" href="#src.Combat.Combat.creerMenuCombat">creerMenuCombat</a></code></li>
 <li><code><a title="src.Combat.Combat.faireAttaquer" href="#src.Combat.Combat.faireAttaquer">faireAttaquer</a></code></li>
 <li><code><a title="src.Combat.Combat.getInitmax" href="#src.Combat.Combat.getInitmax">getInitmax</a></code></li>
+<li><code><a title="src.Combat.Combat.getLoot" href="#src.Combat.Combat.getLoot">getLoot</a></code></li>
 <li><code><a title="src.Combat.Combat.lancement" href="#src.Combat.Combat.lancement">lancement</a></code></li>
 <li><code><a title="src.Combat.Combat.mettreFin" href="#src.Combat.Combat.mettreFin">mettreFin</a></code></li>
 </ul>

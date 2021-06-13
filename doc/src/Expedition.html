@@ -51,29 +51,60 @@ class Expedition:
         self._temps: int = 1  # Numéro du tour de l&#39;expédition en cour
         self._equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
         self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l&#39;éxpedition se déroule
-        for personnage in self._equipe.getPersonnages():
-            personnage.addToInventaire(Objet.objets[&#34;armes&#34;][&#34;Arc&#34;])
-
         self.objetSelectione = None
 
     def on_event(self, event) -&gt; tuple:
         &#34;&#34;&#34;Lecture des évènements pygame tel les clics&#34;&#34;&#34;
+        if event.type == pygame.KEYDOWN:
+            coord = list(self._equipe.getCoord())
+            if event.key == pygame.K_w or event.key == pygame.K_UP:
+                print(&#34;Move the character forwards&#34;)
+                coord[1] -= 1
+
+            elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                print(&#34;Move the character backwards&#34;)
+                coord[1] += 1
+
+            elif event.key == pygame.K_q or event.key == pygame.K_LEFT:
+                print(&#34;Move the character left&#34;)
+                coord[0] -= 1
+
+            elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                print(&#34;Move the character right&#34;)
+                coord[0] += 1
+            if self._plateau.isInTheMap(coord):
+                self._equipe.deplacement(coord)  # Déplacement de l&#39;équipe
+                if self._plateau.getCase(coord).eventSeLance():
+                    return coord
+                else:
+                    return None
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+            if self.isInOneInventory(event.pos)[0]:
+                personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory(event.pos)[1]]
+                objetSelectione = personnageSelection.getObjetByCoord(event.pos)
+                if objetSelectione is not None:
+                    if objetSelectione.getNom() == &#34;Patate&#34;:
+                        personnageSelection.removeFromInventaire(objetSelectione)
+                        personnageSelection.soigner(2)
+
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Lorsque je clic gauche sur une unite et que j&#39;en ai pas de selectionnée
 
             x = int(event.pos[0])  # Enregistre la coordonnée y de l&#39;event
             y = int(event.pos[1])  # Enregistre la coordonnée y de l&#39;event
-            print(&#34;clic :&#34;, x, y)
 
             xInGrid, yInGrid = self.pointToCoord((x, y))
 
             if self._plateau.isInTheMap((xInGrid, yInGrid)):
-                print((xInGrid, yInGrid))
-                self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l&#39;équipe
+                coord = list(self._equipe.getCoord())
+                if  (coord[0] - 1) &lt;= xInGrid &lt;= (coord[0] + 1) and (coord[1] - 1) &lt;= yInGrid &lt;= (coord[1] + 1):
+                    self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l&#39;équipe
 
-                if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
-                    return xInGrid, yInGrid
-                else:
-                    return None
+                    if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
+                        return xInGrid, yInGrid
+                    else:
+                        return None
             elif self.isInOneInventory((x, y))[0]:
                 personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
                 if self.objetSelectione is None:
@@ -82,7 +113,7 @@ class Expedition:
                         personnageSelection.removeFromInventaire(self.objetSelectione)
                 else:
                     objetDestination = personnageSelection.getObjetByCoord((x, y))
-                    if objetDestination is None:
+                    if objetDestination is None or objetDestination.getNom() == self.objetSelectione.getNom():
                         personnageSelection.addToInventaire(self.objetSelectione)
                         self.objetSelectione = None
                     else:
@@ -106,7 +137,7 @@ class Expedition:
         window.fill((70, 70, 70))
         self._plateau.render(window)
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
-        self.renderPersonnageInventaire(window)
+        self._equipe.renderPersonnageInventaire(window)
 
     def returnTypeCase(self, coord) -&gt; str:
         return self._plateau.getCase(coord).getTypeCase()
@@ -125,14 +156,6 @@ class Expedition:
         q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r / 2)
 
         return q, r
-
-    def renderPersonnageInventaire(self, window):
-        &#34;&#34;&#34;Méthode pour afficher les encarts de chaque personnages avec leurs inventaires&#34;&#34;&#34;
-        peronnages = self._equipe.getPersonnages()
-
-        for peronnage in peronnages:
-            &#34;&#34;&#34; Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires &#34;&#34;&#34;
-            peronnage.render(window)
 
     def isInOneInventory(self, coord: tuple):
         &#34;&#34;&#34;Méthode pour savoir si le clic se trouve dans un `inventaire` et si oui dans lequel&#34;&#34;&#34;
@@ -190,29 +213,60 @@ class Expedition:
         self._temps: int = 1  # Numéro du tour de l&#39;expédition en cour
         self._equipe: EquipeDePersonnages = equipe  # Equipe de personnage joueur du joueur
         self._plateau: PlateauDeJeu = plateau  # Plateau sur lequel l&#39;éxpedition se déroule
-        for personnage in self._equipe.getPersonnages():
-            personnage.addToInventaire(Objet.objets[&#34;armes&#34;][&#34;Arc&#34;])
-
         self.objetSelectione = None
 
     def on_event(self, event) -&gt; tuple:
         &#34;&#34;&#34;Lecture des évènements pygame tel les clics&#34;&#34;&#34;
+        if event.type == pygame.KEYDOWN:
+            coord = list(self._equipe.getCoord())
+            if event.key == pygame.K_w or event.key == pygame.K_UP:
+                print(&#34;Move the character forwards&#34;)
+                coord[1] -= 1
+
+            elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                print(&#34;Move the character backwards&#34;)
+                coord[1] += 1
+
+            elif event.key == pygame.K_q or event.key == pygame.K_LEFT:
+                print(&#34;Move the character left&#34;)
+                coord[0] -= 1
+
+            elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                print(&#34;Move the character right&#34;)
+                coord[0] += 1
+            if self._plateau.isInTheMap(coord):
+                self._equipe.deplacement(coord)  # Déplacement de l&#39;équipe
+                if self._plateau.getCase(coord).eventSeLance():
+                    return coord
+                else:
+                    return None
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+            if self.isInOneInventory(event.pos)[0]:
+                personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory(event.pos)[1]]
+                objetSelectione = personnageSelection.getObjetByCoord(event.pos)
+                if objetSelectione is not None:
+                    if objetSelectione.getNom() == &#34;Patate&#34;:
+                        personnageSelection.removeFromInventaire(objetSelectione)
+                        personnageSelection.soigner(2)
+
+
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Lorsque je clic gauche sur une unite et que j&#39;en ai pas de selectionnée
 
             x = int(event.pos[0])  # Enregistre la coordonnée y de l&#39;event
             y = int(event.pos[1])  # Enregistre la coordonnée y de l&#39;event
-            print(&#34;clic :&#34;, x, y)
 
             xInGrid, yInGrid = self.pointToCoord((x, y))
 
             if self._plateau.isInTheMap((xInGrid, yInGrid)):
-                print((xInGrid, yInGrid))
-                self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l&#39;équipe
+                coord = list(self._equipe.getCoord())
+                if  (coord[0] - 1) &lt;= xInGrid &lt;= (coord[0] + 1) and (coord[1] - 1) &lt;= yInGrid &lt;= (coord[1] + 1):
+                    self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l&#39;équipe
 
-                if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
-                    return xInGrid, yInGrid
-                else:
-                    return None
+                    if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
+                        return xInGrid, yInGrid
+                    else:
+                        return None
             elif self.isInOneInventory((x, y))[0]:
                 personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
                 if self.objetSelectione is None:
@@ -221,7 +275,7 @@ class Expedition:
                         personnageSelection.removeFromInventaire(self.objetSelectione)
                 else:
                     objetDestination = personnageSelection.getObjetByCoord((x, y))
-                    if objetDestination is None:
+                    if objetDestination is None or objetDestination.getNom() == self.objetSelectione.getNom():
                         personnageSelection.addToInventaire(self.objetSelectione)
                         self.objetSelectione = None
                     else:
@@ -245,7 +299,7 @@ class Expedition:
         window.fill((70, 70, 70))
         self._plateau.render(window)
         self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
-        self.renderPersonnageInventaire(window)
+        self._equipe.renderPersonnageInventaire(window)
 
     def returnTypeCase(self, coord) -&gt; str:
         return self._plateau.getCase(coord).getTypeCase()
@@ -264,14 +318,6 @@ class Expedition:
         q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r / 2)
 
         return q, r
-
-    def renderPersonnageInventaire(self, window):
-        &#34;&#34;&#34;Méthode pour afficher les encarts de chaque personnages avec leurs inventaires&#34;&#34;&#34;
-        peronnages = self._equipe.getPersonnages()
-
-        for peronnage in peronnages:
-            &#34;&#34;&#34; Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires &#34;&#34;&#34;
-            peronnage.render(window)
 
     def isInOneInventory(self, coord: tuple):
         &#34;&#34;&#34;Méthode pour savoir si le clic se trouve dans un `inventaire` et si oui dans lequel&#34;&#34;&#34;
@@ -329,22 +375,56 @@ class Expedition:
 </summary>
 <pre><code class="python">def on_event(self, event) -&gt; tuple:
     &#34;&#34;&#34;Lecture des évènements pygame tel les clics&#34;&#34;&#34;
+    if event.type == pygame.KEYDOWN:
+        coord = list(self._equipe.getCoord())
+        if event.key == pygame.K_w or event.key == pygame.K_UP:
+            print(&#34;Move the character forwards&#34;)
+            coord[1] -= 1
+
+        elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+            print(&#34;Move the character backwards&#34;)
+            coord[1] += 1
+
+        elif event.key == pygame.K_q or event.key == pygame.K_LEFT:
+            print(&#34;Move the character left&#34;)
+            coord[0] -= 1
+
+        elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+            print(&#34;Move the character right&#34;)
+            coord[0] += 1
+        if self._plateau.isInTheMap(coord):
+            self._equipe.deplacement(coord)  # Déplacement de l&#39;équipe
+            if self._plateau.getCase(coord).eventSeLance():
+                return coord
+            else:
+                return None
+
+    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+        if self.isInOneInventory(event.pos)[0]:
+            personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory(event.pos)[1]]
+            objetSelectione = personnageSelection.getObjetByCoord(event.pos)
+            if objetSelectione is not None:
+                if objetSelectione.getNom() == &#34;Patate&#34;:
+                    personnageSelection.removeFromInventaire(objetSelectione)
+                    personnageSelection.soigner(2)
+
+
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Lorsque je clic gauche sur une unite et que j&#39;en ai pas de selectionnée
 
         x = int(event.pos[0])  # Enregistre la coordonnée y de l&#39;event
         y = int(event.pos[1])  # Enregistre la coordonnée y de l&#39;event
-        print(&#34;clic :&#34;, x, y)
 
         xInGrid, yInGrid = self.pointToCoord((x, y))
 
         if self._plateau.isInTheMap((xInGrid, yInGrid)):
-            print((xInGrid, yInGrid))
-            self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l&#39;équipe
+            coord = list(self._equipe.getCoord())
+            if  (coord[0] - 1) &lt;= xInGrid &lt;= (coord[0] + 1) and (coord[1] - 1) &lt;= yInGrid &lt;= (coord[1] + 1):
+                self._equipe.deplacement((xInGrid, yInGrid))  # Déplacement de l&#39;équipe
 
-            if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
-                return xInGrid, yInGrid
-            else:
-                return None
+                if self._plateau.getCase((xInGrid, yInGrid)).eventSeLance():
+                    return xInGrid, yInGrid
+                else:
+                    return None
         elif self.isInOneInventory((x, y))[0]:
             personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
             if self.objetSelectione is None:
@@ -353,7 +433,7 @@ class Expedition:
                     personnageSelection.removeFromInventaire(self.objetSelectione)
             else:
                 objetDestination = personnageSelection.getObjetByCoord((x, y))
-                if objetDestination is None:
+                if objetDestination is None or objetDestination.getNom() == self.objetSelectione.getNom():
                     personnageSelection.addToInventaire(self.objetSelectione)
                     self.objetSelectione = None
                 else:
@@ -395,7 +475,7 @@ class Expedition:
     window.fill((70, 70, 70))
     self._plateau.render(window)
     self._equipe.render(window, (self._plateau.getTilewidth(), self._plateau.getTileheight()))
-    self.renderPersonnageInventaire(window)</code></pre>
+    self._equipe.renderPersonnageInventaire(window)</code></pre>
 </details>
 </dd>
 <dt id="src.Expedition.Expedition.pointToCoord"><code class="name flex">
@@ -418,24 +498,6 @@ class Expedition:
     q = math.floor((math.floor(2 * x + 1) + t2) / 3) - math.ceil(r / 2)
 
     return q, r</code></pre>
-</details>
-</dd>
-<dt id="src.Expedition.Expedition.renderPersonnageInventaire"><code class="name flex">
-<span>def <span class="ident">renderPersonnageInventaire</span></span>(<span>self, window)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Méthode pour afficher les encarts de chaque personnages avec leurs inventaires</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def renderPersonnageInventaire(self, window):
-    &#34;&#34;&#34;Méthode pour afficher les encarts de chaque personnages avec leurs inventaires&#34;&#34;&#34;
-    peronnages = self._equipe.getPersonnages()
-
-    for peronnage in peronnages:
-        &#34;&#34;&#34; Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires &#34;&#34;&#34;
-        peronnage.render(window)</code></pre>
 </details>
 </dd>
 <dt id="src.Expedition.Expedition.returnTypeCase"><code class="name flex">
@@ -471,14 +533,13 @@ class Expedition:
 <ul>
 <li>
 <h4><code><a title="src.Expedition.Expedition" href="#src.Expedition.Expedition">Expedition</a></code></h4>
-<ul class="">
+<ul class="two-column">
 <li><code><a title="src.Expedition.Expedition.getEquipe" href="#src.Expedition.Expedition.getEquipe">getEquipe</a></code></li>
 <li><code><a title="src.Expedition.Expedition.isInOneInventory" href="#src.Expedition.Expedition.isInOneInventory">isInOneInventory</a></code></li>
 <li><code><a title="src.Expedition.Expedition.on_event" href="#src.Expedition.Expedition.on_event">on_event</a></code></li>
 <li><code><a title="src.Expedition.Expedition.on_loop" href="#src.Expedition.Expedition.on_loop">on_loop</a></code></li>
 <li><code><a title="src.Expedition.Expedition.on_render" href="#src.Expedition.Expedition.on_render">on_render</a></code></li>
 <li><code><a title="src.Expedition.Expedition.pointToCoord" href="#src.Expedition.Expedition.pointToCoord">pointToCoord</a></code></li>
-<li><code><a title="src.Expedition.Expedition.renderPersonnageInventaire" href="#src.Expedition.Expedition.renderPersonnageInventaire">renderPersonnageInventaire</a></code></li>
 <li><code><a title="src.Expedition.Expedition.returnTypeCase" href="#src.Expedition.Expedition.returnTypeCase">returnTypeCase</a></code></li>
 </ul>
 </li>

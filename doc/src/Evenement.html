@@ -35,7 +35,6 @@ class Evenement(ABC):
     def __init__(self):
         self._enCours: bool = True
         self._victoire = True
-        self._texteDescr: str = &#34;&#34;
         self._menu = None
 
     def getTexteDescr(self):
@@ -52,6 +51,11 @@ class Evenement(ABC):
 
     def setEncours(self, boule: bool):
         self._enCours = boule
+
+    @abstractmethod
+    def getLoot(self):
+        &#34;&#34;&#34; Retourne un inventaire qui sera donné au joueur à la fin de l&#39;evenement&#34;&#34;&#34;
+        pass
 
     @abstractmethod
     def lancement(self, equipePerso: EquipeDePersonnages) -&gt; None:
@@ -86,7 +90,6 @@ inheritance.</p></div>
     def __init__(self):
         self._enCours: bool = True
         self._victoire = True
-        self._texteDescr: str = &#34;&#34;
         self._menu = None
 
     def getTexteDescr(self):
@@ -103,6 +106,11 @@ inheritance.</p></div>
 
     def setEncours(self, boule: bool):
         self._enCours = boule
+
+    @abstractmethod
+    def getLoot(self):
+        &#34;&#34;&#34; Retourne un inventaire qui sera donné au joueur à la fin de l&#39;evenement&#34;&#34;&#34;
+        pass
 
     @abstractmethod
     def lancement(self, equipePerso: EquipeDePersonnages) -&gt; None:
@@ -143,6 +151,21 @@ def creerMenu(self, titre: str, texte: str, image):
 </summary>
 <pre><code class="python">def getEnCours(self) -&gt; bool:
     return self._enCours</code></pre>
+</details>
+</dd>
+<dt id="src.Evenement.Evenement.getLoot"><code class="name flex">
+<span>def <span class="ident">getLoot</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retourne un inventaire qui sera donné au joueur à la fin de l'evenement</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def getLoot(self):
+    &#34;&#34;&#34; Retourne un inventaire qui sera donné au joueur à la fin de l&#39;evenement&#34;&#34;&#34;
+    pass</code></pre>
 </details>
 </dd>
 <dt id="src.Evenement.Evenement.getMenu"><code class="name flex">
@@ -234,6 +257,7 @@ def lancement(self, equipePerso: EquipeDePersonnages) -&gt; None:
 <ul class="two-column">
 <li><code><a title="src.Evenement.Evenement.creerMenu" href="#src.Evenement.Evenement.creerMenu">creerMenu</a></code></li>
 <li><code><a title="src.Evenement.Evenement.getEnCours" href="#src.Evenement.Evenement.getEnCours">getEnCours</a></code></li>
+<li><code><a title="src.Evenement.Evenement.getLoot" href="#src.Evenement.Evenement.getLoot">getLoot</a></code></li>
 <li><code><a title="src.Evenement.Evenement.getMenu" href="#src.Evenement.Evenement.getMenu">getMenu</a></code></li>
 <li><code><a title="src.Evenement.Evenement.getTexteDescr" href="#src.Evenement.Evenement.getTexteDescr">getTexteDescr</a></code></li>
 <li><code><a title="src.Evenement.Evenement.getVictoire" href="#src.Evenement.Evenement.getVictoire">getVictoire</a></code></li>

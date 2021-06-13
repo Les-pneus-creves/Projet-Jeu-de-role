@@ -59,6 +59,8 @@ class EquipeDePersonnages:
     def getPersonnages(self) -&gt; list:
         return self._personnages
 
+    def getCoord(self):
+        return self._coord
 
     def getPersonnagesVivants(self) -&gt; list:
         &#34;&#34;&#34;Retourne tous les personnages vivants de l&#39;équipe&#34;&#34;&#34;
@@ -85,7 +87,7 @@ class EquipeDePersonnages:
         return temp
 
 
-    def deplacement(self, coord) -&gt; tuple:
+    def deplacement(self, coord) -&gt; None:
         &#34;&#34;&#34; Change les coordonnées de l&#39;équipe&#34;&#34;&#34;
         self._coord = coord
 
@@ -110,7 +112,14 @@ class EquipeDePersonnages:
             pygame.draw.circle(window, (0, 255, 0), (coordPixel[0] + 10, coordPixel[1] - 7), 5, 4)
             pygame.draw.circle(window, (0, 0, 255), (coordPixel[0], coordPixel[1] + 7), 5, 4)
         else:
-            print(&#34;wtf tu as mis combiens de personnes dans ton Equipe mec !!&#34;)</code></pre>
+            print(&#34;wtf tu as mis combiens de personnes dans ton Equipe mec !!&#34;)
+
+    def renderPersonnageInventaire(self, window):
+        &#34;&#34;&#34;Méthode pour afficher les encarts de chaque personnages avec leurs inventaires&#34;&#34;&#34;
+
+        for peronnage in self._personnages:
+            &#34;&#34;&#34; Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires &#34;&#34;&#34;
+            peronnage.render(window)</code></pre>
 </details>
 </section>
 <section>
@@ -171,6 +180,8 @@ class EquipeDePersonnages:
     def getPersonnages(self) -&gt; list:
         return self._personnages
 
+    def getCoord(self):
+        return self._coord
 
     def getPersonnagesVivants(self) -&gt; list:
         &#34;&#34;&#34;Retourne tous les personnages vivants de l&#39;équipe&#34;&#34;&#34;
@@ -197,7 +208,7 @@ class EquipeDePersonnages:
         return temp
 
 
-    def deplacement(self, coord) -&gt; tuple:
+    def deplacement(self, coord) -&gt; None:
         &#34;&#34;&#34; Change les coordonnées de l&#39;équipe&#34;&#34;&#34;
         self._coord = coord
 
@@ -222,12 +233,19 @@ class EquipeDePersonnages:
             pygame.draw.circle(window, (0, 255, 0), (coordPixel[0] + 10, coordPixel[1] - 7), 5, 4)
             pygame.draw.circle(window, (0, 0, 255), (coordPixel[0], coordPixel[1] + 7), 5, 4)
         else:
-            print(&#34;wtf tu as mis combiens de personnes dans ton Equipe mec !!&#34;)</code></pre>
+            print(&#34;wtf tu as mis combiens de personnes dans ton Equipe mec !!&#34;)
+
+    def renderPersonnageInventaire(self, window):
+        &#34;&#34;&#34;Méthode pour afficher les encarts de chaque personnages avec leurs inventaires&#34;&#34;&#34;
+
+        for peronnage in self._personnages:
+            &#34;&#34;&#34; Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires &#34;&#34;&#34;
+            peronnage.render(window)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="src.EquipeDePersonnages.EquipeDePersonnages.deplacement"><code class="name flex">
-<span>def <span class="ident">deplacement</span></span>(<span>self, coord) ‑> tuple</span>
+<span>def <span class="ident">deplacement</span></span>(<span>self, coord) ‑> NoneType</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Change les coordonnées de l'équipe</p></div>
@@ -235,9 +253,22 @@ class EquipeDePersonnages:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def deplacement(self, coord) -&gt; tuple:
+<pre><code class="python">def deplacement(self, coord) -&gt; None:
     &#34;&#34;&#34; Change les coordonnées de l&#39;équipe&#34;&#34;&#34;
     self._coord = coord</code></pre>
+</details>
+</dd>
+<dt id="src.EquipeDePersonnages.EquipeDePersonnages.getCoord"><code class="name flex">
+<span>def <span class="ident">getCoord</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getCoord(self):
+    return self._coord</code></pre>
 </details>
 </dd>
 <dt id="src.EquipeDePersonnages.EquipeDePersonnages.getPersonnages"><code class="name flex">
@@ -323,6 +354,23 @@ class EquipeDePersonnages:
         print(&#34;wtf tu as mis combiens de personnes dans ton Equipe mec !!&#34;)</code></pre>
 </details>
 </dd>
+<dt id="src.EquipeDePersonnages.EquipeDePersonnages.renderPersonnageInventaire"><code class="name flex">
+<span>def <span class="ident">renderPersonnageInventaire</span></span>(<span>self, window)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Méthode pour afficher les encarts de chaque personnages avec leurs inventaires</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def renderPersonnageInventaire(self, window):
+    &#34;&#34;&#34;Méthode pour afficher les encarts de chaque personnages avec leurs inventaires&#34;&#34;&#34;
+
+    for peronnage in self._personnages:
+        &#34;&#34;&#34; Il faudrait aussi afficher ici les noms de chaque personnes devant leur inventaires &#34;&#34;&#34;
+        peronnage.render(window)</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -345,10 +393,12 @@ class EquipeDePersonnages:
 <h4><code><a title="src.EquipeDePersonnages.EquipeDePersonnages" href="#src.EquipeDePersonnages.EquipeDePersonnages">EquipeDePersonnages</a></code></h4>
 <ul class="">
 <li><code><a title="src.EquipeDePersonnages.EquipeDePersonnages.deplacement" href="#src.EquipeDePersonnages.EquipeDePersonnages.deplacement">deplacement</a></code></li>
+<li><code><a title="src.EquipeDePersonnages.EquipeDePersonnages.getCoord" href="#src.EquipeDePersonnages.EquipeDePersonnages.getCoord">getCoord</a></code></li>
 <li><code><a title="src.EquipeDePersonnages.EquipeDePersonnages.getPersonnages" href="#src.EquipeDePersonnages.EquipeDePersonnages.getPersonnages">getPersonnages</a></code></li>
 <li><code><a title="src.EquipeDePersonnages.EquipeDePersonnages.getPersonnagesVivants" href="#src.EquipeDePersonnages.EquipeDePersonnages.getPersonnagesVivants">getPersonnagesVivants</a></code></li>
 <li><code><a title="src.EquipeDePersonnages.EquipeDePersonnages.getVivante" href="#src.EquipeDePersonnages.EquipeDePersonnages.getVivante">getVivante</a></code></li>
 <li><code><a title="src.EquipeDePersonnages.EquipeDePersonnages.render" href="#src.EquipeDePersonnages.EquipeDePersonnages.render">render</a></code></li>
+<li><code><a title="src.EquipeDePersonnages.EquipeDePersonnages.renderPersonnageInventaire" href="#src.EquipeDePersonnages.EquipeDePersonnages.renderPersonnageInventaire">renderPersonnageInventaire</a></code></li>
 </ul>
 </li>
 </ul>

@@ -34,37 +34,123 @@ from EquipeDePersonnages import EquipeDePersonnages
 from Personnage import Personnage  # pour faire test
 from Recompense import Recompense
 from Combat import Combat
+from Inventaire import Inventaire
+import Objet
 
 
 class ModeEvenement:
-    def __init__(self, evenement: Evenement):
+    def __init__(self, evenement: Evenement, equipe: EquipeDePersonnages):
         self._evenement = evenement
-        # self._surface = pygame.display.set_mode((1600,1400))
+        self._equipe = equipe
+        self._loot = self._evenement.getLoot()
+        if self._loot.vide():
+            self._loot = None
+        self._lootCoord = 1000, 850
+        self._objetSelectione = None
+        self._enCours = True
 
     def getEvenement(self):
         return self._evenement
 
     # lecture des evenements
-    def on_event(self, events) -&gt; None:
+    def on_event(self, events, event) -&gt; None:
         if self._evenement.getEnCours():
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().update(events)
+        elif self._loot is not None:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    self._enCours = False
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x = int(event.pos[0])  # Enregistre la coordonnée y de l&#39;event
+                y = int(event.pos[1])  # Enregistre la coordonnée y de l&#39;event
+                if self.isSurLaCroix((x, y)):
+                    self._enCours = False
+                elif self.isInOneInventory((x, y))[0]:
+                    if self.isInOneInventory((x, y))[1] &lt; 4:
+                        personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
+                        if self._objetSelectione is None:
+                            self._objetSelectione = personnageSelection.getObjetByCoord((x, y))
+                            if self._objetSelectione is not None:
+                                personnageSelection.removeFromInventaire(self._objetSelectione)
+                        else:
+                            objetDestination = personnageSelection.getObjetByCoord((x, y))
+                            if objetDestination is None or objetDestination.getNom() == self._objetSelectione.getNom():
+                                personnageSelection.addToInventaire(self._objetSelectione)
+                                self._objetSelectione = None
+                            else:
+                                personnageSelection.removeFromInventaire(objetDestination)
+                                personnageSelection.addToInventaire(self._objetSelectione)
+                                self._objetSelectione = objetDestination
+                    else:
+                        if self._objetSelectione is None:
+                            self._objetSelectione = self.getObjetByCoord((x, y))
+                            if self._objetSelectione is not None:
+                                self._loot.retirer(self._objetSelectione)
+                        else:
+                            objetDestination = self.getObjetByCoord((x, y))
+                            if objetDestination is None:
+                                self._loot.ajouter(self._objetSelectione)
+                                self._objetSelectione = None
+                            else:
+                                self._loot.retirer(objetDestination)
+                                self._loot.ajouter(self._objetSelectione)
+                                self._objetSelectione = objetDestination
+                    print(&#34;l&#39;objet en main&#34;, self._objetSelectione)
+        else:
+            pass
 
     # Calcul des mises à jours
     def on_loop(self) -&gt; None:
-        pass
+        if not self._evenement.getEnCours():
+            if self._loot is None:
+                self._enCours = False
 
     # Calcul des affichages
     def on_render(self, window) -&gt; None:
         if self._evenement.getEnCours():
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().draw(window)
+        else:
+            self._equipe.renderPersonnageInventaire(window)
+            if self._loot is not None:
+                self._loot.render(window, self._lootCoord[0], self._lootCoord[1])
+            pygame.draw.rect(window, (255, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1], 60, 60))
+            pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1]), (self._lootCoord[0], self._lootCoord[1] + 60))
+            pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1] + 60), (self._lootCoord[0], self._lootCoord[1]))
 
     def getEnCours(self):
-        return self._evenement.getEnCours()
+        return self._enCours
 
     def getVictoire(self):
         return self._evenement.getVictoire()
+
+    def isInOneInventory(self, coord: tuple):
+        &#34;&#34;&#34;Méthode pour savoir si le clic se trouve dans un `src.Inventaire` et si oui dans lequel&#34;&#34;&#34;
+        if self.isInLoot(coord):
+            return True, 4
+
+        peronnages = self._equipe.getPersonnages()
+        i = 0
+        for peronnage in peronnages:
+            if peronnage.isInInventory(coord):
+                return True, i
+            i += 1
+        return False, i
+
+    def isInLoot(self, coord: tuple):
+        return self._lootCoord[0] &lt;= coord[0] &lt;= (self._lootCoord[0] + (4 * 60)) and self._lootCoord[1] &lt;= coord[1] &lt;= (self._lootCoord[1] + 60)
+
+    def isSurLaCroix(self, coord: tuple):
+        return (self._lootCoord[0] - 60) &lt;= coord[0] &lt;= self._lootCoord[0] and self._lootCoord[1] &lt;= coord[1] &lt;= (self._lootCoord[1] + 60)
+
+    def getObjetByCoord(self, point: tuple):
+        if self.isInLoot(point):
+            coord = int((point[0] - self._lootCoord[0]) / 60), int((point[1] - (self._lootCoord[1] + 60)) / 60)
+            index = coord[0] + (coord[1] * 4)
+            return self._loot[index].getObjet()
+        return None
 
 
 if __name__ == &#34;__main__&#34;:
@@ -76,17 +162,19 @@ if __name__ == &#34;__main__&#34;:
     jean = Personnage(&#34;Jean&#34;, 15, 7, 8, 15, None)
     bob = Personnage(&#34;Bob&#34;, 10, 8, 6, 12, None)
     jeanCastex = Personnage(&#34;JeanCastex&#34;, 12, 9, 4, 4, None)
-    pz = Objet.Arme(&#34;Arme_Panzerschreck&#34;, &#34;src/images/Objets/Panzerschreck.png&#34;, 25, 2)
+    pz = Objet.Arme(&#34;Panzerschreck&#34;, &#34;src/images/Objets/Panzerschreck.png&#34;, 25, 2)
     bob.addToInventaire(pz)
 
     equipe = EquipeDePersonnages(jean, bob, jeanCastex)
+
+    print(bob.getInventaire().getArme().getNom())
 
     c = Combat(equipe)
 
     evenement = c
 
     c.lancement()
-    x = ModeEvenement(evenement)
+    x = ModeEvenement(evenement, equipe)
 
     while True:
         events = pygame.event.get()
@@ -116,7 +204,7 @@ if __name__ == &#34;__main__&#34;:
 <dl>
 <dt id="src.ModeEvenement.ModeEvenement"><code class="flex name class">
 <span>class <span class="ident">ModeEvenement</span></span>
-<span>(</span><span>evenement: <module 'Evenement' from '/home/thomas/Documents/2I/Projet_info/Projet-Jeu-de-role/<a title="src" href="index.html">src</a>/Evenement.py'>)</span>
+<span>(</span><span>evenement: <module 'Evenement' from '/home/thomas/Documents/2I/Projet_info/Projet-Jeu-de-role/<a title="src" href="index.html">src</a>/Evenement.py'>, equipe: EquipeDePersonnages.EquipeDePersonnages)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -125,34 +213,118 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ModeEvenement:
-    def __init__(self, evenement: Evenement):
+    def __init__(self, evenement: Evenement, equipe: EquipeDePersonnages):
         self._evenement = evenement
-        # self._surface = pygame.display.set_mode((1600,1400))
+        self._equipe = equipe
+        self._loot = self._evenement.getLoot()
+        if self._loot.vide():
+            self._loot = None
+        self._lootCoord = 1000, 850
+        self._objetSelectione = None
+        self._enCours = True
 
     def getEvenement(self):
         return self._evenement
 
     # lecture des evenements
-    def on_event(self, events) -&gt; None:
+    def on_event(self, events, event) -&gt; None:
         if self._evenement.getEnCours():
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().update(events)
+        elif self._loot is not None:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    self._enCours = False
+
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x = int(event.pos[0])  # Enregistre la coordonnée y de l&#39;event
+                y = int(event.pos[1])  # Enregistre la coordonnée y de l&#39;event
+                if self.isSurLaCroix((x, y)):
+                    self._enCours = False
+                elif self.isInOneInventory((x, y))[0]:
+                    if self.isInOneInventory((x, y))[1] &lt; 4:
+                        personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
+                        if self._objetSelectione is None:
+                            self._objetSelectione = personnageSelection.getObjetByCoord((x, y))
+                            if self._objetSelectione is not None:
+                                personnageSelection.removeFromInventaire(self._objetSelectione)
+                        else:
+                            objetDestination = personnageSelection.getObjetByCoord((x, y))
+                            if objetDestination is None or objetDestination.getNom() == self._objetSelectione.getNom():
+                                personnageSelection.addToInventaire(self._objetSelectione)
+                                self._objetSelectione = None
+                            else:
+                                personnageSelection.removeFromInventaire(objetDestination)
+                                personnageSelection.addToInventaire(self._objetSelectione)
+                                self._objetSelectione = objetDestination
+                    else:
+                        if self._objetSelectione is None:
+                            self._objetSelectione = self.getObjetByCoord((x, y))
+                            if self._objetSelectione is not None:
+                                self._loot.retirer(self._objetSelectione)
+                        else:
+                            objetDestination = self.getObjetByCoord((x, y))
+                            if objetDestination is None:
+                                self._loot.ajouter(self._objetSelectione)
+                                self._objetSelectione = None
+                            else:
+                                self._loot.retirer(objetDestination)
+                                self._loot.ajouter(self._objetSelectione)
+                                self._objetSelectione = objetDestination
+                    print(&#34;l&#39;objet en main&#34;, self._objetSelectione)
+        else:
+            pass
 
     # Calcul des mises à jours
     def on_loop(self) -&gt; None:
-        pass
+        if not self._evenement.getEnCours():
+            if self._loot is None:
+                self._enCours = False
 
     # Calcul des affichages
     def on_render(self, window) -&gt; None:
         if self._evenement.getEnCours():
             if self._evenement.getMenu().is_enabled():
                 self._evenement.getMenu().draw(window)
+        else:
+            self._equipe.renderPersonnageInventaire(window)
+            if self._loot is not None:
+                self._loot.render(window, self._lootCoord[0], self._lootCoord[1])
+            pygame.draw.rect(window, (255, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1], 60, 60))
+            pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1]), (self._lootCoord[0], self._lootCoord[1] + 60))
+            pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1] + 60), (self._lootCoord[0], self._lootCoord[1]))
 
     def getEnCours(self):
-        return self._evenement.getEnCours()
+        return self._enCours
 
     def getVictoire(self):
-        return self._evenement.getVictoire()</code></pre>
+        return self._evenement.getVictoire()
+
+    def isInOneInventory(self, coord: tuple):
+        &#34;&#34;&#34;Méthode pour savoir si le clic se trouve dans un `src.Inventaire` et si oui dans lequel&#34;&#34;&#34;
+        if self.isInLoot(coord):
+            return True, 4
+
+        peronnages = self._equipe.getPersonnages()
+        i = 0
+        for peronnage in peronnages:
+            if peronnage.isInInventory(coord):
+                return True, i
+            i += 1
+        return False, i
+
+    def isInLoot(self, coord: tuple):
+        return self._lootCoord[0] &lt;= coord[0] &lt;= (self._lootCoord[0] + (4 * 60)) and self._lootCoord[1] &lt;= coord[1] &lt;= (self._lootCoord[1] + 60)
+
+    def isSurLaCroix(self, coord: tuple):
+        return (self._lootCoord[0] - 60) &lt;= coord[0] &lt;= self._lootCoord[0] and self._lootCoord[1] &lt;= coord[1] &lt;= (self._lootCoord[1] + 60)
+
+    def getObjetByCoord(self, point: tuple):
+        if self.isInLoot(point):
+            coord = int((point[0] - self._lootCoord[0]) / 60), int((point[1] - (self._lootCoord[1] + 60)) / 60)
+            index = coord[0] + (coord[1] * 4)
+            return self._loot[index].getObjet()
+        return None</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -166,7 +338,7 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getEnCours(self):
-    return self._evenement.getEnCours()</code></pre>
+    return self._enCours</code></pre>
 </details>
 </dd>
 <dt id="src.ModeEvenement.ModeEvenement.getEvenement"><code class="name flex">
@@ -182,6 +354,23 @@ if __name__ == &#34;__main__&#34;:
     return self._evenement</code></pre>
 </details>
 </dd>
+<dt id="src.ModeEvenement.ModeEvenement.getObjetByCoord"><code class="name flex">
+<span>def <span class="ident">getObjetByCoord</span></span>(<span>self, point: tuple)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getObjetByCoord(self, point: tuple):
+    if self.isInLoot(point):
+        coord = int((point[0] - self._lootCoord[0]) / 60), int((point[1] - (self._lootCoord[1] + 60)) / 60)
+        index = coord[0] + (coord[1] * 4)
+        return self._loot[index].getObjet()
+    return None</code></pre>
+</details>
+</dd>
 <dt id="src.ModeEvenement.ModeEvenement.getVictoire"><code class="name flex">
 <span>def <span class="ident">getVictoire</span></span>(<span>self)</span>
 </code></dt>
@@ -195,8 +384,8 @@ if __name__ == &#34;__main__&#34;:
     return self._evenement.getVictoire()</code></pre>
 </details>
 </dd>
-<dt id="src.ModeEvenement.ModeEvenement.on_event"><code class="name flex">
-<span>def <span class="ident">on_event</span></span>(<span>self, events) ‑> NoneType</span>
+<dt id="src.ModeEvenement.ModeEvenement.isInLoot"><code class="name flex">
+<span>def <span class="ident">isInLoot</span></span>(<span>self, coord: tuple)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -204,10 +393,102 @@ if __name__ == &#34;__main__&#34;:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def on_event(self, events) -&gt; None:
+<pre><code class="python">def isInLoot(self, coord: tuple):
+    return self._lootCoord[0] &lt;= coord[0] &lt;= (self._lootCoord[0] + (4 * 60)) and self._lootCoord[1] &lt;= coord[1] &lt;= (self._lootCoord[1] + 60)</code></pre>
+</details>
+</dd>
+<dt id="src.ModeEvenement.ModeEvenement.isInOneInventory"><code class="name flex">
+<span>def <span class="ident">isInOneInventory</span></span>(<span>self, coord: tuple)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Méthode pour savoir si le clic se trouve dans un <code><a title="src.Inventaire" href="Inventaire.html">src.Inventaire</a></code> et si oui dans lequel</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def isInOneInventory(self, coord: tuple):
+    &#34;&#34;&#34;Méthode pour savoir si le clic se trouve dans un `src.Inventaire` et si oui dans lequel&#34;&#34;&#34;
+    if self.isInLoot(coord):
+        return True, 4
+
+    peronnages = self._equipe.getPersonnages()
+    i = 0
+    for peronnage in peronnages:
+        if peronnage.isInInventory(coord):
+            return True, i
+        i += 1
+    return False, i</code></pre>
+</details>
+</dd>
+<dt id="src.ModeEvenement.ModeEvenement.isSurLaCroix"><code class="name flex">
+<span>def <span class="ident">isSurLaCroix</span></span>(<span>self, coord: tuple)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def isSurLaCroix(self, coord: tuple):
+    return (self._lootCoord[0] - 60) &lt;= coord[0] &lt;= self._lootCoord[0] and self._lootCoord[1] &lt;= coord[1] &lt;= (self._lootCoord[1] + 60)</code></pre>
+</details>
+</dd>
+<dt id="src.ModeEvenement.ModeEvenement.on_event"><code class="name flex">
+<span>def <span class="ident">on_event</span></span>(<span>self, events, event) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def on_event(self, events, event) -&gt; None:
     if self._evenement.getEnCours():
         if self._evenement.getMenu().is_enabled():
-            self._evenement.getMenu().update(events)</code></pre>
+            self._evenement.getMenu().update(events)
+    elif self._loot is not None:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                self._enCours = False
+
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            x = int(event.pos[0])  # Enregistre la coordonnée y de l&#39;event
+            y = int(event.pos[1])  # Enregistre la coordonnée y de l&#39;event
+            if self.isSurLaCroix((x, y)):
+                self._enCours = False
+            elif self.isInOneInventory((x, y))[0]:
+                if self.isInOneInventory((x, y))[1] &lt; 4:
+                    personnageSelection = self._equipe.getPersonnages()[self.isInOneInventory((x, y))[1]]
+                    if self._objetSelectione is None:
+                        self._objetSelectione = personnageSelection.getObjetByCoord((x, y))
+                        if self._objetSelectione is not None:
+                            personnageSelection.removeFromInventaire(self._objetSelectione)
+                    else:
+                        objetDestination = personnageSelection.getObjetByCoord((x, y))
+                        if objetDestination is None or objetDestination.getNom() == self._objetSelectione.getNom():
+                            personnageSelection.addToInventaire(self._objetSelectione)
+                            self._objetSelectione = None
+                        else:
+                            personnageSelection.removeFromInventaire(objetDestination)
+                            personnageSelection.addToInventaire(self._objetSelectione)
+                            self._objetSelectione = objetDestination
+                else:
+                    if self._objetSelectione is None:
+                        self._objetSelectione = self.getObjetByCoord((x, y))
+                        if self._objetSelectione is not None:
+                            self._loot.retirer(self._objetSelectione)
+                    else:
+                        objetDestination = self.getObjetByCoord((x, y))
+                        if objetDestination is None:
+                            self._loot.ajouter(self._objetSelectione)
+                            self._objetSelectione = None
+                        else:
+                            self._loot.retirer(objetDestination)
+                            self._loot.ajouter(self._objetSelectione)
+                            self._objetSelectione = objetDestination
+                print(&#34;l&#39;objet en main&#34;, self._objetSelectione)
+    else:
+        pass</code></pre>
 </details>
 </dd>
 <dt id="src.ModeEvenement.ModeEvenement.on_loop"><code class="name flex">
@@ -220,7 +501,9 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def on_loop(self) -&gt; None:
-    pass</code></pre>
+    if not self._evenement.getEnCours():
+        if self._loot is None:
+            self._enCours = False</code></pre>
 </details>
 </dd>
 <dt id="src.ModeEvenement.ModeEvenement.on_render"><code class="name flex">
@@ -235,7 +518,14 @@ if __name__ == &#34;__main__&#34;:
 <pre><code class="python">def on_render(self, window) -&gt; None:
     if self._evenement.getEnCours():
         if self._evenement.getMenu().is_enabled():
-            self._evenement.getMenu().draw(window)</code></pre>
+            self._evenement.getMenu().draw(window)
+    else:
+        self._equipe.renderPersonnageInventaire(window)
+        if self._loot is not None:
+            self._loot.render(window, self._lootCoord[0], self._lootCoord[1])
+        pygame.draw.rect(window, (255, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1], 60, 60))
+        pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1]), (self._lootCoord[0], self._lootCoord[1] + 60))
+        pygame.draw.line(window, (0, 0, 0), (self._lootCoord[0] - 60, self._lootCoord[1] + 60), (self._lootCoord[0], self._lootCoord[1]))</code></pre>
 </details>
 </dd>
 </dl>
@@ -261,7 +551,11 @@ if __name__ == &#34;__main__&#34;:
 <ul class="two-column">
 <li><code><a title="src.ModeEvenement.ModeEvenement.getEnCours" href="#src.ModeEvenement.ModeEvenement.getEnCours">getEnCours</a></code></li>
 <li><code><a title="src.ModeEvenement.ModeEvenement.getEvenement" href="#src.ModeEvenement.ModeEvenement.getEvenement">getEvenement</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.getObjetByCoord" href="#src.ModeEvenement.ModeEvenement.getObjetByCoord">getObjetByCoord</a></code></li>
 <li><code><a title="src.ModeEvenement.ModeEvenement.getVictoire" href="#src.ModeEvenement.ModeEvenement.getVictoire">getVictoire</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.isInLoot" href="#src.ModeEvenement.ModeEvenement.isInLoot">isInLoot</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.isInOneInventory" href="#src.ModeEvenement.ModeEvenement.isInOneInventory">isInOneInventory</a></code></li>
+<li><code><a title="src.ModeEvenement.ModeEvenement.isSurLaCroix" href="#src.ModeEvenement.ModeEvenement.isSurLaCroix">isSurLaCroix</a></code></li>
 <li><code><a title="src.ModeEvenement.ModeEvenement.on_event" href="#src.ModeEvenement.ModeEvenement.on_event">on_event</a></code></li>
 <li><code><a title="src.ModeEvenement.ModeEvenement.on_loop" href="#src.ModeEvenement.ModeEvenement.on_loop">on_loop</a></code></li>
 <li><code><a title="src.ModeEvenement.ModeEvenement.on_render" href="#src.ModeEvenement.ModeEvenement.on_render">on_render</a></code></li>

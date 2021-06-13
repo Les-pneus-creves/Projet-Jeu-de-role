@@ -83,7 +83,7 @@ class Slot_inventaire:
         return -1
 
     def retirer(self, nombre: int = 1):
-        &#34;&#34;&#34;Retire du slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+        &#34;&#34;&#34;Retire du slot l&#39;objet contenu autant de fois que précisé (par défaut 1 seul) et
         s&#39;il n&#39;y a pas assez d&#39;objet à retirer retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu retirer du slot.
         &#34;&#34;&#34;
 
@@ -149,6 +149,16 @@ class Slot_inventaire:
         else:
             window.blit(pygame.transform.scale(typeObjetImages[Objet.Objet], (60, 60)), (posx, posy))
             window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
+            if self._nbContenue &gt; 1:
+                pygame.draw.circle(window, (255, 255, 255), (posx+15, posy+15), 12)
+                if self._nbContenue &lt; 10:
+                    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+                    text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                    window.blit(text, (posx+9, posy+6))
+                else:
+                    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 25)
+                    text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                    window.blit(text, (posx+5, posy+6))
 
 
 def loadSlotsImages():
@@ -268,7 +278,7 @@ def loadSlotsImages():
         return -1
 
     def retirer(self, nombre: int = 1):
-        &#34;&#34;&#34;Retire du slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+        &#34;&#34;&#34;Retire du slot l&#39;objet contenu autant de fois que précisé (par défaut 1 seul) et
         s&#39;il n&#39;y a pas assez d&#39;objet à retirer retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu retirer du slot.
         &#34;&#34;&#34;
 
@@ -333,7 +343,17 @@ def loadSlotsImages():
             window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
         else:
             window.blit(pygame.transform.scale(typeObjetImages[Objet.Objet], (60, 60)), (posx, posy))
-            window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))</code></pre>
+            window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
+            if self._nbContenue &gt; 1:
+                pygame.draw.circle(window, (255, 255, 255), (posx+15, posy+15), 12)
+                if self._nbContenue &lt; 10:
+                    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+                    text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                    window.blit(text, (posx+9, posy+6))
+                else:
+                    font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 25)
+                    text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                    window.blit(text, (posx+5, posy+6))</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -487,21 +507,31 @@ s'il n'y a pas assez de place retourne le nombre d'objet qu'il n'a pas peu ajout
         window.blit(pygame.transform.scale(typeObjetImages[self._typeObjet], (60, 60)), (posx, posy))
     else:
         window.blit(pygame.transform.scale(typeObjetImages[Objet.Objet], (60, 60)), (posx, posy))
-        window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))</code></pre>
+        window.blit(pygame.transform.scale(self._objet.getImage(), (60, 60)), (posx, posy))
+        if self._nbContenue &gt; 1:
+            pygame.draw.circle(window, (255, 255, 255), (posx+15, posy+15), 12)
+            if self._nbContenue &lt; 10:
+                font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
+                text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                window.blit(text, (posx+9, posy+6))
+            else:
+                font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 25)
+                text = font.render(str(self._nbContenue), True, (255, 0, 0))
+                window.blit(text, (posx+5, posy+6))</code></pre>
 </details>
 </dd>
 <dt id="src.Slot_inventaire.Slot_inventaire.retirer"><code class="name flex">
 <span>def <span class="ident">retirer</span></span>(<span>self, nombre: int = 1)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Retire du slot l'objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+<div class="desc"><p>Retire du slot l'objet contenu autant de fois que précisé (par défaut 1 seul) et
 s'il n'y a pas assez d'objet à retirer retourne le nombre d'objet qu'il n'a pas peu retirer du slot.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def retirer(self, nombre: int = 1):
-    &#34;&#34;&#34;Retire du slot l&#39;objet donné en paramètre autant de fois que précisé (par défaut 1 seul) et
+    &#34;&#34;&#34;Retire du slot l&#39;objet contenu autant de fois que précisé (par défaut 1 seul) et
     s&#39;il n&#39;y a pas assez d&#39;objet à retirer retourne le nombre d&#39;objet qu&#39;il n&#39;a pas peu retirer du slot.
     &#34;&#34;&#34;
 

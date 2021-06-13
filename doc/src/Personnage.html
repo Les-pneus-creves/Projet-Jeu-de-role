@@ -27,12 +27,10 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import pygame
-from typing import Type
-from typing import Tuple
 import random
 import Personnage
 from Inventaire import Inventaire
-from Objet import Objet
+import Objet
 from copy import copy
 
 coordInScreen = [0, 830]
@@ -82,6 +80,7 @@ class Personnage:
 
     def mourir(self) -&gt; None:
         self._estVivant = False
+        self._vie = 0
 
     def getNom(self) -&gt; str:
         return self._nom
@@ -95,6 +94,10 @@ class Personnage:
     def getInitiative(self) -&gt; int:
         return self._initiative
 
+    def soigner(self, soin: int):
+        if self._estVivant:
+            self._vie += soin
+
     def prendreDegat(self, degat: int) -&gt; int:
         &#34;&#34;&#34; Methode retirant de la vie au personnage
 
@@ -106,10 +109,17 @@ class Personnage:
 
         Retourne un int pour la construction de log
         &#34;&#34;&#34;
-        self._vie = self._vie - degat
+        if self._inventaire.getEquipement() is not None:
+            degatReduit = degat-self._inventaire.getEquipement().getModDegat()
+            if degatReduit &lt; 0:
+                degatReduit = 0
+        else:
+            degatReduit = degat
+
+        self._vie = self._vie - degatReduit
         if self._vie &lt;= 0:
-            self._estVivant = False
-        return degat
+            self.mourir()
+        return degatReduit
 
     def attaquer(self, cible: Personnage) -&gt; int:
         &#34;&#34;&#34; Methode appelant la méthode prendrerDegat du Personnage ciblé
@@ -128,7 +138,7 @@ class Personnage:
         if &#34;Kv2v2v2&#34; in cible.getNom():
 
             if self._inventaire.getArme() is not None:
-                if self._inventaire.getArme().getNom() == &#34;Arme_Panzerschreck&#34;:   #attention il y a arme_ ...
+                if self._inventaire.getArme().getNom() == &#34;Panzerschreck&#34;:   #attention il y a arme_ ...
                     degat = self._force + self._inventaire.getArme().getModDegat()
                 else:
                     degat = -1
@@ -136,8 +146,12 @@ class Personnage:
                 degat = -1
 
         else:
-            if random.randint(1, 10) &gt; self._precision:
-                return 0
+            if self._inventaire.getArme() is not None:
+                if random.randint(1, 10) &gt; self._precision+self._inventaire.getArme().getModPrecision():
+                    return 0
+            else:
+                if random.randint(1, 10) &gt; self._precision:
+                    return 0
 
             if self._inventaire.getArme() is not None:
                 degat = self._force + self._inventaire.getArme().getModDegat()
@@ -163,12 +177,17 @@ class Personnage:
 
 
     def render(self, window):
+        pygame.draw.rect(window, (5, 5, 5), (self.coordInScreen[0], self.coordInScreen[1], 240, 180), border_radius=5)
         window.blit(pygame.transform.scale(self._image, (60, 60)), self.coordInScreen)
-        posx = self.coordInScreen[0] + 90
-        posy = self.coordInScreen[1]
+        posx = self.coordInScreen[0] + 80
+        posy = self.coordInScreen[1] + 5
         font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
         text = font.render(self._nom, True, (255, 255, 255))
         window.blit(text, (posx, posy))
+        posy += 30
+        text = font.render(&#34;Vie : &#34; + str(self._vie), True, (255, 255, 255))
+        window.blit(text, (posx, posy))
+
         self._inventaire.render(window, self.coordInScreen[0], self.coordInScreen[1] + 60)
 
     def isInInventory(self, coord: tuple) -&gt; bool:
@@ -186,6 +205,11 @@ class Personnage:
             return self._inventaire[index].getObjet()
         return None
 
+    def nbDePatate(self):
+        patate = 0
+        for slot in self._inventaire.slotsOfThisObjet(Objet.objets[&#34;Patate&#34;]):
+            patate += self._inventaire[slot].getNbContenue()
+        return patate
 
 if __name__ == &#34;__main__&#34;:
     x = Personnage(&#34;bob&#34;, 18, 10, 10, 1, &#34;bob&#34;)
@@ -286,6 +310,7 @@ if __name__ == &#34;__main__&#34;:
 
     def mourir(self) -&gt; None:
         self._estVivant = False
+        self._vie = 0
 
     def getNom(self) -&gt; str:
         return self._nom
@@ -299,6 +324,10 @@ if __name__ == &#34;__main__&#34;:
     def getInitiative(self) -&gt; int:
         return self._initiative
 
+    def soigner(self, soin: int):
+        if self._estVivant:
+            self._vie += soin
+
     def prendreDegat(self, degat: int) -&gt; int:
         &#34;&#34;&#34; Methode retirant de la vie au personnage
 
@@ -310,10 +339,17 @@ if __name__ == &#34;__main__&#34;:
 
         Retourne un int pour la construction de log
         &#34;&#34;&#34;
-        self._vie = self._vie - degat
+        if self._inventaire.getEquipement() is not None:
+            degatReduit = degat-self._inventaire.getEquipement().getModDegat()
+            if degatReduit &lt; 0:
+                degatReduit = 0
+        else:
+            degatReduit = degat
+
+        self._vie = self._vie - degatReduit
         if self._vie &lt;= 0:
-            self._estVivant = False
-        return degat
+            self.mourir()
+        return degatReduit
 
     def attaquer(self, cible: Personnage) -&gt; int:
         &#34;&#34;&#34; Methode appelant la méthode prendrerDegat du Personnage ciblé
@@ -332,7 +368,7 @@ if __name__ == &#34;__main__&#34;:
         if &#34;Kv2v2v2&#34; in cible.getNom():
 
             if self._inventaire.getArme() is not None:
-                if self._inventaire.getArme().getNom() == &#34;Arme_Panzerschreck&#34;:   #attention il y a arme_ ...
+                if self._inventaire.getArme().getNom() == &#34;Panzerschreck&#34;:   #attention il y a arme_ ...
                     degat = self._force + self._inventaire.getArme().getModDegat()
                 else:
                     degat = -1
@@ -340,8 +376,12 @@ if __name__ == &#34;__main__&#34;:
                 degat = -1
 
         else:
-            if random.randint(1, 10) &gt; self._precision:
-                return 0
+            if self._inventaire.getArme() is not None:
+                if random.randint(1, 10) &gt; self._precision+self._inventaire.getArme().getModPrecision():
+                    return 0
+            else:
+                if random.randint(1, 10) &gt; self._precision:
+                    return 0
 
             if self._inventaire.getArme() is not None:
                 degat = self._force + self._inventaire.getArme().getModDegat()
@@ -367,12 +407,17 @@ if __name__ == &#34;__main__&#34;:
 
 
     def render(self, window):
+        pygame.draw.rect(window, (5, 5, 5), (self.coordInScreen[0], self.coordInScreen[1], 240, 180), border_radius=5)
         window.blit(pygame.transform.scale(self._image, (60, 60)), self.coordInScreen)
-        posx = self.coordInScreen[0] + 90
-        posy = self.coordInScreen[1]
+        posx = self.coordInScreen[0] + 80
+        posy = self.coordInScreen[1] + 5
         font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
         text = font.render(self._nom, True, (255, 255, 255))
         window.blit(text, (posx, posy))
+        posy += 30
+        text = font.render(&#34;Vie : &#34; + str(self._vie), True, (255, 255, 255))
+        window.blit(text, (posx, posy))
+
         self._inventaire.render(window, self.coordInScreen[0], self.coordInScreen[1] + 60)
 
     def isInInventory(self, coord: tuple) -&gt; bool:
@@ -388,12 +433,18 @@ if __name__ == &#34;__main__&#34;:
             coord = int((point[0] - self.coordInScreen[0]) / 60), int((point[1] - (self.coordInScreen[1] + 60)) / 60)
             index = coord[0] + (coord[1] * 4)
             return self._inventaire[index].getObjet()
-        return None</code></pre>
+        return None
+
+    def nbDePatate(self):
+        patate = 0
+        for slot in self._inventaire.slotsOfThisObjet(Objet.objets[&#34;Patate&#34;]):
+            patate += self._inventaire[slot].getNbContenue()
+        return patate</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="src.Personnage.Personnage.addToInventaire"><code class="name flex">
-<span>def <span class="ident">addToInventaire</span></span>(<span>self, objet: Objet.Objet, nombre: int = 1)</span>
+<span>def <span class="ident">addToInventaire</span></span>(<span>self, objet: <module 'Objet' from '/home/thomas/Documents/2I/Projet_info/Projet-Jeu-de-role/<a title="src" href="index.html">src</a>/Objet.py'>, nombre: int = 1)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -437,7 +488,7 @@ if __name__ == &#34;__main__&#34;:
     if &#34;Kv2v2v2&#34; in cible.getNom():
 
         if self._inventaire.getArme() is not None:
-            if self._inventaire.getArme().getNom() == &#34;Arme_Panzerschreck&#34;:   #attention il y a arme_ ...
+            if self._inventaire.getArme().getNom() == &#34;Panzerschreck&#34;:   #attention il y a arme_ ...
                 degat = self._force + self._inventaire.getArme().getModDegat()
             else:
                 degat = -1
@@ -445,8 +496,12 @@ if __name__ == &#34;__main__&#34;:
             degat = -1
 
     else:
-        if random.randint(1, 10) &gt; self._precision:
-            return 0
+        if self._inventaire.getArme() is not None:
+            if random.randint(1, 10) &gt; self._precision+self._inventaire.getArme().getModPrecision():
+                return 0
+        else:
+            if random.randint(1, 10) &gt; self._precision:
+                return 0
 
         if self._inventaire.getArme() is not None:
             degat = self._force + self._inventaire.getArme().getModDegat()
@@ -511,7 +566,7 @@ if __name__ == &#34;__main__&#34;:
 </details>
 </dd>
 <dt id="src.Personnage.Personnage.getObjetByCoord"><code class="name flex">
-<span>def <span class="ident">getObjetByCoord</span></span>(<span>self, point: tuple) ‑> Objet.Objet</span>
+<span>def <span class="ident">getObjetByCoord</span></span>(<span>self, point: tuple) ‑> <module 'Objet' from '/home/thomas/Documents/2I/Projet_info/Projet-Jeu-de-role/<a title="src" href="index.html">src</a>/Objet.py'></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Retourne l'objet sur lequel on a cliqué</p></div>
@@ -569,7 +624,24 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def mourir(self) -&gt; None:
-    self._estVivant = False</code></pre>
+    self._estVivant = False
+    self._vie = 0</code></pre>
+</details>
+</dd>
+<dt id="src.Personnage.Personnage.nbDePatate"><code class="name flex">
+<span>def <span class="ident">nbDePatate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def nbDePatate(self):
+    patate = 0
+    for slot in self._inventaire.slotsOfThisObjet(Objet.objets[&#34;Patate&#34;]):
+        patate += self._inventaire[slot].getNbContenue()
+    return patate</code></pre>
 </details>
 </dd>
 <dt id="src.Personnage.Personnage.prendreDegat"><code class="name flex">
@@ -598,14 +670,21 @@ if __name__ == &#34;__main__&#34;:
 
     Retourne un int pour la construction de log
     &#34;&#34;&#34;
-    self._vie = self._vie - degat
+    if self._inventaire.getEquipement() is not None:
+        degatReduit = degat-self._inventaire.getEquipement().getModDegat()
+        if degatReduit &lt; 0:
+            degatReduit = 0
+    else:
+        degatReduit = degat
+
+    self._vie = self._vie - degatReduit
     if self._vie &lt;= 0:
-        self._estVivant = False
-    return degat</code></pre>
+        self.mourir()
+    return degatReduit</code></pre>
 </details>
 </dd>
 <dt id="src.Personnage.Personnage.removeFromInventaire"><code class="name flex">
-<span>def <span class="ident">removeFromInventaire</span></span>(<span>self, objet: Objet.Objet, nombre: int = 1)</span>
+<span>def <span class="ident">removeFromInventaire</span></span>(<span>self, objet: <module 'Objet' from '/home/thomas/Documents/2I/Projet_info/Projet-Jeu-de-role/<a title="src" href="index.html">src</a>/Objet.py'>, nombre: int = 1)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -627,13 +706,32 @@ if __name__ == &#34;__main__&#34;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def render(self, window):
+    pygame.draw.rect(window, (5, 5, 5), (self.coordInScreen[0], self.coordInScreen[1], 240, 180), border_radius=5)
     window.blit(pygame.transform.scale(self._image, (60, 60)), self.coordInScreen)
-    posx = self.coordInScreen[0] + 90
-    posy = self.coordInScreen[1]
+    posx = self.coordInScreen[0] + 80
+    posy = self.coordInScreen[1] + 5
     font = pygame.font.Font(pygame.font.match_font(pygame.font.get_default_font()), 30)
     text = font.render(self._nom, True, (255, 255, 255))
     window.blit(text, (posx, posy))
+    posy += 30
+    text = font.render(&#34;Vie : &#34; + str(self._vie), True, (255, 255, 255))
+    window.blit(text, (posx, posy))
+
     self._inventaire.render(window, self.coordInScreen[0], self.coordInScreen[1] + 60)</code></pre>
+</details>
+</dd>
+<dt id="src.Personnage.Personnage.soigner"><code class="name flex">
+<span>def <span class="ident">soigner</span></span>(<span>self, soin: int)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def soigner(self, soin: int):
+    if self._estVivant:
+        self._vie += soin</code></pre>
 </details>
 </dd>
 </dl>
@@ -672,9 +770,11 @@ if __name__ == &#34;__main__&#34;:
 <li><code><a title="src.Personnage.Personnage.getVie" href="#src.Personnage.Personnage.getVie">getVie</a></code></li>
 <li><code><a title="src.Personnage.Personnage.isInInventory" href="#src.Personnage.Personnage.isInInventory">isInInventory</a></code></li>
 <li><code><a title="src.Personnage.Personnage.mourir" href="#src.Personnage.Personnage.mourir">mourir</a></code></li>
+<li><code><a title="src.Personnage.Personnage.nbDePatate" href="#src.Personnage.Personnage.nbDePatate">nbDePatate</a></code></li>
 <li><code><a title="src.Personnage.Personnage.prendreDegat" href="#src.Personnage.Personnage.prendreDegat">prendreDegat</a></code></li>
 <li><code><a title="src.Personnage.Personnage.removeFromInventaire" href="#src.Personnage.Personnage.removeFromInventaire">removeFromInventaire</a></code></li>
 <li><code><a title="src.Personnage.Personnage.render" href="#src.Personnage.Personnage.render">render</a></code></li>
+<li><code><a title="src.Personnage.Personnage.soigner" href="#src.Personnage.Personnage.soigner">soigner</a></code></li>
 </ul>
 </li>
 </ul>
